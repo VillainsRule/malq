@@ -1,0 +1,10 @@
+# modules
+node_modules
+bun.lock
+
+# dev
+.env
+test.ts
+
+# macos
+.DS_Store

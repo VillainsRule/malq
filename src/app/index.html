@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>malq documentation</title>
+
+        <style>
+            * {
+                font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+                margin: 0;
+            }
+
+            body {
+                background: lab(98.2596 -0.247031 -0.706708);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 10vh;
+            }
+
+            h2 {
+                margin-top: 8px;
+            }
+
+            h3 {
+                margin-top: 12px;
+            }
+
+            code {
+                font-family: monospace;
+            }
+
+            .a {
+                display: flex;
+                flex-direction: column;
+                width: 80%;
+                margin-top: 32px;
+                font-size: 16px !important;
+            }
+
+            pre {
+                background: lab(96.1596 -0.0823438 -1.13575);
+                margin-top: 10px;
+                padding: 25px;
+                font-family: monospace;
+                border-radius: 8px;
+                max-width: fit-content;
+            }
+
+            pre * {
+                font-family: monospace;
+            }
+
+            i {
+                margin-left: 32px;
+            }
+
+            a {
+                color: lab(54.1736 13.3369 -74.6839);
+                text-decoration: none;
+            }
+
+            ul {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                margin-top: 8px;
+                padding-left: 32px;
+                list-style-type: disc;
+            }
+        </style>
+    </head>
+
+    <body>
+        <h1>malq</h1>
+        <h2>a temporary email service. no credentials, just mail.</h2>
+        <h3>there's literally 2 fucking endpoints.</h3>
+
+        <div class='a'>
+            <span><b>GET</b> <code>/api/v1/mail/session</code> - creates a new mail session<br></span>
+            <pre>{<br><i></i>"address": "temp@mail",<br><i></i>"token": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"<br>}</pre>
+            <br><br>
+            <span><b>GET</b> <code>/api/v1/mail/inbox/:token</code> - retrieves emails for the session<br></span>
+            <pre>[<br><i></i>{<br><i></i><i></i>"from": "sender@mail",<br><i></i><i></i>"to": "temp@mail",<br><i></i><i></i>"subject": "Hello World!",<br><i></i><i></i>"body": "This is a temporary email service.",<br><i></i><i></i>"date": <n></n><br><i></i>},<br><i></i>...<br>]</pre>
+
+            <br><br>
+            <span><b>note:</b> due to our some of suppliers using websockets, emails are "destroyed" after 2 minutes. womp womp.</span>
+
+            <br><br>
+            <span><b>thank you to our services!</b> they didn't volunteer to be here, but then again, i don't give a
+                fuck!</span>
+            <ul></ul>
+
+            <br>
+            <span>this service is on <a href="https://github.com/VillainsRule/malq">github</a>. thank me later.</span>
+        </div>
+
+        <script>document.querySelector('n').innerText = Date.now();</script>
+    </body>
+
+</html>
