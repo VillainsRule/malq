@@ -7,8 +7,6 @@ malq has a demo setup at https://malq.villainsrule.xyz.
 
 malq is made to be a very basic API with no credentials.
 
-malq relies on multiple email services, the names of which exist in the [providers/impl](./src/providers/impl/) folder.
-
 ## setup
 
 1. install [bun](https://bun.sh)
