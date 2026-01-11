@@ -34,7 +34,7 @@ export default class noopmail$org extends Provider {
         const res = await req.json();
 
         const returnableMail: Mail[] = res.map((email: any) => ({
-            from: email.from.match(/<(.*?)>/)[1],
+            from: email.from,
             to: email.to,
             subject: email.subject,
             body: email.text,
