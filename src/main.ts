@@ -24,6 +24,7 @@ const indexContent = await Bun.file(indexPath).text();
 const servedIndex = indexContent.replace('</ul>', providers.size > 0 ? Array.from(providers.keys()).map((e) => `<li><a href="https://${e.replace(/\$/g, '.')}" target="_blank">${e.replace(/\$/g, '.')}</a></li>`).join('') + '</ul>' : '</ul>');
 
 app.get('/', () => new Response(servedIndex, { headers: { 'Content-Type': 'text/html' } }));
+app.get('/robots.txt', () => new Response('User-agent: *\nDisallow: /', { headers: { 'Content-Type': 'text/plain' } }));
 
 app.get('/api/v1/mail/session', async () => {
     const randomProvider = Array.from(providers.values())[Math.floor(Math.random() * providers.size)];

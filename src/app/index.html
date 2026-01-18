@@ -18,14 +18,17 @@
                 flex-direction: column;
                 align-items: center;
                 padding: 10vh;
+                width: calc(100% - 20vh);
             }
 
             h2 {
                 margin-top: 8px;
+                text-align: center;
             }
 
             h3 {
                 margin-top: 12px;
+                text-align: center;
             }
 
             code {
@@ -47,6 +50,7 @@
                 font-family: monospace;
                 border-radius: 8px;
                 max-width: fit-content;
+                text-wrap: auto;
             }
 
             pre * {
@@ -69,6 +73,17 @@
                 margin-top: 8px;
                 padding-left: 32px;
                 list-style-type: disc;
+            }
+
+            @media (max-width: 600px) {
+                body {
+                    padding: 5vh;
+                    width: calc(100% - 10vh);
+                }
+
+                .a {
+                    width: 100%;
+                }
             }
         </style>
     </head>
