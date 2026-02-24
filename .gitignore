@@ -5,7 +5,6 @@ bun.lock
 # dev
 .env
 tests
-Livewire*
 
 # macos
 .DS_Store

@@ -7,7 +7,7 @@ import type Provider from './providers/Provider';
 
 const providerDir = path.join(import.meta.dirname, 'providers', 'impl');
 const providerFiles = fs.readdirSync(providerDir).filter((file) => file.endsWith('.ts') || file.endsWith('.js'));
-const providers: Map<string, { new (): Provider }> = new Map();
+const providers: Map<string, { new(): Provider }> = new Map();
 
 for (const providerFile of providerFiles) {
     const providerPath = path.join(providerDir, providerFile);
@@ -26,9 +26,18 @@ const servedIndex = indexContent.replace('</ul>', providers.size > 0 ? Array.fro
 app.get('/', () => new Response(servedIndex, { headers: { 'Content-Type': 'text/html' } }));
 app.get('/robots.txt', () => new Response('User-agent: *\nDisallow: /', { headers: { 'Content-Type': 'text/plain' } }));
 
-app.get('/api/v1/mail/session', async () => {
-    const randomProvider = Array.from(providers.values())[Math.floor(Math.random() * providers.size)];
-    const provider = new randomProvider();
+app.get('/api/v1/mail/session', async ({ query }) => {
+    let provider: Provider;
+
+    if (query.provider && Bun.env.ALLOW_PROVIDER_SPECIFY === '1') {
+        const specifiedProvider = providers.get(query.provider);
+        if (!specifiedProvider) return { error: 'invalid provider specified' };
+        provider = new specifiedProvider();
+    } else {
+        const randomProvider = Array.from(providers.values())[Math.floor(Math.random() * providers.size)];
+        provider = new randomProvider();
+    }
+
     const address = await provider.getAddress();
 
     const token = crypto.randomUUID();
@@ -47,7 +56,7 @@ app.get('/api/v1/mail/inbox/:address', async ({ params }) => {
     const token = params.address;
     const provider = sessions.get(token);
 
-    if (!provider) return { error: 'Invalid session token' };
+    if (!provider) return { error: 'invalid session token' };
 
     const mail = await provider.getMail();
 
