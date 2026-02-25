@@ -94,10 +94,10 @@
         <h3>there's literally 2 fucking endpoints.</h3>
 
         <div class='a'>
-            <span><b>GET</b> <code>/api/v1/mail/session</code> - creates a new mail session<br></span>
+            <span><b>GET</b> <code>/api/v1/session</code> - creates a new mail session<br></span>
             <pre>{<br><i></i>"address": "temp@mail",<br><i></i>"token": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"<br>}</pre>
             <br><br>
-            <span><b>GET</b> <code>/api/v1/mail/inbox/:token</code> - retrieves emails for the session<br></span>
+            <span><b>GET</b> <code>/api/v1/inbox/:token</code> - retrieves emails for the session<br></span>
             <pre>[<br><i></i>{<br><i></i><i></i>"from": "sender@mail",<br><i></i><i></i>"to": "temp@mail",<br><i></i><i></i>"subject": "Hello World!",<br><i></i><i></i>"body": "This is a temporary email service.",<br><i></i><i></i>"date": <n></n><br><i></i>},<br><i></i>...<br>]</pre>
 
             <br><br>

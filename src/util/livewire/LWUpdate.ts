@@ -1,7 +1,7 @@
 // only about 1/2 of livewire apps even use this framework
 // and it was SO painful to write :sob: NEVER use livewire
 
-class Livewire {
+class LWUpdate {
     host: string;
 
     html: string = '';
@@ -23,8 +23,6 @@ class Livewire {
 
         this.html = html;
         this.$csrfToken = html.match(/data-csrf="(.*?)"/)?.[1] || '';
-
-        process.getBuiltinModule('fs').writeFileSync(`./debug-${this.host.replace(/\./g, '_')}.html`, html);
 
         const allSnapshots = html.matchAll(/wire:snapshot="(.*?)"/g);
         for (const snapshot of allSnapshots) {
@@ -57,6 +55,7 @@ class Livewire {
     }
 
     cache: Record<string, { component: string, type: string, directParams?: any, data: object }[]> = {};
+    updates: Record<string, any> = {};
 
     directCall(component: string, method: string, params: any[] = []) {
         if (!this.$csrfToken) throw new Error('csrfToken not found, did you call pullHTML() with a valid page?');
@@ -81,7 +80,7 @@ class Livewire {
             _token: this.$csrfToken,
             components: Object.entries(this.cache).map(([component, calls]) => ({
                 snapshot: JSON.stringify(this.snapshots[component]),
-                updates: {},
+                updates: this.updates,
                 calls: calls.map(({ type, data, directParams }) => directParams ? ({
                     path: '',
                     method: type,
@@ -96,6 +95,7 @@ class Livewire {
         };
 
         this.cache = {};
+        this.updates = {};
 
         const req = await fetch(`https://${this.host}/livewire/update`, {
             body: JSON.stringify(body),
@@ -138,4 +138,4 @@ class Livewire {
     }
 }
 
-export default Livewire;
+export default LWUpdate;

@@ -26,7 +26,14 @@ const servedIndex = indexContent.replace('</ul>', providers.size > 0 ? Array.fro
 app.get('/', () => new Response(servedIndex, { headers: { 'Content-Type': 'text/html' } }));
 app.get('/robots.txt', () => new Response('User-agent: *\nDisallow: /', { headers: { 'Content-Type': 'text/plain' } }));
 
-app.get('/api/v1/mail/session', async ({ query }) => {
+app.get('/api/v1/mail/*', ({ params, query, request }) => {
+    const url = new URL(request.url);
+    const newPath = `/api/v1/${params['*']}`;
+    const searchParams = new URLSearchParams(query as Record<string, string>);
+    return Response.redirect(new URL(`${newPath}?${searchParams.toString()}`, url.origin), 307);
+});
+
+app.get('/api/v1/session', async ({ query }) => {
     let provider: Provider;
 
     if (query.provider && Bun.env.ALLOW_PROVIDER_SPECIFY === '1') {
@@ -52,7 +59,7 @@ app.get('/api/v1/mail/session', async ({ query }) => {
     return { address, token, provider: provider.constructor.name };
 });
 
-app.get('/api/v1/mail/inbox/:address', async ({ params }) => {
+app.get('/api/v1/inbox/:address', async ({ params }) => {
     const token = params.address;
     const provider = sessions.get(token);
 
