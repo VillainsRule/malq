@@ -17,7 +17,7 @@ const getSign = (input: string) => {
     };
 };
 
-export default class temporam$com extends Provider {
+export default class postbox$cfd extends Provider {
     $authToken: string | null = null;
 
     fullBodies: Record<string, string> = {};

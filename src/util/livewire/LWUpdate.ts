@@ -1,8 +1,11 @@
 // only about 1/2 of livewire apps even use this framework
 // and it was SO painful to write :sob: NEVER use livewire
 
+import wafFetch from '../waf/fetch';
+
 class LWUpdate {
     host: string;
+    mustByapssWaf: boolean;
 
     html: string = '';
     $cookie: string = '';
@@ -10,12 +13,13 @@ class LWUpdate {
 
     snapshots: Record<string, any> = {};
 
-    constructor(host: string) {
+    constructor(host: string, mustBypassWaf = false) {
         this.host = host;
+        this.mustByapssWaf = mustBypassWaf;
     }
 
     async pullHTML(customPath: string = '/') {
-        const req = await fetch(`https://${this.host}${customPath}`, {
+        const req = await (this.mustByapssWaf ? wafFetch : fetch)(`https://${this.host}${customPath}`, {
             headers: this.$cookie ? { 'Cookie': this.$cookie } : {}
         });
 
@@ -32,7 +36,7 @@ class LWUpdate {
             this.snapshots[json.memo.name] = json;
         }
 
-        this.updateCookies(req.headers.getSetCookie() || []);
+        this.updateCookies('cookies' in req ? req.cookies : req.headers.getSetCookie() || []);
     }
 
     private updateCookies(setCookieHeaders: string[]) {
@@ -97,7 +101,7 @@ class LWUpdate {
         this.cache = {};
         this.updates = {};
 
-        const req = await fetch(`https://${this.host}/livewire/update`, {
+        const req = await (this.mustByapssWaf ? wafFetch : fetch)(`https://${this.host}/livewire/update`, {
             body: JSON.stringify(body),
             method: 'POST',
             headers: {
@@ -109,7 +113,7 @@ class LWUpdate {
             }
         });
 
-        this.updateCookies(req.headers.getSetCookie() || []);
+        this.updateCookies('cookies' in req ? req.cookies : req.headers.getSetCookie() || []);
 
         if (!req.ok) {
             const text = await req.text();
@@ -118,7 +122,7 @@ class LWUpdate {
         }
 
         try {
-            const response = await req.json();
+            const response = await req.json() as any;
 
             if (response.components) {
                 response.components.forEach((comp: any) => {

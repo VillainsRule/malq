@@ -7,6 +7,14 @@ import type Provider from './providers/Provider';
 
 const providerDir = path.join(import.meta.dirname, 'providers', 'impl');
 const providerFiles = fs.readdirSync(providerDir).filter((file) => file.endsWith('.ts') || file.endsWith('.js'));
+const providerSubdirs = fs.readdirSync(providerDir).filter((file) => fs.statSync(path.join(providerDir, file)).isDirectory());
+
+for (const subdir of providerSubdirs) {
+    const subdirPath = path.join(providerDir, subdir);
+    const subdirFiles = fs.readdirSync(subdirPath).filter((file) => file.endsWith('.ts') || file.endsWith('.js'));
+    for (const file of subdirFiles) providerFiles.push(path.join(subdir, file));
+}
+
 const providers: Map<string, { new(): Provider }> = new Map();
 
 for (const providerFile of providerFiles) {

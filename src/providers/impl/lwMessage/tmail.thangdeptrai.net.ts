@@ -1,9 +1,9 @@
-import LWMessage from '../../util/livewire/LWMessage';
+import LWMessage from '../../../util/livewire/LWMessage';
 
-import Provider, { type Mail } from '../Provider';
+import Provider, { type Mail } from '../../Provider';
 
-export default class tmail$xuanlich$com extends Provider {
-    livewire: LWMessage = new LWMessage('tmail.xuanlich.com');
+export default class tmail$thangdeptrai$net extends Provider {
+    livewire: LWMessage = new LWMessage('tmail.thangdeptrai.net');
 
     async getAddress(): Promise<string> {
         await this.livewire.pullHTML();

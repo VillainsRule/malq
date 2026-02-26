@@ -36,7 +36,7 @@ class LWMessage {
 
     async pullHTML(customPath: string = '/') {
         const req = await (this.mustByapssWaf ? wafFetch : fetch)(`https://${this.host}${customPath}`, {
-            headers: this.$cookie ? { 'Cookie': this.$cookie } : {}
+            headers: this.$cookie ? { 'Cookie': this.$cookie } : { 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36' }
         });
 
         const html = await req.text();
@@ -96,6 +96,7 @@ class LWMessage {
             method: 'POST',
             body: JSON.stringify(body),
             headers: {
+                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36',
                 'Cookie': this.$cookie,
                 'Content-Type': 'application/json',
                 'Accept': 'text/html, application/xhtml+xml',

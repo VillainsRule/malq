@@ -1,6 +1,6 @@
-import LWUpdate from '../../util/livewire/LWUpdate';
+import LWUpdate from '../../../util/livewire/LWUpdate';
 
-import Provider, { type Mail } from '../Provider';
+import Provider, { type Mail } from '../../Provider';
 
 export default class edumailfree$com extends Provider {
     livewire: LWUpdate = new LWUpdate('edumailfree.com');

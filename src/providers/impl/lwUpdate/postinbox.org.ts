@@ -1,8 +1,8 @@
-import LWUpdate from '../../util/livewire/LWUpdate';
+import LWUpdate from '../../../util/livewire/LWUpdate';
 
-import { getRandomName } from '../../util/names';
+import { getRandomName } from '../../../util/names';
 
-import Provider, { type Mail } from '../Provider';
+import Provider, { type Mail } from '../../Provider';
 
 export default class postinbox$org extends Provider {
     livewire: LWUpdate = new LWUpdate('postinbox.org');

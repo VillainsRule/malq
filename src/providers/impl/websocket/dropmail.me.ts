@@ -1,4 +1,4 @@
-import Provider, { type Mail } from '../Provider';
+import Provider, { type Mail } from '../../Provider';
 
 export default class DropMail$me extends Provider {
     $mailToken: string | null = null;

@@ -11,7 +11,7 @@ const encode = async (e: string) => {
 
 import Provider, { type Mail } from '../Provider';
 
-export default class IncogNitoMail$co extends Provider {
+export default class incognitomail$co extends Provider {
     $mailToken: string | null = null;
 
     async getAddress(): Promise<string> {
