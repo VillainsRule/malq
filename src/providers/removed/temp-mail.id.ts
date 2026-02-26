@@ -10,8 +10,6 @@ export default class tempmail$id extends Provider {
     async getAddress(): Promise<string> {
         await this.livewire.pullHTML('');
 
-        console.log(this.livewire.html);
-
         const domains = this.livewire.html.match(/setDomain\('(.*?)'\)/g) || [];
         const randomDomain = domains[domains.length * Math.random() | 0];
         const domain = randomDomain.match(/setDomain\('(.*?)'\)/)?.[1];
