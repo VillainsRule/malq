@@ -1,19 +1,28 @@
+- impl possible global domain cache?
+
+- tempmail100.com
+- txen.de
+
 annoying:
 - https://cybertemp.xyz - wonderful domain selection but PoW captcha
 
 https://sendtestmail.com to check
 
+SOURCES:
+- https://usercheck.com
+- https://deviceandbrowserinfo.com/data/emails/providers
+
 **tracker**:
 Y tempmail.lol
-N tempm.com [websockets, HTML]
-N emailfake.com [same tempm.com]
+Y tempm.com
+Y emailfake.com
 Y dropmail.me
-N mail-fake.com [same tempm.com]
-N email-fake.com [same tempm.com]
-N generator.email [same tempm.com]
-N mail-temp.com [same tempm.com]
+Y mail-fake.com
+Y email-fake.com
+Y generator.email
+Y mail-temp.com
 Y tinyhost.shop
-N internxt.com [signup]
+N internxt.com [wrapper]
 Y mail.chatgpt.org.uk
 Y temp-mail.org
 Y tmail.xuanlich.com
@@ -21,29 +30,29 @@ N ghostmail.one [slow]
 N vortex.skyfall.dev [3 domains]
 
 Y tmail.thangdeptrai.net
-N yopmail.com [ssr]
+N yopmail.com [recaptcha]
 N mailtam.com [3 domains]
 N temp2mail.top [down]
-N edumail.biz [ssr, also good edus at edumailfree]
+Y edumail.biz
 N duckmail.sbs [2 domains]
 N gpa.lu [down]
-N anonbox.net [down]
+N anonbox.net [1 domain]
 N app.temailer.com [signup]
 N fake.legal [4 domains]
 N 5smail.email [4 domains]
 N emailondeck.com [recaptcha]
 Y incognitomail.co
 N eml.monster [signup]
-N mailinator.com [signup]
+N mailinator.com [WAF]
 
 P cybertemp.xyz
-N ese.kr [ssr]
-N tempdukviet.click [5 domains]
-N moakt.com [ssr]
+N ese.kr [1 domain]
+Y tempdukviet.click
+Y moakt.com
 N m.kuku.lu [UAM]
 N mailosaur.com [signup]
 N 24.email [broken]
-N trashmailr.com [ssr]
+N trashmailr.com [bad domains]
 N moakt.com [dupe]
 N dispoemail.org [2 domains]
 N emailondeck.com [dupe]
@@ -66,7 +75,7 @@ N tempmail.id.vn [5 domains]
 N nguyendoll.com [broken]
 N mailsac.com [1 domain]
 N tempmail.com.tr [5 domains]
-N tempmail.so [1 domain]
+N tempmail.so [4 domains]
 
 N hotmail9.com [2 domains]
 N 10minutemail.net [WAF]
@@ -78,7 +87,7 @@ Y tempmailo.com
 N mailnesia.com [1 domain]
 Y tempmail44.com
 Y smailpro.com
-N temporary-mail.net [ratelimits]
+N temporary-mail.net [IP]
 N tempmail.cn [1 domain]
 N yours.toools [broken]
 N bccto.me [broken]
@@ -87,7 +96,7 @@ N schutz-mail.de [broken]
 N 1secmail.co [broken]
 N mail.theloi.io.vn [broken]
 N 1sec-mail.com [captcha]
-N fakemail.net [ssr]
+N fakemail.net [1 domain]
 Y 10minemail.com
 N 6d6f.com [broken]
 N vmail.dev [captcha]
@@ -103,7 +112,7 @@ N noopmail.org [broken]
 Y tempmailg.com
 N tempmail.tel [down]
 Y tempmail-plus.com
-R nospam.today [slow]
+R nospam.today [slow] [code = tempdukviet.click]
 R mailmask.cc [partially broken]
 N mintemail.com [1 domain]
 Y postbox.cfd
@@ -134,7 +143,7 @@ N 48h.email [down]
 
 ---
 
-N 48hr.email [borked]
+N 48hr.email [broken]
 N burnermailbox.com [UAM]
 N tempmail.adguard.com [captcha]
 N byom.de [1 domain]
@@ -143,7 +152,7 @@ N etempmail.com [4 domains]
 N etempmail.net [UAM]
 Y expressinboxhub.com
 Y email10min.com
-N fakemailgenerator.com [SSR]
+P fakemailgenerator.com
 N fakermail.com [broken]
 N fmail.sbs [down]
 N fumail.co [captcha]
@@ -219,3 +228,41 @@ N upxmail.com [down]
 N wp-temp-mail.com [changed]
 N trashlify.com [1 domain]
 N maildrop.cc [1 domain]
+
+N spamok.com [1 domain]
+N wabblywabble.com [down]
+N addy.io [signup]
+N improvmx.com [forward]
+N plingest.com [changed]
+N mainnetmail.com [down]
+N mail-temp.site [down]
+N tmail.pro [signup]
+N temail.pro [wrapper]
+N vsmailpro.com [expired]
+P temp-mail.club
+N emltmp.com [down]
+N proxiedmail.com [forwarder]
+P tmail.dark2web.com
+P tempmail.pw
+P altaddress.org
+P linshiyouxiang.net
+N unstablemail.com [down]
+N surfshark.com [signup]
+P temp-mail.asia
+N notletters.com [signup]
+N unlimitmail.com [changed]
+N 1sec-mail.net [down]
+P tempmailbank.com
+N tempumail.com [captcha]
+N sharklasers.com [wrapper]
+N spam4.me [wrapper]
+P spoofmail.de
+N premiumisme.info [2 domains]
+N tempmailturbo.com [UAM]
+N 1secmail.cc [3 domains]
+N tempmailx.xyz [captcha]
+N anonymmail.net [wrapper]
+N tempmailbee.com [1 domain]
+N temporary-email.org [5 domains]
+P emailnator.com (gmail!!)
+N onesecmail.xyz [down]

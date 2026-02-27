@@ -1,14 +1,14 @@
-import LWMessage from '../../util/livewire/LWMessage';
+import LWMessage from '../../../util/livewire/LWMessage';
 
-import { getRandomName } from '../../util/names';
+import { getRandomName } from '../../../util/names';
 
-import Provider, { type Mail } from '../Provider';
+import Provider, { type Mail } from '../../Provider';
 
-export default class nospam$today extends Provider {
-    livewire: LWMessage = new LWMessage('nospam.today', true);
+export default class tempdukviet$click extends Provider {
+    livewire: LWMessage = new LWMessage('tempdukviet.click', true);
 
     async getAddress(): Promise<string> {
-        await this.livewire.pullHTML('');
+        await this.livewire.pullHTML('/mailbox');
 
         const domains = this.livewire.html.match(/setDomain\('(.*?)'\)/g) || [];
         const randomDomain = domains[domains.length * Math.random() | 0];

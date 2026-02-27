@@ -1,3 +1,5 @@
+import { getRandomName } from '../../util/names';
+
 import Provider, { type Mail } from '../Provider';
 
 export default class tempmail$io$vn extends Provider {
@@ -10,7 +12,7 @@ export default class tempmail$io$vn extends Provider {
         const domains = res.match(/<option value="(.*?)">/g)?.map((option: any) => option.match(/<option value="(.*?)">/)![1]) || [];
         const randomDomain = domains[Math.floor(Math.random() * domains.length)];
 
-        this.address = `${Math.random().toString(36).substring(2, 10)}@${randomDomain}`;
+        this.address = `${getRandomName()}@${randomDomain}`;
 
         return this.address;
     }
