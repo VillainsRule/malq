@@ -49,7 +49,6 @@ export default class surlCommons extends Provider {
             let body = '';
             if (!id) {
                 if (res.includes('mess_number">1</')) {
-                    process.getBuiltinModule('fs').writeFileSync('tempm-debug.html', res);
                     id = res.match(/smurl\+"\/(.*?)"/)?.[1];
                     body = dom.querySelector('.mess_bodiyy')?.innerHTML || '';
                     if (id) this.fullBodies[id] = body;

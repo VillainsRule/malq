@@ -95,29 +95,6 @@ export default class moakt$com extends Provider {
             return e;
         }));
 
-        return finalMail
-
-        /*
-        const returnableMail: Mail[] = res.result.map((email) => ({
-            id: email.id,
-            from: email.from_address,
-            to: email.to_address,
-            subject: email.subject,
-            body: this.fullBodies[email.id] || '',
-            date: new Date(email.received_at).getTime()
-        }));
-
-        const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
-            if (!e.body && e.id) await this.fetch(`https://temp-mail.louisnguyen198x.workers.dev/inbox/${e.id}`).then(async (bodyReq) => {
-                const bodyRes = await bodyReq.json();
-                e.body = bodyRes.result.text_content || bodyRes.result.html_content;
-                this.fullBodies[e.id!] = e.body;
-            });
-
-            return e;
-        }));
-
         return finalMail;
-        */
     }
 }

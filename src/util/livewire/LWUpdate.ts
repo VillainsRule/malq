@@ -1,6 +1,3 @@
-// only about 1/2 of livewire apps even use this framework
-// and it was SO painful to write :sob: NEVER use livewire
-
 import wafFetch from '../waf/fetch';
 
 class LWUpdate {

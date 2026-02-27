@@ -3,15 +3,15 @@
     <h3>a temporary email API. no credentials!</h3>
 </div>
 
-malq has a demo setup at https://malq.villainsrule.xyz.
+malq is made to be a very basic API with no credentials. it pulls from TONS (42 at last update) of providers and creates a unified API to get emails from them. the goal is to be as simple as possible, and to have a very large pool of providers to pull from.
 
-malq is made to be a very basic API with no credentials.
+malq has a demo setup at https://malq.villainsrule.xyz. please do not spam the demo.
 
 ## setup
 
 1. install [bun](https://bun.sh)
 2. `bun i`
-3. add a AT LEAST datacenter proxy to `.env` (see `.env.example` for syntax)
+3. add an **AT LEAST DATACENTER** proxy to `.env` (see `.env.example` for syntax)
 4. `bun .`
 
 > [!NOTE]

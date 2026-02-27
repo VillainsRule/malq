@@ -23,6 +23,8 @@ for (const providerFile of providerFiles) {
     providers.set(providerFile.replace('.ts', ''), providerModule.default);
 }
 
+console.log(`[malq] operating off ${providers.size} providers!`);
+
 const app = new Elysia();
 
 const sessions = new Map<string, Provider>();
@@ -79,6 +81,6 @@ app.get('/api/v1/inbox/:address', async ({ params }) => {
 });
 
 app.listen(4400, () => {
-    console.log('malq be ballin: http://localhost:4400');
-    console.log(`malq is ${!process.env.PROXY ? 'not ' : ''}using a proxy`);
+    console.log('[malq] on http://localhost:4400');
+    console.log(`[malq] proxy ${process.env.PROXY ? 'enabled ' : 'disabled [CAUTION]'}`);
 });

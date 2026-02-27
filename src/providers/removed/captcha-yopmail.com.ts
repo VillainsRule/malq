@@ -22,7 +22,6 @@ export default class yopmail$com extends Provider {
         const iCookies2 = initialCookies?.split(',').map((c) => c.split(';')[0].trim()).join('; ');
 
         const yp = ypRes.match(/id="yp" value="(.*?)"/)?.[1];
-        console.log(yp, iCookies2);
 
         const cookieReq = await this.fetch('https://yopmail.com/', {
             method: 'POST',
@@ -34,10 +33,7 @@ export default class yopmail$com extends Provider {
         const sendableCookies = rawCookies?.split(',').map((c) => c.split(';')[0].trim()).join('; ');
 
         const cookieRes = await cookieReq.text();
-        console.log(cookieRes);
         const currentVersion = cookieRes.match(/ver = '(.*?)';/)?.[1];
-
-        console.log(currentVersion, sendableCookies);
 
         return '';
     }

@@ -7,7 +7,7 @@ export default class TempMail$lol extends Provider {
         const req = await this.fetch('https://api.tempmail.lol/v2/inbox/create');
         const res = await req.json();
 
-        if (!res.address || !res.token) console.log(res);
+        if (!res.address || !res.token) console.log('tempmail.lol failed', res);
 
         this.address = res.address;
         this.$mailToken = res.token;
