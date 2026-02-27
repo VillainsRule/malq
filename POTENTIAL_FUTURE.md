@@ -252,7 +252,7 @@ P temp-mail.asia
 N notletters.com [signup]
 N unlimitmail.com [changed]
 N 1sec-mail.net [down]
-P tempmailbank.com
+Y tempmailbank.com
 N tempumail.com [captcha]
 N sharklasers.com [wrapper]
 N spam4.me [wrapper]
