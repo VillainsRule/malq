@@ -1,6 +1,6 @@
 import Provider, { type Mail } from '../Provider';
 
-export default class tempmail$io extends Provider {
+export default class temp_mail$io extends Provider {
     $domain: string | null = null;
     $addressName: string | null = null;
 

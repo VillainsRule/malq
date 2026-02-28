@@ -2,7 +2,7 @@ import Provider, { type Mail } from '../Provider';
 
 import { getRandomName } from '../../util/names';
 
-export default class TinyHost$shop extends Provider {
+export default class tinyhost$shop extends Provider {
     $domain: string | null = null;
     $addressName: string | null = null;
 

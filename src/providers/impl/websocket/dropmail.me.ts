@@ -1,6 +1,6 @@
 import Provider, { type Mail } from '../../Provider';
 
-export default class DropMail$me extends Provider {
+export default class dropmail$me extends Provider {
     $mailToken: string | null = null;
     $ws: WebSocket | null = null;
 

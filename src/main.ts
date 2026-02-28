@@ -18,6 +18,8 @@ for (const subdir of providerSubdirs) {
 const providers: Map<string, { new(): Provider }> = new Map();
 
 for (const providerFile of providerFiles) {
+    if (providerFile.includes('_')) continue;
+
     const providerPath = path.join(providerDir, providerFile);
     const providerModule = await import(providerPath);
     providers.set(providerFile.replace('.ts', ''), providerModule.default);

@@ -1,14 +1,35 @@
 - impl possible global domain cache?
 
 P cybertemp.xyz
-P 10-minutemail.net
-P mohmal.com
-P fakemailgenerator.com
-P trashmailr.com
-P temp-mail.club
-P altaddress.org
-P linshiyouxiang.net
-P spoofmail.de
+P temporarymail.com
+P yours.tools
+P em.bjedu.tech
+P inspacebox.com
+P spoofer.me
+P temp-mailo.org
+P driftz.net
+P fex.plus
+P cs.email
+P mail1s.net
+P noemail.cc
+P emailgenerator.email
+P expressmail.app
+P throwaway.io
+P z4mails.com
+P mailgen.biz
+P temp-mail.africa
+P quickmails.eu
+P email-once.com
+P 10-minutemail.com
+P mailyra.com
+P mailforspam.net
+P tempmailx.xyz
+P tempmailspin.com
+P purplemail.neweymail.com
+P temp-mail.fyi
+P mailtemp.us
+
+crack captcha on tempemails.net for fun?
 
 annoying:
 - https://cybertemp.xyz - wonderful domain selection but PoW captcha
@@ -64,43 +85,65 @@ Y temp-mail.asia
 Y tempmailbank.com
 Y tmail.dark2web.com
 Y emailnator.com
+Y temp-mail.club
+Y linshiyouxiang.net
+Y 24.email
+Y mnx-family.com
+Y nguyendoll.com
+Y 10-minutemail.net
 
+N 0mail.pro [down]
 N 1secmail.cc [3 domains]
 N 1sec-mail.net [down]
 N 10minuteemails.com [1 domain]
 N 10minutemail.one [2 domains]
 N 10minutesemail.net [down]
 N 1secmail.com [down]
-N 1secmail.co [broken]
+N 1secmail.co [down]
 N 1sec-mail.com [captcha]
 N 1secmail.site [down]
 N 10minutemail.net [WAF]
-N 24.email [broken]
+N 10minuteinbox.com [changed]
+N 10minutemail.now [4 domains]
 N 24hour.email [1 domain]
+N 33mail.com [signup]
 N 48h.email [down]
-N 48hr.email [broken]
+N 48hr.email [broken] (cloudflare.gay)
 N 5smail.email [4 domains]
-N 6d6f.com [broken]
+N 6d6f.com [broken] (mbejci.com)
 
 N anonbox.net [1 domain]
 N app.temailer.com [signup]
-N anonymmail.net [broken]
+N anonymmail.net [wrapper]
 N adguard.com [captcha]
 N addy.io [signup]
-N anonymmail.net [wrapper]
+N altaddress.org [broken] (hidefrom.us)
+N anonymster.com [down]
+N adhoc-email.com [down]
+N alias.email [proxy]
+N adrestymczasowy.pl [UAM]
 
 N byom.de [1 domain]
 N burnermailbox.com [UAM]
 N burnermail.io [signup]
-N bccto.me [broken]
+N bccto.me [down]
+N boun.cr [proxy]
+N barid.site [down]
+N besttemporaryemail.com [3 domains]
 
 N chat-tempmail.com [signup]
 N crazymailing.com [4 domains]
+N candymailbox.com [down]
 
 N dropmailer.net [3 domains]
 N dispoemail.org [2 domains]
 N duckmail.sbs [2 domains]
 N disposablemail.com [1 domain]
+N donarev419.com [signup]
+N dismail.top [3 domains]
+N dropalias.app [down]
+N disposableemail.co [down]
+N delpost.ru [1 domain]
 
 N emltmp.com [down]
 N easytrashmail.eu [down]
@@ -110,37 +153,54 @@ N eml.monster [signup]
 N emailondeck.com [recaptcha]
 N etempmail.com [4 domains]
 N etempmail.net [UAM]
-R eztempmail.com [slow]
+N eztempmail.com [slow] (laravel)
+N e4ward.com [1 domain]
+N email1.io [down]
+N etempmail.com [4 domains]
+N emailtemp.org [1 domain]
+N emailme.at [1 domain]
+N extraclass.ng [down]
+N emailgenerator.org [1 domain]
+N email10min.net [1 domain]
 
 N fake.legal [4 domains]
 N fakemail.net [1 domain]
-N fakermail.com [broken]
+N fakermail.com [broken] (realquickemail.com)
 N fmail.sbs [down]
 N fumail.co [captcha]
+N fakemailgenerator.com [IP]
+N freecustom.email [1 domain]
+N fakeemail.net [4 domains]
+N faxmail.co [down]
 
 N gmailcity.com [down]
 N guerrillamail.com [branded domains]
 N getnada.cc [down]
 N gpa.lu [down]
-N ghostmail.one [slow]
+N ghostmail.one [slow] (laravel)
+N grouplist.io [captcha]
+N getemails.uk [mirror] (mailtemp.uk)
 
 N harakirimail.com [1 domain]
 N haribu.net [1 domain]
 N hotmail9.com [2 domains]
+N helicopter-mail.com [down]
 
-N improvmx.com [forward]
+N improvmx.com [proxy]
 N inboxkitten.com [1 domain]
 N inboxes.com [doesnt send full subject ????]
 N internxt.com [wrapper]
+N instant-email.org [2 domains]
 
-N jonasleo.top [broken]
+N jonasleo.top [broken] (gmailking.co) (same postinbox.org)
 
 N lroid.com [1 domain]
+N linshi-email.com [1 domain]
+N likemail.com [4 domains]
 
 N mintemail.com [1 domain]
-N mnx-family.com [broken]
 N mails.org [captcha]
-N mail.theloi.io.vn [broken]
+N mail.theloi.io.vn [down]
 N mailnesia.com [1 domain]
 N minuteinbox.com [1 domain]
 N muellmail.com [turnstile]
@@ -148,12 +208,12 @@ N mailsac.com [1 domain]
 N mail.tm [1 domain]
 N mail.gw [5 domains]
 N mail.td [5 domains]
-N mailscr.us [broken]
+N mailscr.us [broken] (greenbudgetstore.online)
 N m.kuku.lu [UAM]
 N mailosaur.com [signup]
 N mailtam.com [3 domains]
 N mailinator.com [WAF]
-N mailtemp.uk [broken]
+N mailtemp.uk [broken] (emailterminal.info)
 N minutemailbox.com [1 domain]
 N mostakbile.com [1 domain]
 N mailporary.com [5 domains]
@@ -171,21 +231,42 @@ N mailseven.io [1 domain]
 N maildrop.cc [1 domain]
 N mainnetmail.com [down]
 N mail-temp.site [down]
-R mailmask.cc [partially broken]
+N mailmask.cc [broken] (skipsend.io)
+N mohmal.com [1 domain]
+N mailticking.com [UAM]
+N mailgw.com [1 domain]
+N mail.awsl.uk [captcha]
+N mailbox49.com [down]
+N mailtemp.dev [down]
+N mytemp.email [down]
+N mail.cx [wrapper]
+N minmail.app [1 domain]
+N mail10p.com [1 domain]
+N mail-jetable.com [down]
+N mohmal.cc [down]
+N mailslurp.com [signup]
+N minutesmail.com [3 domains]
+N mailtemporal.net [wrapper]
+N m2u.io [captcha]
 
 N notletters.com [signup]
-N nguyendoll.com [broken]
-N noopmail.org [broken]
-R nospam.today [slow] [code = tempdukviet.click]
+N noopmail.org [broken] (taohucom.store)
+N nospam.today [slow] (tempdukviet.click)
 
 N onesecmail.xyz [down]
+N onetempmail.com [down]
+N onetimeinbox.com [4 domains]
+N onetime-mail.com [1 domain]
 
 N premiumisme.info [2 domains]
-N proxiedmail.com [forwarder]
+N proxiedmail.com [proxy]
 N plingest.com [changed]
 N pinmx.net [2 domains]
 
+N quickemail.xyz [2 domains]
+
 N rainmail.xyz [2 domains]
+N receivemail.org [4 domains]
 
 N segamail.com [1 domain]
 N spamok.com [1 domain]
@@ -193,7 +274,10 @@ N surfshark.com [signup]
 N sharklasers.com [wrapper]
 N spam4.me [wrapper]
 N spamgourmet.com [signup]
-N schutz-mail.de [broken]
+N schutz-mail.de [down]
+N snapchat.email [4 domains]
+N spoofmail.de [broken] (funnymail.de)
+N sqrx.com [changed]
 
 N temp2mail.top [down]
 N trashmailr.com [bad domains]
@@ -205,7 +289,7 @@ N tempmail.so [4 domains]
 N trashmail.com [3 domains]
 N temporary-mail.net [IP]
 N tempmail.cn [1 domain]
-N tmailweb.com [broken]
+N tmailweb.com [down]
 N tempmail.tel [down]
 N temporarily.de [signup]
 N tmail.mekongmmo.com [down]
@@ -239,9 +323,8 @@ N tempmails.net [down]
 N tempmailso.com [2 domains]
 N tempo-mail.com [WAF]
 N tempomail.top [1 domain]
-N temporarymail.com [partial broken]
 N tempp-mails.com [1 domain]
-N tempmail100.com [broken]
+N tempmail100.com [broken] (swsdz.com)
 N tempmailx.xyz [captcha]
 N tempmailbee.com [1 domain]
 N temporary-email.org [5 domains]
@@ -260,6 +343,48 @@ N tm-mail.com [1 domain]
 N tmpmail.co [1 domain]
 N tempmail.pw [captcha]
 N trash-mail.com [3 domains]
+N trashmailr.com [4 domains]
+N throwawaymail.com [down]
+N tempmailin.com [down]
+N tempmaili.com [1 domain]
+N tempmail.la [UAM]
+N temp.kopeechka.store [down]
+N tmail.nz [2 domains]
+N temp.kopeechka.store [down]
+N tempmail.now [3 domains]
+N tempimail.org [1 domain]
+N tmail.link [1 domain]
+N tempmailb.com [down]
+N tempmail4u.com [3 domains]
+N tempmailpro.org [1 domain]
+N tempmail.im [1 domain]
+N tempmail.ranzotech.com [3 domains]
+N tempmail.ac.id [signup]
+N tempboxmail.com [down]
+N temp-inbox.com [down]
+N trickadsagencyltd.com [1 domain]
+N tempmail.best [captcha]
+N tempmails.net [expired]
+N tmail.hp.gl [1 domain]
+N tempmaillab.com [1 domain]
+N tempo-mail.pro [UAM]
+N tempusmail.com [3 domains]
+N tempmailpro.in [1 domain]
+N tempmail.world [1 domain]
+N tempemails.net [1 domain]
+N tempmailonline.co [down]
+N tempo-mail.xyz [down]
+N temprmail.com [down]
+N trashmail.io.vn [signup]
+N temp-emails.net [2 domains]
+N tem-mail.net [WAF]
+N tempmail.blog [1 domain]
+N tempmailcentral.com [3 domains]
+N tempmail.uno [changed]
+N tempmail.dev [down]
+N tempmail.quest [captcha]
+N tempmailid.com [down]
+N thetemp.email [4 domains]
 
 N unlimitmail.com [changed]
 N unstablemail.com [down]
@@ -269,9 +394,10 @@ N unlimitmail.com [signup]
 N vsmailpro.com [expired]
 N vmail.dev [captcha]
 N vortex.skyfall.dev [3 domains]
+N voo-email.com [down]
 
 N wp-temp-mail.com [changed]
 N wabblywabble.com [down]
+N wwpager.com [signup]
 
 N yopmail.com [recaptcha]
-N yours.toools [broken]

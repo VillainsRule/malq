@@ -2,7 +2,6 @@ import { getRandomName } from '../../util/names';
 import Provider, { type Mail } from '../Provider';
 
 // never sends the full email subject to the client
-// FUCK
 
 export default class inboxes$com extends Provider {
     fullFrom: Record<string, string> = {};
@@ -15,7 +14,7 @@ export default class inboxes$com extends Provider {
 
         const domain = res.domains[res.domains.length * Math.random() | 0].qdn;
         const user = getRandomName();
-        const email = 'thomastalley@robot-mail.com' // `${user}@${domain}`;
+        const email = `${user}@${domain}`;
 
         this.address = email;
         return email;

@@ -1,6 +1,6 @@
 import Provider, { type Mail } from '../Provider';
 
-export default class TempMail$org extends Provider {
+export default class temp_mail$org extends Provider {
     $token: string | null = null;
 
     fullBodies: Record<string, string> = {};

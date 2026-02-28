@@ -1,6 +1,6 @@
 import Provider, { type Mail } from '../Provider';
 
-export default class TempMail$lol extends Provider {
+export default class tempmail$lol extends Provider {
     $mailToken: string | null = null;
 
     async getAddress(): Promise<string> {
