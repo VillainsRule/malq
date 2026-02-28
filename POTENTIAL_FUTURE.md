@@ -3,28 +3,16 @@
 P cybertemp.xyz
 P temporarymail.com
 P yours.tools
-P em.bjedu.tech
-P inspacebox.com
 P spoofer.me
-P temp-mailo.org
 P driftz.net
 P fex.plus
 P cs.email
 P mail1s.net
 P noemail.cc
-P emailgenerator.email
 P expressmail.app
-P throwaway.io
-P z4mails.com
-P mailgen.biz
-P temp-mail.africa
-P quickmails.eu
 P email-once.com
-P 10-minutemail.com
 P mailyra.com
-P mailforspam.net
 P tempmailx.xyz
-P tempmailspin.com
 P purplemail.neweymail.com
 P temp-mail.fyi
 P mailtemp.us
@@ -91,6 +79,13 @@ Y 24.email
 Y mnx-family.com
 Y nguyendoll.com
 Y 10-minutemail.net
+Y inspacebox.com
+Y temp-mailo.org
+Y emailgenerator.email
+Y z4mails.com
+Y temp-mail.africa
+Y 10-minutemail.com
+Y tempmailspin.com
 
 N 0mail.pro [down]
 N 1secmail.cc [3 domains]
@@ -162,6 +157,7 @@ N emailme.at [1 domain]
 N extraclass.ng [down]
 N emailgenerator.org [1 domain]
 N email10min.net [1 domain]
+N em.bjedu.tech [signup]
 
 N fake.legal [4 domains]
 N fakemail.net [1 domain]
@@ -248,6 +244,8 @@ N mailslurp.com [signup]
 N minutesmail.com [3 domains]
 N mailtemporal.net [wrapper]
 N m2u.io [captcha]
+N mailgen.biz [bad domains]
+N mailforspam.net [broken] (zakute.com)
 
 N notletters.com [signup]
 N noopmail.org [broken] (taohucom.store)
@@ -264,6 +262,7 @@ N plingest.com [changed]
 N pinmx.net [2 domains]
 
 N quickemail.xyz [2 domains]
+N quickmails.eu [broken] (quickmails.eu)
 
 N rainmail.xyz [2 domains]
 N receivemail.org [4 domains]
@@ -385,6 +384,7 @@ N tempmail.dev [down]
 N tempmail.quest [captcha]
 N tempmailid.com [down]
 N thetemp.email [4 domains]
+N throwaway.io [slow]
 
 N unlimitmail.com [changed]
 N unstablemail.com [down]
