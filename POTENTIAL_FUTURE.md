@@ -76,7 +76,6 @@ Y emailnator.com
 Y temp-mail.club
 Y linshiyouxiang.net
 Y 24.email
-Y mnx-family.com
 Y nguyendoll.com
 Y 10-minutemail.net
 Y inspacebox.com
@@ -246,6 +245,7 @@ N mailtemporal.net [wrapper]
 N m2u.io [captcha]
 N mailgen.biz [bad domains]
 N mailforspam.net [broken] (zakute.com)
+N mnx-family.com [broken] (sprytny.edu.pl)
 
 N notletters.com [signup]
 N noopmail.org [broken] (taohucom.store)
