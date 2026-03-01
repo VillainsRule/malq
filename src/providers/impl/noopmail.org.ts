@@ -3,8 +3,8 @@ import Provider, { type Mail } from '../Provider';
 import { getRandomName } from '../../util/names';
 
 export default class noopmail$org extends Provider {
-    $domain: string | null = null;
-    $addressName: string | null = null;
+    $domain = '';
+    $addressName = '';
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://noopmail.org/api/d');

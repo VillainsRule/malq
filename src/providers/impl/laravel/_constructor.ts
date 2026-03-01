@@ -7,12 +7,12 @@ export default class laravelCommons extends Provider {
     hasAddress = false;
     isFormData = false;
 
-    $csrfToken: string | null = null;
+    $csrfToken = '';
 
-    $xsrfCookie: string | null = null;
-    $sessionCookie: string | null = null;
-    $localeCookie: string | null = null;
-    $emailCookie: string | null = null;
+    $xsrfCookie = '';
+    $sessionCookie = '';
+    $localeCookie = '';
+    $emailCookie = '';
 
     async getAddress(): Promise<string> {
         const req = await fetch(`https://${this.domain}/en`, {
@@ -84,7 +84,7 @@ export default class laravelCommons extends Provider {
 
         const returnableMail: Mail[] = res.messages.map((email) => ({
             from: email.from_email,
-            to: this.hasAddress ? email.to : this.address!,
+            to: this.hasAddress ? email.to : this.address,
             subject: email.subject,
             body: email.content,
             date: new Date(email.receivedAt).getTime()

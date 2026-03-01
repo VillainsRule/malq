@@ -1,7 +1,7 @@
 import Provider, { type Mail } from '../Provider';
 
 export default class smailpro$com extends Provider {
-    $mailToken: string | null = null;
+    $mailToken = '';
 
     fullBodies: Record<string, string> = {};
 
@@ -21,7 +21,7 @@ export default class smailpro$com extends Provider {
     }
 
     async getMail(): Promise<Mail[]> {
-        const payload = await this.getPayload('https://api.sonjj.com/v1/temp_email/inbox', [['email', this.address!]]);
+        const payload = await this.getPayload('https://api.sonjj.com/v1/temp_email/inbox', [['email', this.address]]);
         const req = await this.fetch('https://api.sonjj.com/v1/temp_email/inbox?payload=' + payload);
         const res = await req.json() as {
             messages: {
@@ -44,7 +44,7 @@ export default class smailpro$com extends Provider {
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
             if (!e.body && e.id) {
-                const payload = await this.getPayload('https://api.sonjj.com/v1/temp_email/message', [['email', this.address!], ['mid', e.id!]]);
+                const payload = await this.getPayload('https://api.sonjj.com/v1/temp_email/message', [['email', this.address], ['mid', e.id!]]);
                 await this.fetch('https://api.sonjj.com/v1/temp_email/message?payload=' + payload).then(async (bodyReq) => {
                     const bodyRes = await bodyReq.json();
                     e.body = bodyRes.body;

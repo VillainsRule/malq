@@ -18,7 +18,7 @@ const getSign = (input: string) => {
 };
 
 export default class postbox$cfd extends Provider {
-    $authToken: string | null = null;
+    $authToken = '';
 
     fullBodies: Record<string, string> = {};
 
@@ -59,7 +59,7 @@ export default class postbox$cfd extends Provider {
     async getMail(): Promise<Mail[]> {
         const getSig = getSign('emailGeneration');
 
-        const req = await this.fetch(`https://mailapi.tempmailfa.st/api/v1/emails/inbox/${encodeURIComponent(this.address!)}`, {
+        const req = await this.fetch(`https://mailapi.tempmailfa.st/api/v1/emails/inbox/${encodeURIComponent(this.address)}`, {
             headers: {
                 'Authorization': `Bearer ${this.$authToken}`,
                 'X-Nonce': getSig.nonce,

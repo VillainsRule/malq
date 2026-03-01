@@ -1,7 +1,7 @@
 import Provider, { type Mail } from '../Provider';
 
 export default class mail$chatgpt$org$uk extends Provider {
-    $mailToken: string | null = null;
+    $mailToken = '';
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://mail.chatgpt.org.uk/api/generate-email', {

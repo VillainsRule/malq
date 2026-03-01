@@ -18,7 +18,7 @@ export default class tempmail$io$vn extends Provider {
     }
 
     async getMail(): Promise<Mail[]> {
-        const req = await this.fetch(`https://temp-mail.louisnguyen198x.workers.dev/emails/${encodeURIComponent(this.address!)}`);
+        const req = await this.fetch(`https://temp-mail.louisnguyen198x.workers.dev/emails/${encodeURIComponent(this.address)}`);
         const res = await req.json() as {
             result: {
                 id: string,

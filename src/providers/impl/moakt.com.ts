@@ -7,7 +7,7 @@ export default class moakt$com extends Provider {
     fullBodies: Record<string, string> = {};
     fullDates: Record<string, number> = {};
 
-    $cookie: string | null = null;
+    $cookie = '';
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://moakt.com');
@@ -37,7 +37,7 @@ export default class moakt$com extends Provider {
 
     async getMail(): Promise<Mail[]> {
         const req = await this.fetch('https://moakt.com/en/inbox', {
-            headers: { cookie: this.$cookie! }
+            headers: { cookie: this.$cookie }
         });
 
         const res = await req.text();
@@ -59,7 +59,7 @@ export default class moakt$com extends Provider {
             return {
                 id: href,
                 from: sender.trim(),
-                to: this.address!,
+                to: this.address,
                 subject: subject.trim(),
                 body: this.fullBodies[href] || '',
                 date: this.fullDates[href] || 0
@@ -68,7 +68,7 @@ export default class moakt$com extends Provider {
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
             if (!e.date && e.id) await this.fetch(`https://moakt.com${e.id}`, {
-                headers: { cookie: this.$cookie! }
+                headers: { cookie: this.$cookie }
             }).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.text();
                 const bodyDOM = parse(bodyRes);
@@ -81,7 +81,7 @@ export default class moakt$com extends Provider {
             });
 
             if (!e.body && e.id) await this.fetch(`https://moakt.com${e.id}/content`, {
-                headers: { cookie: this.$cookie! }
+                headers: { cookie: this.$cookie }
             }).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.text();
                 const bodyDOM = parse(bodyRes);

@@ -1,7 +1,7 @@
 import Provider, { type Mail } from '../Provider';
 
 export default class temp_mail$org extends Provider {
-    $token: string | null = null;
+    $token = '';
 
     fullBodies: Record<string, string> = {};
 
@@ -27,7 +27,7 @@ export default class temp_mail$org extends Provider {
         const returnableMail: Mail[] = res.messages.map((email: any) => ({
             id: email._id,
             from: email.from,
-            to: this.address!,
+            to: this.address,
             subject: email.subject,
             body: this.fullBodies[email._id] || '',
             date: email.receivedAt * 1000

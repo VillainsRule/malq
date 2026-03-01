@@ -1,8 +1,8 @@
 import Provider, { type Mail } from '../Provider';
 
 export default class temp_mail$io extends Provider {
-    $domain: string | null = null;
-    $addressName: string | null = null;
+    $domain = '';
+    $addressName = '';
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://api.internal.temp-mail.io/api/v3/email/new', {

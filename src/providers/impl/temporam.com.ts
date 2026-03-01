@@ -24,7 +24,7 @@ export default class temporam$com extends Provider {
     }
 
     async getMail(): Promise<Mail[]> {
-        const req = await this.fetch(`https://temporam.com/api/email/messages?email=${encodeURIComponent(this.address!)}`, {
+        const req = await this.fetch(`https://temporam.com/api/email/messages?email=${encodeURIComponent(this.address)}`, {
             headers: {
                 'Referer': 'https://temporam.com/'
             }

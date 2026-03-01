@@ -19,14 +19,14 @@ export default class yopmail$com extends Provider {
         const ypRes = await ypReq.text();
 
         const initialCookies = ypReq.headers.get('set-cookie');
-        const iCookies2 = initialCookies?.split(',').map((c) => c.split(';')[0].trim()).join('; ');
+        const iCookies2 = initialCookies?.split(',').map((c) => c.split(';')[0].trim()).join('; ')!;
 
         const yp = ypRes.match(/id="yp" value="(.*?)"/)?.[1];
 
         const cookieReq = await this.fetch('https://yopmail.com/', {
             method: 'POST',
             body: `yp=${yp}&login=${name}`,
-            headers: { 'content-type': 'application/x-www-form-urlencoded', cookie: iCookies2! }
+            headers: { 'content-type': 'application/x-www-form-urlencoded', cookie: iCookies2 }
         });
 
         const rawCookies = cookieReq.headers.get('set-cookie');

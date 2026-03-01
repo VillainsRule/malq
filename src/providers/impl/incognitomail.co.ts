@@ -9,10 +9,14 @@ const encode = async (e: string) => {
     return Array.from(new Uint8Array(r)).map(e => e.toString(16).padStart(2, '0')).join('')
 }
 
+const sha256 = (str: string) => crypto.createHash('sha256').update(str).digest('hex');
+
 import Provider, { type Mail } from '../Provider';
 
 export default class incognitomail$co extends Provider {
-    $mailToken: string | null = null;
+    $mailToken = '';
+
+    knownMailSignatures: Set<string> = new Set();
 
     async getAddress(): Promise<string> {
         const payload: any = { ts: Date.now(), domain: '' };
@@ -46,18 +50,26 @@ export default class incognitomail$co extends Provider {
                 'Referer': 'https://incognitomail.co/'
             }
         });
-        const res = await req.json();
 
-        const returnableMail: Mail[] = res.items.map((email: any) => ({
+        const res = await req.json() as {
+            items: {
+                date: string,
+                messageURL: string,
+                sender: { email: string },
+                subject: string
+            }[];
+        }
+
+        const returnableMail: Mail[] = res.items.map((email) => ({
             from: email.sender.email,
-            to: this.address!,
+            to: this.address,
             subject: email.subject,
             body: email.messageURL,
             date: new Date(email.date).getTime()
         }));
 
         for (const e of returnableMail) {
-            const encoded = this.encode(e);
+            const encoded = sha256(JSON.stringify(e));
 
             if (!this.knownMailSignatures.has(encoded)) {
                 this.knownMailSignatures.add(encoded);

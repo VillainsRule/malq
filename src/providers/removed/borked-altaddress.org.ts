@@ -5,7 +5,7 @@ import Provider, { type Mail } from '../Provider';
 // some domains don't work (hidefrom.us), so removed for now
 
 export default class altaddress$org extends Provider {
-    $cookie: string | null = null;
+    $cookie = '';
 
     fullBodies: Record<string, string> = {};
 
@@ -27,7 +27,7 @@ export default class altaddress$org extends Provider {
             redirect: 'manual'
         });
 
-        this.$cookie = loginReq.headers.get('set-cookie')?.split(';')[0] || null;
+        this.$cookie = loginReq.headers.get('set-cookie')?.split(';')[0]!;
         
         this.address = `${user}@${domain}`;
         return this.address;
@@ -35,7 +35,7 @@ export default class altaddress$org extends Provider {
 
     async getMail(): Promise<Mail[]> {
         const req = await this.fetch(`https://altaddress.org/inbox`, {
-            headers: { cookie: this.$cookie! }
+            headers: { cookie: this.$cookie }
         });
 
         const res = await req.text();

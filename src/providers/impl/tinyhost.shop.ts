@@ -3,8 +3,8 @@ import Provider, { type Mail } from '../Provider';
 import { getRandomName } from '../../util/names';
 
 export default class tinyhost$shop extends Provider {
-    $domain: string | null = null;
-    $addressName: string | null = null;
+    $domain = '';
+    $addressName = '';
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://tinyhost.shop/api/random-domains/?page=1&limit=1');
@@ -31,7 +31,7 @@ export default class tinyhost$shop extends Provider {
 
         const returnableMail: Mail[] = res.emails.map((email: any) => ({
             from: email.sender,
-            to: this.address!,
+            to: this.address,
             subject: email.subject,
             body: email.body || email.html_body,
             date: new Date(email.date).getTime()

@@ -1,7 +1,7 @@
 import Provider, { type Mail } from '../Provider';
 
 export default class _10minemail$com extends Provider {
-    $token: string | null = null;
+    $token = '';
 
     bodyCache: Record<string, string> = {};
 

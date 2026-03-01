@@ -4,7 +4,7 @@ import Provider, { type Mail } from '../Provider';
 export default class temporarymail$com extends Provider {
     fullBodies: Record<string, string> = {};
 
-    $token: string | null = null;
+    $token = '';
 
     async getAddress(): Promise<string> {
         const domainReq = await this.fetch('https://temporarymail.com/api/?action=getDomains');
@@ -36,14 +36,14 @@ export default class temporarymail$com extends Provider {
         const returnableMail: Mail[] = res.mail_list.map((email) => ({
             id: email.mail_id.toString(),
             from: email.from_mail,
-            to: this.address!,
+            to: this.address,
             subject: email.subject,
             body: this.fullBodies[email.mail_id] || '',
             date: new Date(email.time).getTime()
         }));
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
-            if (!e.body && e.id) await this.fetch(`https://tempmail.plus/api/mails/${e.id}?email=${encodeURIComponent(this.address!)}`).then(async (bodyReq) => {
+            if (!e.body && e.id) await this.fetch(`https://tempmail.plus/api/mails/${e.id}?email=${encodeURIComponent(this.address)}`).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.json() as { text: string, html: string };
                 e.body = bodyRes.text || bodyRes.html;
                 this.fullBodies[e.id!] = e.body;

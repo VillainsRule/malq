@@ -34,7 +34,7 @@ export default class inboxes$com extends Provider {
         const returnableMail: Mail[] = res.msgs.map((email) => ({
             id: email.uid,
             from: this.fullFrom[email.uid] || email.f,
-            to: this.address!,
+            to: this.address,
             subject: this.fullSubjects[email.uid] || email.s,
             body: this.fullBodies[email.uid] || '',
             date: new Date(email.cr).getTime()

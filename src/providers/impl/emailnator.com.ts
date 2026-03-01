@@ -102,7 +102,7 @@ export default class emailnator$com extends Provider {
                 'accept': 'application/json, text/plain, */*',
                 'x-requested-with': 'XMLHttpRequest',
                 'Referer': 'https://www.emailnator.com/mailbox/',
-                'Cookie': this.$cookie!,
+                'Cookie': this.$cookie,
                 'X-Xsrf-Token': this.$xsrfToken,
                 'Content-Type': 'application/json',
                 'Origin': 'https://www.emailnator.com',
@@ -124,7 +124,7 @@ export default class emailnator$com extends Provider {
         const returnableMail: Mail[] = res.messageData.filter(e => e.from.includes('@')).map((email) => ({
             id: email.messageID,
             from: email.from,
-            to: this.address!,
+            to: this.address,
             subject: email.subject,
             body: this.bodies[email.messageID] || '',
             date: getTimeFromEstimate(email.time)
@@ -137,7 +137,7 @@ export default class emailnator$com extends Provider {
                     'content-type': 'application/json',
                     'x-requested-with': 'XMLHttpRequest',
                     'Referer': 'https://www.emailnator.com/mailbox/',
-                    'Cookie': this.$cookie!,
+                    'Cookie': this.$cookie,
                     'X-Xsrf-Token': this.$xsrfToken,
                     'Content-Type': 'application/json',
                     'Origin': 'https://www.emailnator.com',

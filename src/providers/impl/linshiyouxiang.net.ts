@@ -60,7 +60,7 @@ export default class linshiyouxiang$net extends Provider {
         const returnableMail: Mail[] = (res.emails || []).map((email) => ({
             id: email.Code,
             from: email.FromEmail,
-            to: this.address!,
+            to: this.address,
             subject: email.Subject,
             body: this.bodies[email.Code] || '',
             date: email.SendTime * 1000

@@ -104,8 +104,8 @@ const BoomlifyDecryptor = new class {
 }();
 
 export default class boomlify$com extends Provider {
-    $token: string | null = null;
-    $id: string | null = null;
+    $token = '';
+    $id = '';
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://v1.boomlify.com/guest/init', { method: 'POST' });

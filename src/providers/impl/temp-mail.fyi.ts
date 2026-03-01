@@ -53,7 +53,7 @@ export default class temp_mail$fyi extends Provider {
 
         const returnableMail: Mail[] = res.emails.map((email) => ({
             from: email.sender_email,
-            to: this.address!,
+            to: this.address,
             subject: email.subject,
             body: email.body_text || email.body_html,
             date: new Date(email.received_at).getTime()

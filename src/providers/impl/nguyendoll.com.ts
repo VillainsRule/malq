@@ -2,7 +2,7 @@ import { getRandomName } from '../../util/names';
 import Provider, { type Mail } from '../Provider';
 
 export default class nguyendoll$com extends Provider {
-    $mailToken: string | null = null;
+    $mailToken = '';
 
     async getAddress(): Promise<string> {
         let attempts = 0;
@@ -35,7 +35,7 @@ export default class nguyendoll$com extends Provider {
     }
 
     async getMail(): Promise<Mail[]> {
-        const req = await this.fetch('https://nguyendoll.com/api/get_mail.php?email=' + encodeURIComponent(this.address!));
+        const req = await this.fetch('https://nguyendoll.com/api/get_mail.php?email=' + encodeURIComponent(this.address));
         const res = await req.json() as {
             data: {
                 subject: string,
@@ -47,7 +47,7 @@ export default class nguyendoll$com extends Provider {
 
         const returnableMail: Mail[] = res.data.map((email) => ({
             from: email.from_field,
-            to: this.address!,
+            to: this.address,
             subject: email.subject,
             body: email.html_content,
             date: new Date(email.date).getTime()

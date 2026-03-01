@@ -3,7 +3,7 @@ import { getRandomName } from '../../util/names';
 import Provider, { type Mail } from '../Provider';
 
 export default class rootsh$com extends Provider {
-    $cookie: string | null = null;
+    $cookie = '';
 
     fullBodies: Record<string, string> = {};
 
@@ -39,8 +39,8 @@ export default class rootsh$com extends Provider {
     async getMail(): Promise<Mail[]> {
         const fetchReq = await fetch('https://rootsh.com/getmail', {
             method: 'POST',
-            body: `mail=${encodeURIComponent(this.address!)}&time=0&_=${Date.now()}`,
-            headers: { 'content-type': 'application/x-www-form-urlencoded', cookie: this.$cookie! }
+            body: `mail=${encodeURIComponent(this.address)}&time=0&_=${Date.now()}`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded', cookie: this.$cookie }
         });
 
         const fetchRes = await fetchReq.json() as {
@@ -65,8 +65,8 @@ export default class rootsh$com extends Provider {
         }));
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
-            if (!e.body && e.id) await this.fetch(`https://rootsh.com/win/${encodeURIComponent(this.address!.replace('@', '*!!^^').replaceAll('.', '+==_-'))}/${e.id}`, {
-                headers: { cookie: this.$cookie! }
+            if (!e.body && e.id) await this.fetch(`https://rootsh.com/win/${encodeURIComponent(this.address.replace('@', '*!!^^').replaceAll('.', '+==_-'))}/${e.id}`, {
+                headers: { cookie: this.$cookie }
             }).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.text();
                 e.body = bodyRes.match(/.push\(\{\}\);<\/script><br\/><hr\/><br\/>(.*?)<br\/><hr\/><br\/><script async src=/s)?.[1]!;

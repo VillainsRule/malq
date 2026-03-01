@@ -38,7 +38,7 @@ export default class temp_mail$club extends Provider {
 
         return messages.map((msg: any) => ({
             from: msg.sender_email,
-            to: this.address!,
+            to: this.address,
             subject: msg.subject,
             body: msg.content,
             date: new Date(msg.date).getTime()

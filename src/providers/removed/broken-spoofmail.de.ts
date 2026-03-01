@@ -81,7 +81,7 @@ export default class spoofmail$de extends Provider {
         const returnableMail: Mail[] = (res.messages || []).map((email) => ({
             id: email.id,
             from: email.from[0],
-            to: this.address!,
+            to: this.address,
             subject: email.subject,
             body: this.bodies[email.id] || '',
             date: email.created_at[0] * 1000

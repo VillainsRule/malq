@@ -5,8 +5,8 @@ import { getRandomName } from '../../util/names';
 // some domains don't work (skipsend.io), so suspended for now
 
 export default class mailscr$us extends Provider {
-    $domain: string | null = null;
-    $addressName: string | null = null;
+    $domain = '';
+    $addressName = '';
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://mailmask.cc/domains');
@@ -33,7 +33,7 @@ export default class mailscr$us extends Provider {
 
         const returnableMail: Mail[] = res.map((email: any) => ({
             from: email.from_address.match(/<(.*?)>/)[1],
-            to: this.address!,
+            to: this.address,
             subject: email.subject,
             body: email.body_text || email.body_html,
             date: new Date(email.received_at).getTime()

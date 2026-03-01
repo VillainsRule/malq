@@ -30,7 +30,7 @@ export default class surlCommons extends Provider {
 
     async getMail(): Promise<Mail[]> {
         const req = await this.fetch(`https://${this.host}`, {
-            headers: { cookie: `embx=%5B%22${encodeURIComponent(this.address!)}%22%5D; surl=${this.$domain}/${this.$user}` }
+            headers: { cookie: `embx=%5B%22${encodeURIComponent(this.address)}%22%5D; surl=${this.$domain}/${this.$user}` }
         });
 
         const res = await req.text();
@@ -58,7 +58,7 @@ export default class surlCommons extends Provider {
             return {
                 id,
                 from,
-                to: this.address!,
+                to: this.address,
                 subject,
                 body: this.fullBodies[id!] || body,
                 date: new Date(date).getTime()
@@ -67,7 +67,7 @@ export default class surlCommons extends Provider {
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
             if (!e.body && e.id) await this.fetch(`https://${this.host}/${this.$domain}/${this.$user}/${e.id}`, {
-                headers: { cookie: `embx=%5B%22${encodeURIComponent(this.address!)}%22%5D; surl=${this.$domain}/${this.$user}/${e.id}` }
+                headers: { cookie: `embx=%5B%22${encodeURIComponent(this.address)}%22%5D; surl=${this.$domain}/${this.$user}/${e.id}` }
             }).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.text();
                 const bodyDOM = parse(bodyRes);

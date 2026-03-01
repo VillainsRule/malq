@@ -20,7 +20,7 @@ export default class _24$email extends Provider {
     }
 
     async getMail(): Promise<Mail[]> {
-        const ws = new WebSocket(`wss://24.email/ws/emails?email=${encodeURIComponent(this.address!)}`, {
+        const ws = new WebSocket(`wss://24.email/ws/emails?email=${encodeURIComponent(this.address)}`, {
             headers: {
                 'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36',
                 'origin': 'https://24.email'
@@ -47,7 +47,7 @@ export default class _24$email extends Provider {
                     const returnableMail: Mail[] = data.emails.map((email) => ({
                         id: email.body,
                         from: email.sender,
-                        to: this.address!,
+                        to: this.address,
                         subject: email.subject,
                         body: this.fullBodies[email.body] || '',
                         date: new Date(email.received_at).getTime()

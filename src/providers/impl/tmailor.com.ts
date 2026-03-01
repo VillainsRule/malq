@@ -1,7 +1,7 @@
 import Provider, { type Mail } from '../Provider';
 
 export default class tmailor$com extends Provider {
-    $token: string | null = null;
+    $token = '';
 
     fullBodies: Record<string, string> = {};
 
@@ -42,7 +42,7 @@ export default class tmailor$com extends Provider {
         const returnableMail: Mail[] = messages.map((email) => ({
             id: email.id,
             from: email.sender_email,
-            to: this.address!,
+            to: this.address,
             subject: email.subject,
             body: this.fullBodies[email.id] || '',
             date: new Date(email.receive_time * 1000).getTime()

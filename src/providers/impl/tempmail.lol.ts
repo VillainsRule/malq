@@ -1,7 +1,13 @@
+import crypto from 'node:crypto';
+
 import Provider, { type Mail } from '../Provider';
 
+const sha256 = (str: string) => crypto.createHash('sha256').update(str).digest('hex');
+
 export default class tempmail$lol extends Provider {
-    $mailToken: string | null = null;
+    $mailToken = '';
+
+    knownMailSignatures: Set<string> = new Set();
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://api.tempmail.lol/v2/inbox/create');
@@ -29,7 +35,7 @@ export default class tempmail$lol extends Provider {
             }));
 
             returnableMail.forEach((e) => {
-                const encoded = this.encode(e);
+                const encoded = sha256(JSON.stringify(e));
 
                 if (!this.knownMailSignatures.has(encoded)) {
                     this.knownMailSignatures.add(encoded);

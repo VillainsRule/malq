@@ -8,10 +8,8 @@ export interface Mail {
 }
 
 class Provider {
-    address?: string | null = null;
-
+    address: string = '';
     mail: Mail[] = [];
-    knownMailSignatures: Set<string> = new Set();
 
     getAddress(): Promise<string> {
         throw new Error(this.constructor.name + ' has not implemented getAddress()');
@@ -22,10 +20,6 @@ class Provider {
     }
 
     destroy(): void { }
-
-    encode(mail: Mail) {
-        return btoa(JSON.stringify(mail));
-    }
 
     fetch(url: string, options: RequestInit = {}) {
         if (process.env.PROXY) (options as any).proxy = process.env.PROXY;

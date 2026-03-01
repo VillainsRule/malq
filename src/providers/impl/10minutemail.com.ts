@@ -3,7 +3,7 @@ import wafFetch from '../../util/waf/fetch';
 import Provider, { type Mail } from '../Provider';
 
 export default class _10minutemail$com extends Provider {
-    $cookie: string | null = null;
+    $cookie = '';
 
     async getAddress(): Promise<string> {
         const addressReq = await wafFetch('https://10minutemail.com/session/address');
