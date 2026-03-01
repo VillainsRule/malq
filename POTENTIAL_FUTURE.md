@@ -4,17 +4,12 @@ P cybertemp.xyz
 P temporarymail.com
 P yours.tools
 P spoofer.me
-P driftz.net
-P fex.plus
 P cs.email
 P mail1s.net
 P noemail.cc
 P expressmail.app
 P email-once.com
 P mailyra.com
-P tempmailx.xyz
-P purplemail.neweymail.com
-P temp-mail.fyi
 P mailtemp.us
 
 crack captcha on tempemails.net for fun?
@@ -85,6 +80,9 @@ Y z4mails.com
 Y temp-mail.africa
 Y 10-minutemail.com
 Y tempmailspin.com
+Y purplemail.neweymail.com
+Y driftz.net
+Y temp-mail.fyi
 
 N 0mail.pro [down]
 N 1secmail.cc [3 domains]
@@ -167,6 +165,7 @@ N fakemailgenerator.com [IP]
 N freecustom.email [1 domain]
 N fakeemail.net [4 domains]
 N faxmail.co [down]
+N fex.plus [down]
 
 N gmailcity.com [down]
 N guerrillamail.com [branded domains]
@@ -385,6 +384,7 @@ N tempmail.quest [captcha]
 N tempmailid.com [down]
 N thetemp.email [4 domains]
 N throwaway.io [slow]
+N tempmailx.xyz [captcha]
 
 N unlimitmail.com [changed]
 N unstablemail.com [down]
