@@ -33,7 +33,7 @@ const sessions = new Map<string, Provider>();
 
 const indexPath = path.join(import.meta.dirname, 'app', 'index.html');
 const indexContent = await Bun.file(indexPath).text();
-const servedIndex = indexContent.replace('</ul>', providers.size > 0 ? Array.from(providers.keys()).map((e) => `<li><a href="https://${e.replace(/\$/g, '.')}" target="_blank">${e.replace(/\$/g, '.')}</a></li>`).join('') + '</ul>' : '</ul>');
+const servedIndex = indexContent.replace('{NUM_PROVIDERS}', providers.size.toString());
 
 app.get('/', () => new Response(servedIndex, { headers: { 'Content-Type': 'text/html' } }));
 app.get('/robots.txt', () => new Response('User-agent: *\nDisallow: /', { headers: { 'Content-Type': 'text/plain' } }));
@@ -68,7 +68,7 @@ app.get('/api/v1/session', async ({ query }) => {
         sessions.delete(token);
     }, 2 * 60 * 1000);
 
-    return { address, token, provider: provider.constructor.name };
+    return { address, token, provider: provider.constructor.name.replaceAll('$', '.') };
 });
 
 app.get('/api/v1/inbox/:address', async ({ params }) => {
