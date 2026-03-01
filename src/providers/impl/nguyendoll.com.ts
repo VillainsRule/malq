@@ -1,9 +1,8 @@
-import { getRandomName } from '../../util/names';
+import { getRandomName } from '@/util/names';
+
 import Provider, { type Mail } from '../Provider';
 
 export default class nguyendoll$com extends Provider {
-    $mailToken = '';
-
     async getAddress(): Promise<string> {
         let attempts = 0;
         let domain = '';
@@ -18,7 +17,7 @@ export default class nguyendoll$com extends Provider {
             let extractedDomain = attemptingDomain.match(/"domain":"(.*?)"/)?.[1];
 
             const req = await this.fetch('https://nguyendoll.com/api/check_mx.php?domain=' + extractedDomain);
-            const res = await req.json();
+            const res = await req.json() as { hasMX: boolean, mxRecords: string[] };
 
             if (res.hasMX && res.mxRecords.length === 1 && res.mxRecords[0] && res.mxRecords[0].includes('nguyendoll')) {
                 domain = extractedDomain!;

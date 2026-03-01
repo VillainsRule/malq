@@ -1,11 +1,12 @@
 import parse from 'node-html-parser';
-import { getRandomName } from '../../util/names';
+
+import { getRandomName } from '@/util/names';
 
 import Provider, { type Mail } from '../Provider';
 
 export default class moakt$com extends Provider {
-    fullBodies: Record<string, string> = {};
-    fullDates: Record<string, number> = {};
+    bodies: Record<string, string> = {};
+    dates: Record<string, number> = {};
 
     $cookie = '';
 
@@ -61,8 +62,8 @@ export default class moakt$com extends Provider {
                 from: sender.trim(),
                 to: this.address,
                 subject: subject.trim(),
-                body: this.fullBodies[href] || '',
-                date: this.fullDates[href] || 0
+                body: this.bodies[href] || '',
+                date: this.dates[href] || 0
             }
         }).filter(e => typeof e === 'object') as Mail[];
 
@@ -77,7 +78,7 @@ export default class moakt$com extends Provider {
                 const date = new Date(dateElement).getTime();
 
                 e.date = date;
-                this.fullDates[e.id!] = e.date;
+                this.dates[e.id!] = e.date;
             });
 
             if (!e.body && e.id) await this.fetch(`https://moakt.com${e.id}/content`, {
@@ -89,7 +90,7 @@ export default class moakt$com extends Provider {
                 const html = bodyDOM.querySelector('div')!.outerHTML;
 
                 e.body = html;
-                this.fullBodies[e.id!] = e.body;
+                this.bodies[e.id!] = e.body;
             });
 
             return e;

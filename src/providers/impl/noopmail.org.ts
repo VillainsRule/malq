@@ -1,26 +1,19 @@
-import Provider, { type Mail } from '../Provider';
+import { getRandomName } from '@/util/names';
 
-import { getRandomName } from '../../util/names';
+import Provider, { type Mail } from '../Provider';
 
 export default class noopmail$org extends Provider {
     $domain = '';
-    $addressName = '';
+    $email = '';
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://noopmail.org/api/d');
-        const res = await req.json();
+        const res = await req.json() as string[];
 
-        const domain = res[Math.floor(res.length * Math.random())];
+        this.$domain = res[Math.floor(res.length * Math.random())];
+        this.$email = getRandomName();
 
-        const emailName = getRandomName();
-        const randomNumbers = Math.floor(1000 + Math.random() * 9000);
-        const addressName = `${emailName}${randomNumbers}`;
-        const emailAddress = `${addressName}@${domain}`;
-
-        this.$domain = domain;
-        this.$addressName = addressName;
-
-        this.address = emailAddress;
+        this.address = `${this.$email}@${this.$domain}`;
 
         return this.address;
     }
@@ -29,11 +22,18 @@ export default class noopmail$org extends Provider {
         const req = await this.fetch('https://noopmail.org/api/c', {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({ d: this.$domain, e: this.$addressName })
+            body: JSON.stringify({ d: this.$domain, e: this.$email })
         });
-        const res = await req.json();
 
-        const returnableMail: Mail[] = res.map((email: any) => ({
+        const res = await req.json() as {
+            from: string,
+            to: string,
+            subject: string,
+            text: string,
+            date: string
+        }[];
+
+        const returnableMail: Mail[] = res.map((email) => ({
             from: email.from,
             to: email.to,
             subject: email.subject,

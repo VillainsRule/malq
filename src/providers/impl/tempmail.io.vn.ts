@@ -1,9 +1,9 @@
-import { getRandomName } from '../../util/names';
+import { getRandomName } from '@/util/names';
 
 import Provider, { type Mail } from '../Provider';
 
 export default class tempmail$io$vn extends Provider {
-    fullBodies: Record<string, string> = {};
+    bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://tempmail.io.vn');
@@ -34,15 +34,15 @@ export default class tempmail$io$vn extends Provider {
             from: email.from_address,
             to: email.to_address,
             subject: email.subject,
-            body: this.fullBodies[email.id] || '',
+            body: this.bodies[email.id] || '',
             date: new Date(email.received_at).getTime()
         }));
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
             if (!e.body && e.id) await this.fetch(`https://temp-mail.louisnguyen198x.workers.dev/inbox/${e.id}`).then(async (bodyReq) => {
-                const bodyRes = await bodyReq.json();
+                const bodyRes = await bodyReq.json() as { result: { text_content: string, html_content: string } };
                 e.body = bodyRes.result.text_content || bodyRes.result.html_content;
-                this.fullBodies[e.id!] = e.body;
+                this.bodies[e.id!] = e.body;
             });
 
             return e;

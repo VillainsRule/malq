@@ -1,6 +1,6 @@
-import Provider, { type Mail } from '../Provider';
-
 import crypto from 'node:crypto';
+
+import Provider, { type Mail } from '../Provider';
 
 const getSign = (input: string) => {
     const rand = Math.random().toString(36).substring(2, 15);
@@ -20,11 +20,10 @@ const getSign = (input: string) => {
 export default class postbox$cfd extends Provider {
     $authToken = '';
 
-    fullBodies: Record<string, string> = {};
+    bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
         const tokenSig = getSign('emailGeneration');
-
         const req = await this.fetch('https://mailapi.tempmailfa.st/api/v1/auth/token', {
             headers: {
                 'X-Nonce': tokenSig.nonce,
@@ -32,12 +31,11 @@ export default class postbox$cfd extends Provider {
                 'X-Signature': tokenSig.signature
             }
         });
-        const res = await req.text();
 
+        const res = await req.text();
         this.$authToken = res;
 
         const emailSig = getSign('emailGeneration');
-
         const req2 = await this.fetch('https://mailapi.tempmailfa.st/api/v1/mailboxes/dynamic', {
             method: 'POST',
             headers: {
@@ -49,16 +47,15 @@ export default class postbox$cfd extends Provider {
             },
             body: JSON.stringify({})
         });
-        const res2 = await req2.json();
+
+        const res2 = await req2.json() as { address: string };
 
         this.address = res2.address;
-
         return res2.address;
     }
 
     async getMail(): Promise<Mail[]> {
         const getSig = getSign('emailGeneration');
-
         const req = await this.fetch(`https://mailapi.tempmailfa.st/api/v1/emails/inbox/${encodeURIComponent(this.address)}`, {
             headers: {
                 'Authorization': `Bearer ${this.$authToken}`,
@@ -67,14 +64,21 @@ export default class postbox$cfd extends Provider {
                 'X-Signature': getSig.signature
             }
         });
-        const res = await req.json();
 
-        const returnableMail: Mail[] = res.map((email: any) => ({
+        const res = await req.json() as {
+            id: string,
+            fromAddress: string,
+            subject: string,
+            receivedAt: number,
+            inboxAddress: string
+        }[];
+
+        const returnableMail: Mail[] = res.map((email) => ({
             id: email.id,
             from: email.fromAddress,
             to: email.inboxAddress,
             subject: email.subject,
-            body: this.fullBodies[email.id] || '',
+            body: this.bodies[email.id] || '',
             date: new Date(email.receivedAt).getTime()
         }));
 
@@ -90,9 +94,9 @@ export default class postbox$cfd extends Provider {
                         'X-Signature': getBodySig.signature
                     }
                 }).then(async (bodyReq) => {
-                    const bodyRes = await bodyReq.json();
+                    const bodyRes = await bodyReq.json() as { bodyText: string, bodyHtml: string };
                     e.body = bodyRes.bodyText || bodyRes.bodyHtml;
-                    this.fullBodies[e.id!] = bodyRes.bodyText || bodyRes.bodyHtml;
+                    this.bodies[e.id!] = bodyRes.bodyText || bodyRes.bodyHtml;
                 });
             }
 

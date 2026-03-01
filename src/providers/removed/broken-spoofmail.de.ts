@@ -1,4 +1,4 @@
-import { getRandomName } from '../../util/names';
+import { getRandomName } from '@/util/names';
 
 import Provider, { type Mail } from '../Provider';
 

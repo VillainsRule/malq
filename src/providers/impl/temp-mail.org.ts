@@ -3,11 +3,11 @@ import Provider, { type Mail } from '../Provider';
 export default class temp_mail$org extends Provider {
     $token = '';
 
-    fullBodies: Record<string, string> = {};
+    bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://web2.temp-mail.org/mailbox', { method: 'POST' });
-        const res = await req.json();
+        const res = await req.json() as { mailbox: string, token: string };
 
         this.address = res.mailbox;
         this.$token = res.token;
@@ -17,19 +17,24 @@ export default class temp_mail$org extends Provider {
 
     async getMail(): Promise<Mail[]> {
         const req = await this.fetch('https://web2.temp-mail.org/messages', {
-            headers: {
-                'Authorization': `Bearer ${this.$token}`
-            }
+            headers: { 'Authorization': `Bearer ${this.$token}` }
         });
 
-        const res = await req.json();
+        const res = await req.json() as {
+            messages: {
+                _id: string,
+                from: string,
+                subject: string,
+                receivedAt: number
+            }[]
+        };
 
-        const returnableMail: Mail[] = res.messages.map((email: any) => ({
+        const returnableMail: Mail[] = res.messages.map((email) => ({
             id: email._id,
             from: email.from,
             to: this.address,
             subject: email.subject,
-            body: this.fullBodies[email._id] || '',
+            body: this.bodies[email._id] || '',
             date: email.receivedAt * 1000
         }));
 
@@ -39,9 +44,9 @@ export default class temp_mail$org extends Provider {
                     'Authorization': `Bearer ${this.$token}`
                 }
             }).then(async (bodyReq) => {
-                const bodyRes = await bodyReq.json();
+                const bodyRes = await bodyReq.json() as { bodyHtml: string };
                 e.body = bodyRes.bodyHtml;
-                this.fullBodies[e.id!] = bodyRes.bodyHtml;
+                this.bodies[e.id!] = bodyRes.bodyHtml;
             });
 
             return e;

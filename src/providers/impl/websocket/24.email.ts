@@ -1,16 +1,16 @@
 import parse from 'node-html-parser';
 import WebSocket from 'ws';
 
-import { getRandomName } from '../../../util/names';
+import { getRandomName } from '@/util/names';
 
 import Provider, { type Mail } from '../../Provider';
 
 export default class _24$email extends Provider {
-    fullBodies: Record<string, string> = {};
+    bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://24.email/get-domains');
-        const res = await req.json();
+        const res = await req.json() as { name: string }[];
 
         const domain = res[Math.floor(Math.random() * res.length)].name;
         const user = getRandomName();
@@ -49,7 +49,7 @@ export default class _24$email extends Provider {
                         from: email.sender,
                         to: this.address,
                         subject: email.subject,
-                        body: this.fullBodies[email.body] || '',
+                        body: this.bodies[email.body] || '',
                         date: new Date(email.received_at).getTime()
                     }));
 
@@ -63,7 +63,7 @@ export default class _24$email extends Provider {
 
                             const body = bodySelected?.innerHTML.trim() || '';
                             e.body = body;
-                            this.fullBodies[e.id!] = body;
+                            this.bodies[e.id!] = body;
                         });
 
                         return e;

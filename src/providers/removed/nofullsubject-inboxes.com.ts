@@ -1,16 +1,17 @@
-import { getRandomName } from '../../util/names';
+import { getRandomName } from '@/util/names';
+
 import Provider, { type Mail } from '../Provider';
 
 // never sends the full email subject to the client
 
 export default class inboxes$com extends Provider {
-    fullFrom: Record<string, string> = {};
-    fullSubjects: Record<string, string> = {};
-    fullBodies: Record<string, string> = {};
+    froms: Record<string, string> = {};
+    subjects: Record<string, string> = {};
+    bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://inboxes.com/api/v2/domain');
-        const res = await req.json();
+        const res = await req.json() as { domains: { qdn: string }[] };
 
         const domain = res.domains[res.domains.length * Math.random() | 0].qdn;
         const user = getRandomName();
@@ -33,10 +34,10 @@ export default class inboxes$com extends Provider {
 
         const returnableMail: Mail[] = res.msgs.map((email) => ({
             id: email.uid,
-            from: this.fullFrom[email.uid] || email.f,
+            from: this.froms[email.uid] || email.f,
             to: this.address,
-            subject: this.fullSubjects[email.uid] || email.s,
-            body: this.fullBodies[email.uid] || '',
+            subject: this.subjects[email.uid] || email.s,
+            body: this.bodies[email.uid] || '',
             date: new Date(email.cr).getTime()
         }));
 
@@ -44,7 +45,7 @@ export default class inboxes$com extends Provider {
             if (!e.body && e.id) await this.fetch(`https://inboxes.com/api/v2/message/${e.id}`).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.json() as any;
                 e.body = bodyRes.body || bodyRes.html_body;
-                this.fullBodies[e.id!] = e.body;
+                this.bodies[e.id!] = e.body;
             });
 
             return e;

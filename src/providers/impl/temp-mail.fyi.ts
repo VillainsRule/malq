@@ -19,8 +19,8 @@ export default class temp_mail$fyi extends Provider {
         const req = await this.fetch('https://temp-mail.fyi/api/get_domains.php', {
             headers: { 'x-csrf-token': csrfToken, cookie: this.$cookie }
         });
-        const res = await req.json() as { domains: { id: number, domain: string }[] };
 
+        const res = await req.json() as { domains: { id: number, domain: string }[] };
         const domain = res.domains[Math.floor(res.domains.length * Math.random())];
 
         const generateReq = await this.fetch('https://temp-mail.fyi/api/generate_email.php', {
@@ -28,6 +28,7 @@ export default class temp_mail$fyi extends Provider {
             body: JSON.stringify({ domain_id: domain.id }),
             headers: { 'content-type': 'application/json', 'x-csrf-token': csrfToken, cookie: this.$cookie }
         });
+
         const generateRes = await generateReq.json() as { email_address: string };
 
         this.address = generateRes.email_address;

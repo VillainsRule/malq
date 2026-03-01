@@ -1,11 +1,11 @@
-import { getRandomName } from '../../util/names';
+import { getRandomName } from '@/util/names';
 
 import Provider, { type Mail } from '../Provider';
 
 export default class rootsh$com extends Provider {
     $cookie = '';
 
-    fullBodies: Record<string, string> = {};
+    bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
         const domainReq = await fetch('https://rootsh.com');
@@ -60,7 +60,7 @@ export default class rootsh$com extends Provider {
             from: email[1],
             to: fetchRes.to,
             subject: email[2],
-            body: this.fullBodies[email[4]] || '',
+            body: this.bodies[email[4]] || '',
             date: new Date(email[3]).getTime()
         }));
 
@@ -70,7 +70,7 @@ export default class rootsh$com extends Provider {
             }).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.text();
                 e.body = bodyRes.match(/.push\(\{\}\);<\/script><br\/><hr\/><br\/>(.*?)<br\/><hr\/><br\/><script async src=/s)?.[1]!;
-                this.fullBodies[e.id!] = e.body;
+                this.bodies[e.id!] = e.body;
             });
 
             return e;

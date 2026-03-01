@@ -1,20 +1,21 @@
-import { getRandomName } from '../../util/names';
+import { getRandomName } from '@/util/names';
+
 import Provider, { type Mail } from '../Provider';
 
 export default class temporarymail$com extends Provider {
-    fullBodies: Record<string, string> = {};
+    bodies: Record<string, string> = {};
 
     $token = '';
 
     async getAddress(): Promise<string> {
         const domainReq = await this.fetch('https://temporarymail.com/api/?action=getDomains');
-        const domainRes = await domainReq.json();
+        const domainRes = await domainReq.json() as string[];
 
         const randomDomain = domainRes[Math.floor(Math.random() * domainRes.length)].toLowerCase();
         const email = `${getRandomName()}@${randomDomain}`;
 
         const tokenReq = await this.fetch(`https://temporarymail.com/api/?action=requestEmailAccess&key=&value=${encodeURIComponent(email)}`);
-        const tokenRes = await tokenReq.json();
+        const tokenRes = await tokenReq.json() as { secretKey: string };
 
         this.$token = tokenRes.secretKey;
 
@@ -38,7 +39,7 @@ export default class temporarymail$com extends Provider {
             from: email.from_mail,
             to: this.address,
             subject: email.subject,
-            body: this.fullBodies[email.mail_id] || '',
+            body: this.bodies[email.mail_id] || '',
             date: new Date(email.time).getTime()
         }));
 
@@ -46,7 +47,7 @@ export default class temporarymail$com extends Provider {
             if (!e.body && e.id) await this.fetch(`https://tempmail.plus/api/mails/${e.id}?email=${encodeURIComponent(this.address)}`).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.json() as { text: string, html: string };
                 e.body = bodyRes.text || bodyRes.html;
-                this.fullBodies[e.id!] = e.body;
+                this.bodies[e.id!] = e.body;
             });
 
             return e;

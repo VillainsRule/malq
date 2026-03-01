@@ -1,6 +1,6 @@
 import parse from 'node-html-parser';
 
-import wafFetch from '../../util/waf/fetch';
+import wafFetch from '@/util/waf/fetch';
 
 import Provider, { type Mail } from '../Provider';
 

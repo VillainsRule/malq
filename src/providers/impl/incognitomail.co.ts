@@ -1,5 +1,7 @@
 import crypto from 'node:crypto';
 
+import Provider, { type Mail } from '../Provider';
+
 const encode = async (e: string) => {
     let t = new TextEncoder;
     let o = '6Cf1PDvSe{t2d6H2N;SCf34tRQOfoinO'.split('').map(e => String.fromCharCode(e.charCodeAt(0) - 2)).join('')
@@ -10,8 +12,6 @@ const encode = async (e: string) => {
 }
 
 const sha256 = (str: string) => crypto.createHash('sha256').update(str).digest('hex');
-
-import Provider, { type Mail } from '../Provider';
 
 export default class incognitomail$co extends Provider {
     $mailToken = '';
@@ -30,7 +30,8 @@ export default class incognitomail$co extends Provider {
                 'Referer': 'https://incognitomail.co/'
             }
         });
-        const res = await req.json();
+
+        const res = await req.json() as { id: string, token: string };
 
         this.address = res.id;
         this.$mailToken = res.token;

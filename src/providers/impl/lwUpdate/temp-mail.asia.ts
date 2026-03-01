@@ -1,4 +1,4 @@
-import LWUpdate from '../../../util/livewire/LWUpdate';
+import LWUpdate from '@/util/livewire/LWUpdate';
 
 import Provider, { type Mail } from '../../Provider';
 

@@ -1,5 +1,6 @@
 import parse from 'node-html-parser';
-import { getRandomName } from '../../../util/names';
+
+import { getRandomName } from '@/util/names';
 
 import Provider, { type Mail } from '../../Provider';
 
@@ -9,7 +10,7 @@ export default class surlCommons extends Provider {
     $domain = '';
     $user = '';
 
-    fullBodies: Record<string, string> = {};
+    bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
         const req = await this.fetch(`https://${this.host}`);
@@ -51,7 +52,7 @@ export default class surlCommons extends Provider {
                 if (res.includes('mess_number">1</')) {
                     id = res.match(/smurl\+"\/(.*?)"/)?.[1];
                     body = dom.querySelector('.mess_bodiyy')?.innerHTML || '';
-                    if (id) this.fullBodies[id] = body;
+                    if (id) this.bodies[id] = body;
                 } else throw new Error(this.host + ' is broken, inaccurate mail info may be reported');
             }
 
@@ -60,7 +61,7 @@ export default class surlCommons extends Provider {
                 from,
                 to: this.address,
                 subject,
-                body: this.fullBodies[id!] || body,
+                body: this.bodies[id!] || body,
                 date: new Date(date).getTime()
             };
         }).filter(e => Array.isArray(e) || e) as Mail[];
@@ -74,7 +75,7 @@ export default class surlCommons extends Provider {
                 const innerHTML = bodyDOM.querySelector('.mess_bodiyy')?.innerHTML || '';
 
                 e.body = innerHTML;
-                this.fullBodies[e.id!] = e.body;
+                this.bodies[e.id!] = e.body;
             });
 
             return e;

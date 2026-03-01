@@ -42,7 +42,7 @@ app.get('/api/v1/mail/*', ({ params, query, request }) => {
     const url = new URL(request.url);
     const newPath = `/api/v1/${params['*']}`;
     const searchParams = new URLSearchParams(query as Record<string, string>);
-    return Response.redirect(new URL(`${newPath}?${searchParams.toString()}`, url.origin), 307);
+    return Response.redirect(new URL(`${newPath}?${searchParams.toString()}`, url.origin).toString(), 307);
 });
 
 app.get('/api/v1/session', async ({ query }) => {

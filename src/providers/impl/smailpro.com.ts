@@ -1,9 +1,7 @@
 import Provider, { type Mail } from '../Provider';
 
 export default class smailpro$com extends Provider {
-    $mailToken = '';
-
-    fullBodies: Record<string, string> = {};
+    bodies: Record<string, string> = {};
 
     async getPayload(url: string, params: [string, string][] = []) {
         const req = await this.fetch('https://smailpro.com/app/payload?url=' + encodeURIComponent(url) + params.map(([a, b]) => `&${a}=${b}`).join(''));
@@ -38,7 +36,7 @@ export default class smailpro$com extends Provider {
             from: email.textFrom,
             to: email.textTo,
             subject: email.textSubject,
-            body: this.fullBodies[email.mid] || '',
+            body: this.bodies[email.mid] || '',
             date: new Date(email.textDate).getTime()
         }));
 
@@ -46,9 +44,9 @@ export default class smailpro$com extends Provider {
             if (!e.body && e.id) {
                 const payload = await this.getPayload('https://api.sonjj.com/v1/temp_email/message', [['email', this.address], ['mid', e.id!]]);
                 await this.fetch('https://api.sonjj.com/v1/temp_email/message?payload=' + payload).then(async (bodyReq) => {
-                    const bodyRes = await bodyReq.json();
+                    const bodyRes = await bodyReq.json() as { body: string };
                     e.body = bodyRes.body;
-                    this.fullBodies[e.id!] = e.body;
+                    this.bodies[e.id!] = e.body;
                 });
             }
 

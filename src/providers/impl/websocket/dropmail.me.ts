@@ -1,7 +1,6 @@
 import Provider, { type Mail } from '../../Provider';
 
 export default class dropmail$me extends Provider {
-    $mailToken = '';
     $ws: WebSocket | null = null;
 
     async getAddress(): Promise<string> {

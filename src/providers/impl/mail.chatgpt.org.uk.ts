@@ -1,30 +1,37 @@
 import Provider, { type Mail } from '../Provider';
 
 export default class mail$chatgpt$org$uk extends Provider {
-    $mailToken = '';
-
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://mail.chatgpt.org.uk/api/generate-email', {
-            headers: {
-                'Referer': 'https://mail.chatgpt.org.uk/'
-            }
+            headers: { 'Referer': 'https://mail.chatgpt.org.uk/' }
         });
-        const res = await req.json();
+
+        const res = await req.json() as { data: { email: string } };
 
         this.address = res.data.email;
-
         return res.data.email;
     }
 
     async getMail(): Promise<Mail[]> {
         const req = await this.fetch('https://mail.chatgpt.org.uk/api/emails?email=' + this.address, {
-            headers: {
-                'Referer': 'https://mail.chatgpt.org.uk/'
-            }
+            headers: { 'Referer': 'https://mail.chatgpt.org.uk/' }
         });
-        const res = await req.json();
 
-        const returnableMail: Mail[] = res.data.emails.map((email: any) => ({
+        const res = await req.json() as {
+            data: {
+                emails: {
+                    id: string,
+                    from_address: string,
+                    email_address: string,
+                    subject: string,
+                    content: string,
+                    html_content: string,
+                    timestamp: number
+                }[]
+            }
+        }
+
+        const returnableMail: Mail[] = res.data.emails.map((email) => ({
             from: email.from_address,
             to: email.email_address,
             subject: email.subject,

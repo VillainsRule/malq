@@ -1,5 +1,7 @@
 import parse from 'node-html-parser';
-import { getRandomName } from '../../util/names';
+
+import { getRandomName } from '@/util/names';
+
 import Provider, { type Mail } from '../Provider';
 
 // some domains don't work (hidefrom.us), so removed for now
@@ -7,7 +9,7 @@ import Provider, { type Mail } from '../Provider';
 export default class altaddress$org extends Provider {
     $cookie = '';
 
-    fullBodies: Record<string, string> = {};
+    bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://altaddress.org');

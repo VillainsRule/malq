@@ -11,7 +11,7 @@ export default class tempmail$lol extends Provider {
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://api.tempmail.lol/v2/inbox/create');
-        const res = await req.json();
+        const res = await req.json() as { address: string, token: string };
 
         if (!res.address || !res.token) console.log('tempmail.lol failed', res);
 
@@ -24,9 +24,18 @@ export default class tempmail$lol extends Provider {
     async getMail(): Promise<Mail[]> {
         try {
             const req = await this.fetch('https://api.tempmail.lol/v2/inbox?token=' + this.$mailToken);
-            const res = await req.json();
+            const res = await req.json() as {
+                emails: {
+                    id: string,
+                    from: string,
+                    to: string,
+                    subject: string,
+                    body: string,
+                    date: number
+                }[]
+            }
 
-            const returnableMail: Mail[] = res.emails.map((email: any) => ({
+            const returnableMail: Mail[] = res.emails.map((email) => ({
                 from: email.from,
                 to: email.to,
                 subject: email.subject,

@@ -1,37 +1,36 @@
-import Provider, { type Mail } from '../Provider';
+import { getRandomName } from '@/util/names';
 
-import { getRandomName } from '../../util/names';
+import Provider, { type Mail } from '../Provider';
 
 export default class temporam$com extends Provider {
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://temporam.com/api/email/domains', {
-            headers: {
-                'Referer': 'https://temporam.com/'
-            }
+            headers: { 'Referer': 'https://temporam.com/' }
         });
-        const res = await req.json();
 
+        const res = await req.json() as { domain: string }[];
         const domain = res[res.length * Math.random() | 0].domain;
 
-        const emailName = getRandomName();
-        const randomNumbers = Math.floor(1000 + Math.random() * 9000);
-        const addressName = `${emailName}${randomNumbers}`;
-        const emailAddress = `${addressName}@${domain}`;
-
-        this.address = emailAddress;
-
+        this.address = `${getRandomName()}@${domain}`;
         return this.address;
     }
 
     async getMail(): Promise<Mail[]> {
         const req = await this.fetch(`https://temporam.com/api/email/messages?email=${encodeURIComponent(this.address)}`, {
-            headers: {
-                'Referer': 'https://temporam.com/'
-            }
+            headers: { 'Referer': 'https://temporam.com/' }
         });
-        const res = await req.json();
 
-        const returnableMail: Mail[] = res.map((email: any) => ({
+        const res = await req.json() as {
+            id: number,
+            from_email: string,
+            to_email: string,
+            subject: string,
+            content: string,
+            summary: string,
+            created_at: string
+        }[];
+
+        const returnableMail: Mail[] = res.map((email) => ({
             from: email.from_email,
             to: email.to_email,
             subject: email.subject,

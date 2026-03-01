@@ -1,5 +1,6 @@
-import { getRandomName } from '../../util/names';
-import wafFetch from '../../util/waf/fetch';
+import wafFetch from '@/util/waf/fetch';
+import { getRandomName } from '@/util/names';
+
 import Provider, { type Mail } from '../Provider';
 
 export default class linshiyouxiang$net extends Provider {

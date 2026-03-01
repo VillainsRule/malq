@@ -1,13 +1,13 @@
-import Provider, { type Mail } from '../Provider';
+import { getRandomName } from '@/util/names';
 
-import { getRandomName } from '../../util/names';
+import Provider, { type Mail } from '../Provider';
 
 export default class driftz$net extends Provider {
     bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://api.driftz.net/domains');
-        const res = await req.json();
+        const res = await req.json() as { result: { public: string[] } };
 
         const domain = res.result.public[Math.floor(res.result.public.length * Math.random())];
 

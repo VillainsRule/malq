@@ -1,4 +1,4 @@
-import { getRandomName } from '../../util/names';
+import { getRandomName } from '@/util/names';
 
 import Provider, { type Mail } from '../Provider';
 
@@ -109,7 +109,7 @@ export default class boomlify$com extends Provider {
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://v1.boomlify.com/guest/init', { method: 'POST' });
-        const res = await req.json();
+        const res = await req.json() as { encrypted: string };
         const encKey = req.headers.get('x-enc-key-id')!;
         const decoded = BoomlifyDecryptor.decrypt(res, encKey);
 
@@ -130,7 +130,7 @@ export default class boomlify$com extends Provider {
             headers: { 'Authorization': `Bearer ${this.$token}`, 'Content-Type': 'application/json' }
         });
 
-        const res3 = await req3.json();
+        const res3 = await req3.json() as { encrypted: string };
         const res3t = req3.headers.get('x-enc-key-id')!;
         const res3d = BoomlifyDecryptor.decrypt(res3, res3t);
 

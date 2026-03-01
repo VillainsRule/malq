@@ -3,7 +3,7 @@ import Provider, { type Mail } from '../Provider';
 export default class _10minemail$com extends Provider {
     $token = '';
 
-    bodyCache: Record<string, string> = {};
+    bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://web2.10minemail.com/mailbox', { method: 'POST' });
@@ -36,7 +36,7 @@ export default class _10minemail$com extends Provider {
             from: email.from,
             to: res.mailbox,
             subject: email.subject,
-            body: this.bodyCache[email._id] || '',
+            body: this.bodies[email._id] || '',
             date: email.receivedAt * 1000
         }));
 
@@ -51,7 +51,7 @@ export default class _10minemail$com extends Provider {
                 const bodyRes = await bodyReq.json() as { bodyHtml: string };
 
                 e.body = bodyRes.bodyHtml;
-                this.bodyCache[e.id!] = e.body;
+                this.bodies[e.id!] = e.body;
             }
 
             return e;

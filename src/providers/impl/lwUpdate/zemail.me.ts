@@ -1,6 +1,6 @@
-import LWUpdate from '../../../util/livewire/LWUpdate';
+import LWUpdate from '@/util/livewire/LWUpdate';
 
-import { getRandomName } from '../../../util/names';
+import { getRandomName } from '@/util/names';
 
 import Provider, { type Mail } from '../../Provider';
 

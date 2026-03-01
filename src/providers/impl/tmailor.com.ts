@@ -3,7 +3,7 @@ import Provider, { type Mail } from '../Provider';
 export default class tmailor$com extends Provider {
     $token = '';
 
-    fullBodies: Record<string, string> = {};
+    bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://tmailor.com/api', {
@@ -44,7 +44,7 @@ export default class tmailor$com extends Provider {
             from: email.sender_email,
             to: this.address,
             subject: email.subject,
-            body: this.fullBodies[email.id] || '',
+            body: this.bodies[email.id] || '',
             date: new Date(email.receive_time * 1000).getTime()
         }));
 
@@ -61,9 +61,9 @@ export default class tmailor$com extends Provider {
                 }),
                 headers: { 'Content-Type': 'application/json' }
             }).then(async (bodyReq) => {
-                const bodyRes = await bodyReq.json();
+                const bodyRes = await bodyReq.json() as { data: { body: string } };
                 e.body = bodyRes.data.body;
-                this.fullBodies[e.id!] = bodyRes.data.body;
+                this.bodies[e.id!] = bodyRes.data.body;
             });
 
             return e;

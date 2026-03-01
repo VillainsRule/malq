@@ -1,38 +1,37 @@
-import Provider, { type Mail } from '../Provider';
+import { getRandomName } from '@/util/names';
 
-import { getRandomName } from '../../util/names';
+import Provider, { type Mail } from '../Provider';
 
 // some domains don't work (skipsend.io), so suspended for now
 
 export default class mailscr$us extends Provider {
     $domain = '';
-    $addressName = '';
+    $email = '';
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://mailmask.cc/domains');
-        const res = await req.json();
+        const res = await req.json() as string[];
 
-        const domain = res[res.length * Math.random() | 0];
+        this.$domain = res[res.length * Math.random() | 0];
+        this.$email = getRandomName();
 
-        const emailName = getRandomName();
-        const randomNumbers = Math.floor(1000 + Math.random() * 9000);
-        const addressName = `${emailName}${randomNumbers}`;
-        const emailAddress = `${addressName}@${domain}`;
-
-        this.$domain = domain;
-        this.$addressName = addressName;
-
-        this.address = emailAddress;
+        this.address = `${this.$email}@${this.$domain}`;
 
         return this.address;
     }
 
     async getMail(): Promise<Mail[]> {
-        const req = await this.fetch(`https://mailmask.cc/inbox?user=${this.$addressName}&domain=${this.$domain}`);
-        const res = await req.json();
+        const req = await this.fetch(`https://mailmask.cc/inbox?user=${this.$email}&domain=${this.$domain}`);
+        const res = await req.json() as {
+            from_address: string,
+            subject: string,
+            body_text: string,
+            body_html: string,
+            received_at: string
+         }[];
 
-        const returnableMail: Mail[] = res.map((email: any) => ({
-            from: email.from_address.match(/<(.*?)>/)[1],
+        const returnableMail: Mail[] = res.map((email) => ({
+            from: email.from_address.match(/<(.*?)>/)?.[1]!,
             to: this.address,
             subject: email.subject,
             body: email.body_text || email.body_html,

@@ -1,9 +1,9 @@
-import { getRandomName } from '../../util/names';
+import { getRandomName } from '@/util/names';
 
 import Provider, { type Mail } from '../Provider';
 
 export default class yopmail$com extends Provider {
-    fullBodies: Record<string, string> = {};
+    bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
         const req = await this.fetch('https://yopmail.com/domain?d=all');
