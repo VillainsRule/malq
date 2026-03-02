@@ -5,11 +5,17 @@ import Provider, { type Mail } from '../Provider';
 export default class rootsh$com extends Provider {
     $cookie = '';
 
+    atExpression = '';
+    dotExpression = '';
+
     bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
         const domainReq = await fetch('https://rootsh.com');
         const domainRes = await domainReq.text();
+
+        this.atExpression = domainRes.match(/\.replace\("@","(.*?)"\)/)?.[1] || '';
+        this.dotExpression = domainRes.match(/\.replace\("\.","(.*?)"\)/)?.[1] || '';
 
         const cookie = domainReq.headers.getSetCookie();
         const sendableCookie = cookie.map((c: string) => c.split(';')[0]).join('; ');
@@ -65,7 +71,7 @@ export default class rootsh$com extends Provider {
         }));
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
-            if (!e.body && e.id) await this.fetch(`https://rootsh.com/win/${encodeURIComponent(this.address.replace('@', '*!!^^').replaceAll('.', '+==_-'))}/${e.id}`, {
+            if (!e.body && e.id) await this.fetch(`https://rootsh.com/win/${encodeURIComponent(this.address.replace('@', this.atExpression).replaceAll('.', this.dotExpression))}/${e.id}`, {
                 headers: { cookie: this.$cookie }
             }).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.text();

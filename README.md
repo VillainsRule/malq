@@ -3,9 +3,14 @@
     <h3>a temporary email API. no credentials!</h3>
 </div>
 
-malq is made to be a very basic API with no credentials. it pulls from TONS (60+ at last update) of providers and creates a unified API to get emails from them. the goal is to be as simple as possible, and to have a very large pool of providers to pull from.
+malq is a temporary email API. it:
+- is designed to be very basic
+- requires no credentials to use
+- pulls from 50+ temporary email providers
+- has 100s of domains to pull from
+- uses 1 unified API to make calls
 
-malq has a demo setup at https://malq.villainsrule.xyz. please do not spam the demo.
+malq has a demo setup at https://malq.villainsrule.xyz. please do not spam it.
 
 ## setup
 

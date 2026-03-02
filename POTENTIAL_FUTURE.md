@@ -8,9 +8,6 @@ P cs.email
 P mail1s.net
 P noemail.cc
 P expressmail.app
-P email-once.com
-P mailyra.com
-P mailtemp.us
 
 crack captcha on tempemails.net for fun?
 
@@ -42,7 +39,6 @@ Y mail.chatgpt.org.uk
 Y temp-mail.org
 Y tmail.xuanlich.com
 Y tmail.thangdeptrai.net
-Y incognitomail.co
 Y tempdukviet.click
 Y moakt.com
 Y tmailor.com
@@ -62,20 +58,16 @@ Y tempmail-plus.com
 Y zemail.me
 Y tempmail.io.vn
 Y mailtemp.net
-Y tempmail.plus
 Y txen.de
 Y temp-mail.asia
 Y tempmailbank.com
 Y tmail.dark2web.com
 Y emailnator.com
-Y temp-mail.club
 Y linshiyouxiang.net
 Y 24.email
 Y nguyendoll.com
-Y 10-minutemail.net
 Y inspacebox.com
 Y temp-mailo.org
-Y emailgenerator.email
 Y z4mails.com
 Y temp-mail.africa
 Y 10-minutemail.com
@@ -83,6 +75,7 @@ Y tempmailspin.com
 Y purplemail.neweymail.com
 Y driftz.net
 Y temp-mail.fyi
+Y mailtemp.us
 
 N 0mail.pro [down]
 N 1secmail.cc [3 domains]
@@ -97,6 +90,7 @@ N 1secmail.site [down]
 N 10minutemail.net [WAF]
 N 10minuteinbox.com [changed]
 N 10minutemail.now [4 domains]
+N 10-minutemail.net [mirror]
 N 24hour.email [1 domain]
 N 33mail.com [signup]
 N 48h.email [down]
@@ -155,6 +149,8 @@ N extraclass.ng [down]
 N emailgenerator.org [1 domain]
 N email10min.net [1 domain]
 N em.bjedu.tech [signup]
+N email-once.com [captcha]
+N emailgenerator.email [broken] (lovecutelife.xyz)
 
 N fake.legal [4 domains]
 N fakemail.net [1 domain]
@@ -185,6 +181,7 @@ N inboxkitten.com [1 domain]
 N inboxes.com [doesnt send full subject ????]
 N internxt.com [wrapper]
 N instant-email.org [2 domains]
+N incognitomail.co [captcha]
 
 N jonasleo.top [broken] (gmailking.co) (same postinbox.org)
 
@@ -245,10 +242,12 @@ N m2u.io [captcha]
 N mailgen.biz [bad domains]
 N mailforspam.net [broken] (zakute.com)
 N mnx-family.com [broken] (sprytny.edu.pl)
+N mailyra.com [broken] (beauturn.com)
 
 N notletters.com [signup]
 N noopmail.org [broken] (taohucom.store)
 N nospam.today [slow] (tempdukviet.click)
+N nguyendoll.com [broken] (ameliekovacek3.top)
 
 N onesecmail.xyz [down]
 N onetempmail.com [down]
@@ -385,6 +384,8 @@ N tempmailid.com [down]
 N thetemp.email [4 domains]
 N throwaway.io [slow]
 N tempmailx.xyz [captcha]
+N tempmail.plus [broken] (fexpost.com)
+N temporarymail.com [broken] (allwebemails.com)
 
 N unlimitmail.com [changed]
 N unstablemail.com [down]

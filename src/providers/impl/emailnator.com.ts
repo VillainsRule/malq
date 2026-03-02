@@ -56,7 +56,19 @@ export default class emailnator$com extends Provider {
                 'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'
 
             },
-            body: JSON.stringify({ email: ['domain', 'plusGmail', 'dotGmail'] })
+            body: JSON.stringify({
+                email: [
+                    'domain',
+
+                    // yes, gmail is good. unfortunately, they don't purge the inbox, and emails are out of space:
+                    // https://sendtestmail.com/status/AHHvd3rY1fLEbH6BYibR / ca.mus.p.amm@gmail.com
+                    // it is what it is; the goal of malq is to provide working mail as opposed to "hq" mail
+                    // you can uncomment the below if your goal is different :P
+
+                    // 'plusGmail',
+                    // 'dotGmail'
+                ]
+            })
         });
 
         const addressRes = await addressReq.json() as { email: string | string[] };

@@ -10,8 +10,9 @@ export default class zemail$me extends Provider {
     async getAddress(): Promise<string> {
         await this.livewire.pullHTML('');
 
-        const domains = this.livewire.html.match(/setDomain\('(.*?)'\)/g)?.filter(f => !f.startsWith('g')) || [];
-        const randomDomain = domains[domains.length * Math.random() | 0];
+        const matchedDomains = this.livewire.html.match(/setDomain\('(.*?)'\)/g)?.filter(f => !f.startsWith('g')) || [];
+        const filteredDomains = matchedDomains.filter(d => d !== 'googlemail.com' && d !== 'gmail.com');
+        const randomDomain = filteredDomains[filteredDomains.length * Math.random() | 0];
         const domain = randomDomain.match(/setDomain\('(.*?)'\)/)?.[1];
 
         const user = getRandomName().slice(0, 15);

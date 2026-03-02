@@ -23,7 +23,7 @@ export default class lwMessageCommons extends Provider {
     }
 
     async getAddress(): Promise<string> {
-        await this.livewire.pullHTML('');
+        await this.livewire.pullHTML(this.initialPath);
 
         if (this.allowsDomainChange) {
             const domains = this.livewire.html.match(/setDomain\('(.*?)'\)/g) || [];
