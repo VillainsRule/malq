@@ -1,0 +1,49 @@
+import parse from 'node-html-parser';
+
+import { getRandomName } from '@/util/names';
+
+import Provider, { type Mail } from '../Provider';
+
+export default class noemail$cc extends Provider {
+    bodies: Record<string, string> = {};
+
+    async getAddress(): Promise<string> {
+        const req = await this.fetch('https://noemail.cc');
+        const res = await req.text();
+
+        const matchedDomains = res.match(/<option value="(.*?)"/g) || [];
+        const randomDomain = matchedDomains[Math.floor(Math.random() * matchedDomains.length)];
+        const domain = randomDomain.match(/<option value="(.*?)"/)![1];
+
+        this.address = `${getRandomName()}@${domain}`;
+        this.address = 'qrqomonczyktpa@cum.tnt.name';
+        return this.address;
+    }
+
+    async getMail(): Promise<Mail[]> {
+        const req = await this.fetch('https://noemail.cc/' + this.address);
+        const res = await req.text();
+        const dom = parse(res);
+
+        const messages = dom.querySelectorAll('.card.mt-4');
+
+        const returnableMail: Mail[] = messages.map((kid) => {
+            const details = kid.children[0].innerText.trim().split('\n');
+
+            const to = details[0].trim().slice(4);
+            const from = details[2].trim().slice(6);
+            const subject = details[4].trim().slice(9);
+            const dateStamp = details[6].replace('email headers', '').trim().slice(10);
+
+            return {
+                from: from,
+                to: to,
+                subject: subject,
+                body: kid.querySelector('.card-text')?.innerHTML.trim() || '',
+                date: new Date(dateStamp).getTime()
+            }
+        }) as Mail[];
+
+        return returnableMail;
+    }
+}

@@ -21,6 +21,7 @@ export default class _10minemail$com extends Provider {
                 'Authorization': `Bearer ${this.$token}`
             }
         });
+
         const res = await req.json() as {
             mailbox: string;
             messages: {

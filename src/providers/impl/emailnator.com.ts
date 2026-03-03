@@ -62,7 +62,7 @@ export default class emailnator$com extends Provider {
 
                     // yes, gmail is good. unfortunately, they don't purge the inbox, and emails are out of space:
                     // https://sendtestmail.com/status/AHHvd3rY1fLEbH6BYibR / ca.mus.p.amm@gmail.com
-                    // it is what it is; the goal of malq is to provide working mail as opposed to "hq" mail
+                    // it is what it is; the goal is to provide working mail as opposed to "hq" mail
                     // you can uncomment the below if your goal is different :P
 
                     // 'plusGmail',
