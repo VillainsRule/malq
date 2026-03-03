@@ -37,7 +37,7 @@ export default class noemail$cc extends Provider {
                 body: kid.querySelector('.card-text')?.innerHTML.trim() || '',
                 date: new Date(dateStamp).getTime()
             }
-        }) as Mail[];
+        });
 
         return returnableMail;
     }

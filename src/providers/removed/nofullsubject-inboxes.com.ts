@@ -43,7 +43,7 @@ export default class inboxes$com extends Provider {
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
             if (!e.body && e.id) await this.fetch(`https://inboxes.com/api/v2/message/${e.id}`).then(async (bodyReq) => {
-                const bodyRes = await bodyReq.json() as any;
+                const bodyRes = await bodyReq.json() as { body: string, html_body: string };
                 e.body = bodyRes.body || bodyRes.html_body;
                 this.bodies[e.id!] = e.body;
             });

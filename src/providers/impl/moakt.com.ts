@@ -14,12 +14,13 @@ export default class moakt$com extends Provider {
         const req = await this.fetch('https://moakt.com');
         const res = await req.text();
 
-        const domains = res.match(/<option value="(.*?)">/g)?.map((option: any) => option.match(/<option value="(.*?)">/)![1]) || [];
-        const randomDomain = domains[Math.floor(Math.random() * domains.length)];
+        const matchedDomains = res.match(/<option value="(.*?)">/g) || [];
+        const randomDomain = matchedDomains[Math.floor(Math.random() * matchedDomains.length)];
+        const domain = randomDomain.match(/<option value="(.*?)">/)![1];
 
         const name = getRandomName();
 
-        this.address = `${name}@${randomDomain}`;
+        this.address = `${name}@${domain}`;
 
         const activateReq = await this.fetch('https://moakt.com/en/inbox', {
             method: 'POST',

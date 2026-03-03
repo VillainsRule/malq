@@ -9,10 +9,11 @@ export default class tempmail$io$vn extends Provider {
         const req = await this.fetch('https://tempmail.io.vn');
         const res = await req.text();
 
-        const domains = res.match(/<option value="(.*?)">/g)?.map((option: any) => option.match(/<option value="(.*?)">/)![1]) || [];
-        const randomDomain = domains[Math.floor(Math.random() * domains.length)];
+        const matchedDomains = res.match(/<option value="(.*?)">/g) || [];
+        const randomDomain = matchedDomains[Math.floor(Math.random() * matchedDomains.length)];
+        const domain = randomDomain.match(/<option value="(.*?)">/)![1];
 
-        this.address = `${getRandomName()}@${randomDomain}`;
+        this.address = `${getRandomName()}@${domain}`;
 
         return this.address;
     }
