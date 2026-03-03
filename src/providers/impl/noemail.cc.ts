@@ -16,7 +16,6 @@ export default class noemail$cc extends Provider {
         const domain = randomDomain.match(/<option value="(.*?)"/)![1];
 
         this.address = `${getRandomName()}@${domain}`;
-        this.address = 'qrqomonczyktpa@cum.tnt.name';
         return this.address;
     }
 
@@ -29,16 +28,12 @@ export default class noemail$cc extends Provider {
 
         const returnableMail: Mail[] = messages.map((kid) => {
             const details = kid.children[0].innerText.trim().split('\n');
-
-            const to = details[0].trim().slice(4);
-            const from = details[2].trim().slice(6);
-            const subject = details[4].trim().slice(9);
             const dateStamp = details[6].replace('email headers', '').trim().slice(10);
 
             return {
-                from: from,
-                to: to,
-                subject: subject,
+                from: details[2].trim().slice(6),
+                to: details[0].trim().slice(4),
+                subject: details[4].trim().slice(9),
                 body: kid.querySelector('.card-text')?.innerHTML.trim() || '',
                 date: new Date(dateStamp).getTime()
             }
