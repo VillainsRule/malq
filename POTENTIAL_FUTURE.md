@@ -4,9 +4,6 @@ P cybertemp.xyz
 P temporarymail.com
 P yours.tools
 P spoofer.me
-P cs.email
-P mail1s.net
-P noemail.cc
 P mohmal.com
 
 annoying:
@@ -69,6 +66,8 @@ Y purplemail.neweymail.com
 Y driftz.net
 Y temp-mail.fyi
 Y mailtemp.us
+Y cs.email
+Y noemail.cc
 
 N 0mail.pro [NXDOMAIN]
 N 1secmail.cc [3 domains]
@@ -240,6 +239,7 @@ N mailgen.biz [bad domains]
 N mailforspam.net [broken] (zakute.com)
 N mnx-family.com [broken] (sprytny.edu.pl)
 N mailyra.com [broken] (beauturn.com)
+N mail1s.net [broken] (mailkp.pro)
 
 N notletters.com [signup]
 N noopmail.org [broken] (taohucom.store)
