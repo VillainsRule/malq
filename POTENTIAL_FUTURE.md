@@ -22,7 +22,6 @@ SOURCES:
 
 Y boomlify.com
 Y dropmail.me
-Y edumail.biz
 Y edumailfree.com
 Y email10min.com
 Y emailfake.com
@@ -45,7 +44,6 @@ Y rootsh.com
 Y priyo.email
 Y 10minutemail.com
 Y tempmailo.com
-Y tempmail44.com
 Y smailpro.com
 Y 10minemail.com
 Y mail.paicha.cloud
@@ -64,12 +62,9 @@ Y emailnator.com
 Y linshiyouxiang.net
 Y 24.email
 Y nguyendoll.com
-Y inspacebox.com
 Y temp-mailo.org
 Y z4mails.com
-Y temp-mail.africa
 Y 10-minutemail.com
-Y tempmailspin.com
 Y purplemail.neweymail.com
 Y driftz.net
 Y temp-mail.fyi
@@ -151,6 +146,7 @@ N em.bjedu.tech [signup]
 N email-once.com [captcha]
 N emailgenerator.email [broken] (lovecutelife.xyz)
 N expressmail.app [4 domains]
+N edumail.biz [slow]
 
 N fake.legal [4 domains]
 N fakemail.net [1 domain]
@@ -182,6 +178,7 @@ N inboxes.com [doesnt send full subject ????]
 N internxt.com [wrapper]
 N instant-email.org [2 domains]
 N incognitomail.co [captcha]
+N inspacebox.com [broken] (bfhunter.online)
 
 N jonasleo.top [broken] (gmailking.co) (same postinbox.org)
 
@@ -385,6 +382,9 @@ N throwaway.io [slow]
 N tempmailx.xyz [captcha]
 N tempmail.plus [wrapper] (fex.plus)
 N temporarymail.com [broken] (allwebemails.com)
+N tempmailspin.com [serverr]
+N temp-mail.africa [broken] (mailingbox.us)
+N tempmail44.com [broken] (gmaiil.shop)
 
 N unlimitmail.com [changed]
 N unstablemail.com [NXDOMAIN]

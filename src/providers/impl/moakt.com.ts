@@ -24,7 +24,7 @@ export default class moakt$com extends Provider {
 
         const activateReq = await this.fetch('https://moakt.com/en/inbox', {
             method: 'POST',
-            body: `domain=${randomDomain}&username=${name}&setemail=&preferred_domain=disbox.net`,
+            body: `domain=${domain}&username=${name}&setemail=&preferred_domain=disbox.net`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
             redirect: 'manual'
         });
