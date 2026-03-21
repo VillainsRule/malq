@@ -3,41 +3,59 @@ import { getRandomName } from '@/util/names';
 import Provider, { type Mail } from '../Provider';
 
 export default class temporam$com extends Provider {
+    date: string = '';
+
+    bodies: Record<string, string> = {};
+
     async getAddress(): Promise<string> {
-        const req = await this.fetch('https://temporam.com/api/email/domains', {
+        const req = await this.fetch('https://temporam.com/api/domains', {
             headers: { 'Referer': 'https://temporam.com/' }
         });
 
-        const res = await req.json() as { domain: string }[];
-        const domain = res[res.length * Math.random() | 0].domain;
+        const res = await req.json() as { data: { domain: string }[] };
+        const domain = res.data[res.data.length * Math.random() | 0].domain;
 
+        this.date = new Date().toISOString();
         this.address = `${getRandomName()}@${domain}`;
         return this.address;
     }
 
     async getMail(): Promise<Mail[]> {
-        const req = await this.fetch(`https://temporam.com/api/email/messages?email=${encodeURIComponent(this.address)}`, {
+        const req = await this.fetch(`https://temporam.com/api/emails?email=${encodeURIComponent(this.address)}&since=${this.date}&limit=50`, {
             headers: { 'Referer': 'https://temporam.com/' }
         });
 
         const res = await req.json() as {
-            id: number,
-            from_email: string,
-            to_email: string,
-            subject: string,
-            content: string,
-            summary: string,
-            created_at: string
-        }[];
+            data: {
+                id: number,
+                fromEmail: string,
+                toEmail: string,
+                subject: string,
+                createdAt: string
+            }[]
+        };
 
-        const returnableMail: Mail[] = res.map((email) => ({
-            from: email.from_email,
-            to: email.to_email,
+        const returnableMail: Mail[] = res.data.map((email) => ({
+            id: email.id.toString(),
+            from: email.fromEmail,
+            to: email.toEmail,
             subject: email.subject,
-            body: email.content || email.summary,
-            date: new Date(email.created_at).getTime()
+            body: this.bodies[email.id] || '',
+            date: new Date(email.createdAt).getTime()
         }));
 
-        return returnableMail;
+        const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
+            if (!e.body && e.id) await this.fetch(`https://temporam.com/api/emails/${e.id}`, {
+                headers: { 'Referer': 'https://temporam.com/' }
+            }).then(async (bodyReq) => {
+                const bodyRes = await bodyReq.json() as { data: { content: string, summary: string } };
+                e.body = bodyRes.data.content || bodyRes.data.summary;
+                this.bodies[e.id!] = e.body;
+            });
+
+            return e;
+        }));
+
+        return finalMail;
     }
 }

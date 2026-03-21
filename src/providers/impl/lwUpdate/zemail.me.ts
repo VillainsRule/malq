@@ -11,7 +11,7 @@ export default class zemail$me extends Provider {
         await this.livewire.pullHTML('');
 
         const matchedDomains = this.livewire.html.match(/setDomain\('(.*?)'\)/g)?.filter(f => !f.startsWith('g')) || [];
-        const filteredDomains = matchedDomains.filter(d => d !== 'googlemail.com' && d !== 'gmail.com');
+        const filteredDomains = matchedDomains.filter(d => !d.includes('googlemail.com') && !d.includes('gmail.com'));
         const randomDomain = filteredDomains[filteredDomains.length * Math.random() | 0];
         const domain = randomDomain.match(/setDomain\('(.*?)'\)/)?.[1];
 

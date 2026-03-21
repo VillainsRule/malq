@@ -46,7 +46,6 @@ Y 10minemail.com
 Y mail.paicha.cloud
 Y tempmailg.com
 Y postbox.cfd
-Y postinbox.org
 Y tempmail-plus.com
 Y zemail.me
 Y tempmail.io.vn
@@ -55,7 +54,6 @@ Y txen.de
 Y temp-mail.asia
 Y tempmailbank.com
 Y tmail.dark2web.com
-Y emailnator.com
 Y linshiyouxiang.net
 Y 24.email
 Y nguyendoll.com
@@ -146,6 +144,7 @@ N email-once.com [captcha]
 N emailgenerator.email [broken] (lovecutelife.xyz)
 N expressmail.app [4 domains]
 N edumail.biz [slow]
+N emailnator.com [broken] (femailtor.com)
 
 N fake.legal [4 domains]
 N fakemail.net [1 domain]
@@ -179,7 +178,7 @@ N instant-email.org [2 domains]
 N incognitomail.co [captcha]
 N inspacebox.com [broken] (bfhunter.online)
 
-N jonasleo.top [broken] (gmailking.co) (same postinbox.org)
+N jonasleo.top [broken] (gmailking.co) (same temp-mailo.org)
 
 N lroid.com [1 domain]
 N linshi-email.com [1 domain]
@@ -255,6 +254,7 @@ N premiumisme.info [2 domains]
 N proxiedmail.com [proxy]
 N plingest.com [changed]
 N pinmx.net [2 domains]
+N postinbox.org [broken] (postinbox.pw) (same temp-mailo.org)
 
 N quickemail.xyz [2 domains]
 N quickmails.eu [broken] (quickmails.eu)

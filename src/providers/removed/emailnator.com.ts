@@ -4,6 +4,12 @@ import wafFetch from '@/util/waf/fetch';
 
 import Provider, { type Mail } from '../Provider';
 
+// yes i know emailnator is wonderful and i had like 3 people ask me to add it
+// that being said, it is one of the most unstable services on malq overall
+// their gmails are constantly out of storage entirely, meaning mail fails
+// their custom domains often do not actually get emails whatsoever
+// if you want to use it, move it from the removed folder to impl
+
 const getTimeFromEstimate = (estimate: string): number => {
     const now = Date.now();
     const lower = estimate.trim().toLowerCase();
