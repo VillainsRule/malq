@@ -1,7 +1,10 @@
+import { StringDomainCache } from '@/util/domainCache';
 import wafFetch from '@/util/waf/fetch';
-import { getRandomName } from '@/util/names';
+import getRandomName from '@/util/names';
 
 import Provider, { type Mail } from '../Provider';
+
+const domainCache = new StringDomainCache();
 
 export default class linshiyouxiang$net extends Provider {
     $cookie: string = '';
@@ -10,12 +13,14 @@ export default class linshiyouxiang$net extends Provider {
     bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
-        const req = await wafFetch('https://linshiyouxiang.net/get-domains');
-        const res = await req.json() as { items: { domain: string, type: 'domain' | 'gmail_alias', is_vip: boolean }[] }[];
+        if (!domainCache.hasItems()) {
+            const req = await wafFetch('https://linshiyouxiang.net/get-domains');
+            const res = await req.json() as { items: { domain: string, type: 'domain' | 'gmail_alias', is_vip: boolean }[] }[];
+            const validDomains = res.map(e => e.items).flat(1).filter(e => !e.is_vip && e.type === 'domain');
+            domainCache.set(validDomains.map(d => d.domain));
+        }
 
-        const validDomains = res.map(e => e.items).flat(1).filter(e => !e.is_vip && e.type === 'domain');
-        const domain = validDomains[Math.floor(Math.random() * validDomains.length)].domain;
-
+        const domain = domainCache.pull();
         const user = getRandomName();
 
         const cookieReq = await wafFetch('https://linshiyouxiang.net');

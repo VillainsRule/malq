@@ -1,18 +1,24 @@
 import parse from 'node-html-parser';
 import WebSocket from 'ws';
 
-import { getRandomName } from '@/util/names';
+import { StringDomainCache } from '@/util/domainCache';
+import getRandomName from '@/util/names';
 
 import Provider, { type Mail } from '../../Provider';
+
+const domainCache = new StringDomainCache();
 
 export default class _24$email extends Provider {
     bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
-        const req = await this.fetch('https://24.email/get-domains');
-        const res = await req.json() as { name: string }[];
+        if (!domainCache.hasItems()) {
+            const req = await this.fetch('https://24.email/get-domains');
+            const res = await req.json() as { name: string }[];
+            domainCache.set(res.map(r => r.name));
+        }
 
-        const domain = res[Math.floor(Math.random() * res.length)].name;
+        const domain = domainCache.pull();
         const user = getRandomName();
 
         this.address = `${user}@${domain}`;

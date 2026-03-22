@@ -1,4 +1,7 @@
+import { ObjectDomainCache } from '@/util/domainCache';
 import Provider, { type Mail } from '../Provider';
+
+const domainCache = new ObjectDomainCache();
 
 export default class temp_mail$fyi extends Provider {
     bodies: Record<string, string> = {};
@@ -16,12 +19,16 @@ export default class temp_mail$fyi extends Provider {
         const phpSessId = csrfReq.headers.get('set-cookie')?.split(';')[0].split('=')[1];
         this.$cookie = `PHPSESSID=${phpSessId}`;
 
-        const req = await this.fetch('https://temp-mail.fyi/api/get_domains.php', {
-            headers: { 'x-csrf-token': csrfToken, cookie: this.$cookie }
-        });
+        if (!domainCache.hasItems()) {
+            const req = await this.fetch('https://temp-mail.fyi/api/get_domains.php', {
+                headers: { 'x-csrf-token': csrfToken, cookie: this.$cookie }
+            });
+            // id is actually a NUMBER, but for typing reasons, we'll declare it as a string
+            const res = await req.json() as { domains: { id: string, domain: string }[] };
+            domainCache.set(res.domains);
+        }
 
-        const res = await req.json() as { domains: { id: number, domain: string }[] };
-        const domain = res.domains[Math.floor(res.domains.length * Math.random())];
+        const domain = domainCache.pull();
 
         const generateReq = await this.fetch('https://temp-mail.fyi/api/generate_email.php', {
             method: 'POST',

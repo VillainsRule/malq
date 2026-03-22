@@ -1,6 +1,9 @@
-import { getRandomName } from '@/util/names';
+import { StringDomainCache } from '@/util/domainCache';
+import getRandomName from '@/util/names';
 
 import Provider, { type Mail } from '../Provider';
+
+const domainCache = new StringDomainCache();
 
 export default class temporam$com extends Provider {
     date: string = '';
@@ -8,15 +11,18 @@ export default class temporam$com extends Provider {
     bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
-        const req = await this.fetch('https://temporam.com/api/domains', {
-            headers: { 'Referer': 'https://temporam.com/' }
-        });
+        if (!domainCache.hasItems()) {
+            const req = await this.fetch('https://temporam.com/api/domains', {
+                headers: { 'Referer': 'https://temporam.com/' }
+            });
 
-        const res = await req.json() as { data: { domain: string }[] };
-        const domain = res.data[res.data.length * Math.random() | 0].domain;
+            const res = await req.json() as { data: { domain: string }[] };
+            domainCache.set(res.data.map(d => d.domain));
+        }
 
         this.date = new Date().toISOString();
-        this.address = `${getRandomName()}@${domain}`;
+        this.address = `${getRandomName()}@${domainCache.pull()}`;
+
         return this.address;
     }
 

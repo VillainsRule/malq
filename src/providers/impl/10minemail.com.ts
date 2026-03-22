@@ -17,9 +17,7 @@ export default class _10minemail$com extends Provider {
 
     async getMail(): Promise<Mail[]> {
         const req = await this.fetch('https://web2.10minemail.com/messages', {
-            headers: {
-                'Authorization': `Bearer ${this.$token}`
-            }
+            headers: { 'Authorization': `Bearer ${this.$token}` }
         });
 
         const res = await req.json() as {
@@ -44,9 +42,7 @@ export default class _10minemail$com extends Provider {
         const finalMail = await Promise.all(returnableMail.map(async (e) => {
             if (!e.body && e.id) {
                 const bodyReq = await this.fetch(`https://web2.10minemail.com/messages/${e.id}`, {
-                    headers: {
-                        'Authorization': `Bearer ${this.$token}`
-                    }
+                    headers: { 'Authorization': `Bearer ${this.$token}` }
                 });
 
                 const bodyRes = await bodyReq.json() as { bodyHtml: string };

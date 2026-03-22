@@ -1,21 +1,27 @@
 import parse from 'node-html-parser';
 
-import { getRandomName } from '@/util/names';
+import { StringDomainCache } from '@/util/domainCache';
+import getRandomName from '@/util/names';
 
 import Provider, { type Mail } from '../Provider';
+
+const domainCache = new StringDomainCache();
 
 export default class noemail$cc extends Provider {
     bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
-        const req = await this.fetch('https://noemail.cc');
-        const res = await req.text();
+        if (!domainCache.hasItems()) {
+            const req = await this.fetch('https://noemail.cc');
+            const res = await req.text();
 
-        const matchedDomains = res.match(/<option value="(.*?)"/g) || [];
-        const randomDomain = matchedDomains[Math.floor(Math.random() * matchedDomains.length)];
-        const domain = randomDomain.match(/<option value="(.*?)"/)![1];
+            const matchedDomains = res.match(/<option value="(.*?)"/g) || [];
+            const cleanDomains = matchedDomains.map(d => d.match(/<option value="(.*?)"/)![1]);
 
-        this.address = `${getRandomName()}@${domain}`;
+            domainCache.set(cleanDomains);
+        }
+
+        this.address = `${getRandomName()}@${domainCache.pull()}`;
         return this.address;
     }
 

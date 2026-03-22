@@ -19,9 +19,7 @@ export default class _10minutemail$com extends Provider {
 
     async getMail(): Promise<Mail[]> {
         const fetchReq = await wafFetch('https://10minutemail.com/messages/messagesAfter/0', {
-            headers: {
-                'Cookie': this.$cookie!
-            }
+            headers: { 'Cookie': this.$cookie }
         });
 
         const fetchRes = await fetchReq.json() as {

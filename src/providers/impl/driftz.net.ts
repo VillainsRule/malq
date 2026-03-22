@@ -1,17 +1,21 @@
-import { getRandomName } from '@/util/names';
+import { StringDomainCache } from '@/util/domainCache';
+import getRandomName from '@/util/names';
 
 import Provider, { type Mail } from '../Provider';
+
+const domainCache = new StringDomainCache();
 
 export default class driftz$net extends Provider {
     bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
-        const req = await this.fetch('https://api.driftz.net/domains');
-        const res = await req.json() as { result: { public: string[] } };
+        if (!domainCache.hasItems()) {
+            const req = await this.fetch('https://api.driftz.net/domains');
+            const res = await req.json() as { result: { public: string[] } };
+            domainCache.set(res.result.public);
+        }
 
-        const domain = res.result.public[Math.floor(res.result.public.length * Math.random())];
-
-        this.address = `${getRandomName()}@${domain}`;
+        this.address = `${getRandomName()}@${domainCache.pull()}`;
         return this.address;
     }
 

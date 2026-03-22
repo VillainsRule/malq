@@ -1,6 +1,9 @@
-import { getRandomName } from '@/util/names';
+import { ObjectDomainCache } from '@/util/domainCache';
+import getRandomName from '@/util/names';
 
 import Provider, { type Mail } from '../Provider';
+
+const domainCache = new ObjectDomainCache();
 
 const BoomlifyDecryptor = new class {
     encryptionKey: { key: Uint8Array | null, keyString: string | null };
@@ -115,12 +118,14 @@ export default class boomlify$com extends Provider {
 
         this.$token = decoded.token;
 
-        const req2 = await this.fetch('https://v1.boomlify.com/domains', { headers: { 'Authorization': `Bearer ${this.$token}` } });
-        const res2 = await req2.json() as { domains: { is_premium: boolean, id: string, domain: string }[] };
+        if (!domainCache.hasItems()) {
+            const reqd = await this.fetch('https://v1.boomlify.com/domains', { headers: { 'Authorization': `Bearer ${this.$token}` } });
+            const resd = await reqd.json() as { domains: { is_premium: boolean, id: string, domain: string }[] };
+            const allowedDomains = resd.domains.filter((e) => !e.is_premium);
+            domainCache.set(allowedDomains);
+        }
 
-        const allowedDomains = res2.domains.filter((e) => !e.is_premium);
-        const randomDomain = allowedDomains[allowedDomains.length * Math.random() | 0];
-
+        const randomDomain = domainCache.pull();
         const randomName = getRandomName();
         const email = `${randomName}@${randomDomain.domain}`;
 

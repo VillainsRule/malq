@@ -6,9 +6,10 @@ const firstNameReq = await fetch('https://raw.githubusercontent.com/danielmiessl
 const firstNameRes = await firstNameReq.text();
 const firstNameList = firstNameRes.toLowerCase().split('\n').map(n => n.trim()).filter(n => n.length > 0);
 
-export const getRandomName = () => {
+const getRandomName = () => {
     const firstName = firstNameList[Math.floor(Math.random() * firstNameList.length)];
     const lastName = lastNameList[Math.floor(Math.random() * lastNameList.length)];
-
     return firstName + lastName;
-}
+};
+
+export default getRandomName;

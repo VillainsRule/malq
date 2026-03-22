@@ -1,8 +1,11 @@
 import parse from 'node-html-parser';
 
-import { getRandomName } from '@/util/names';
+import { StringDomainCache } from '@/util/domainCache';
+import getRandomName from '@/util/names';
 
 import Provider, { type Mail } from '../../Provider';
+
+const domainCache = new StringDomainCache();
 
 export default class surlCommons extends Provider {
     host = '';
@@ -13,13 +16,17 @@ export default class surlCommons extends Provider {
     bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
-        const req = await this.fetch(`https://${this.host}`);
-        const res = await req.text();
+        if (!domainCache.hasItems()) {
+            const req = await this.fetch(`https://${this.host}`);
+            const res = await req.text();
 
-        const domains = res.match(/change_dropdown_list\(this\.innerHTML\)" id="(.*?)"/g) || [];
-        const randomDomain = domains[Math.floor(Math.random() * domains.length)];
-        const domain = randomDomain.match(/change_dropdown_list\(this\.innerHTML\)" id="(.*?)"/)![1];
+            const domains = res.match(/change_dropdown_list\(this\.innerHTML\)" id="(.*?)"/g) || [];
+            const cleanedDomains = domains.map(d => d.match(/change_dropdown_list\(this\.innerHTML\)" id="(.*?)"/)?.[1] || '').filter(d => d);
 
+            domainCache.set(cleanedDomains);
+        }
+
+        const domain = domainCache.pull();
         const user = getRandomName();
 
         this.address = `${user}@${domain}`;

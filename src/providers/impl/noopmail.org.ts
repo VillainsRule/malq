@@ -1,16 +1,22 @@
-import { getRandomName } from '@/util/names';
+import { StringDomainCache } from '@/util/domainCache';
+import getRandomName from '@/util/names';
 
 import Provider, { type Mail } from '../Provider';
+
+const domainCache = new StringDomainCache();
 
 export default class noopmail$org extends Provider {
     $domain = '';
     $email = '';
 
     async getAddress(): Promise<string> {
-        const req = await this.fetch('https://noopmail.org/api/d');
-        const res = await req.json() as string[];
+        if (!domainCache.hasItems()) {
+            const req = await this.fetch('https://noopmail.org/api/d');
+            const res = await req.json() as string[];
+            domainCache.set(res);
+        }
 
-        this.$domain = res[Math.floor(res.length * Math.random())];
+        this.$domain = domainCache.pull();
         this.$email = getRandomName();
 
         this.address = `${this.$email}@${this.$domain}`;

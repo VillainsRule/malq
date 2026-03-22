@@ -11,7 +11,6 @@ export default class temp_mail$io extends Provider {
         const res = await req.json() as { email: string, token: string };
 
         this.address = res.email;
-
         return res.email;
     }
 

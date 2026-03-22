@@ -1,15 +1,5 @@
-- impl possible global domain cache?
-
-P cybertemp.xyz
-P temporarymail.com
-P yours.tools
-P spoofer.me
-P mohmal.com
-
-annoying:
-- https://cybertemp.xyz - wonderful domain selection but PoW captcha
-
-https://sendtestmail.com to check
+CHECKERS:
+- https://sendtestmail.com
 
 SOURCES:
 - https://usercheck.com
@@ -111,6 +101,7 @@ N beerhut.cc [1 domain]
 N chat-tempmail.com [signup]
 N crazymailing.com [4 domains]
 N candymailbox.com [serverr]
+N cybertemp.xyz [pow captcha]
 
 N dropmailer.net [3 domains]
 N dispoemail.org [2 domains]
@@ -145,6 +136,8 @@ N emailgenerator.email [broken] (lovecutelife.xyz)
 N expressmail.app [4 domains]
 N edumail.biz [slow]
 N emailnator.com [broken] (femailtor.com)
+N emailsensei.com [1 domain]
+N edumailfree.com [broken] (student.gold.edu.pl)
 
 N fake.legal [4 domains]
 N fakemail.net [1 domain]
@@ -239,6 +232,7 @@ N mailforspam.net [broken] (zakute.com)
 N mnx-family.com [broken] (sprytny.edu.pl)
 N mailyra.com [broken] (beauturn.com)
 N mail1s.net [broken] (mailkp.pro)
+N mohmal.com [pmo]
 
 N notletters.com [signup]
 N noopmail.org [broken] (taohucom.store)
@@ -272,6 +266,7 @@ N schutz-mail.de [serverr]
 N snapchat.email [4 domains]
 N spoofmail.de [broken] (funnymail.de)
 N sqrx.com [changed]
+N spoofer.me [broken] (kingmail.store)
 
 N temp2mail.top [timeout]
 N trashmailr.com [bad domains]
@@ -385,6 +380,10 @@ N temporarymail.com [broken] (allwebemails.com)
 N tempmailspin.com [serverr]
 N temp-mail.africa [broken] (mailingbox.us)
 N tempmail44.com [broken] (gmaiil.shop)
+N temp-mail.now [1 domain]
+N tempr.email [4 domains]
+N temporarymail.com [needs xtra req for...subject?? tf??]
+N trash-mail.de [3 domains]
 
 N unlimitmail.com [changed]
 N unstablemail.com [NXDOMAIN]
@@ -401,3 +400,4 @@ N wabblywabble.com [NXDOMAIN]
 N wwpager.com [signup]
 
 N yopmail.com [recaptcha]
+N yours.tools [3 domains]

@@ -29,8 +29,7 @@ export default class dropmail$me extends Provider {
         });
 
         this.address = address;
-
-        return address;
+        return this.address;
     }
 
     async getMail(): Promise<Mail[]> {

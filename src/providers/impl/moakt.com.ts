@@ -1,8 +1,11 @@
 import parse from 'node-html-parser';
 
-import { getRandomName } from '@/util/names';
+import { StringDomainCache } from '@/util/domainCache';
+import getRandomName from '@/util/names';
 
 import Provider, { type Mail } from '../Provider';
+
+const domainCache = new StringDomainCache();
 
 export default class moakt$com extends Provider {
     bodies: Record<string, string> = {};
@@ -11,13 +14,17 @@ export default class moakt$com extends Provider {
     $cookie = '';
 
     async getAddress(): Promise<string> {
-        const req = await this.fetch('https://moakt.com');
-        const res = await req.text();
+        if (!domainCache.hasItems()) {
+            const req = await this.fetch('https://moakt.com');
+            const res = await req.text();
 
-        const matchedDomains = res.match(/<option value="(.*?)">/g) || [];
-        const randomDomain = matchedDomains[Math.floor(Math.random() * matchedDomains.length)];
-        const domain = randomDomain.match(/<option value="(.*?)">/)![1];
+            const matchedDomains = res.match(/<option value="(.*?)">/g) || [];
+            const cleanDomains = matchedDomains.map(d => d.match(/<option value="(.*?)">/)![1]);
 
+            domainCache.set(cleanDomains);
+        }
+
+        const domain = domainCache.pull();
         const name = getRandomName();
 
         this.address = `${name}@${domain}`;
