@@ -57,18 +57,24 @@ app.get('/api/v1/session', async ({ query }) => {
         provider = new randomProvider();
     }
 
-    const address = await provider.getAddress();
+    const providerName = provider.constructor.name.replaceAll('$', '.');
 
-    const token = crypto.randomUUID();
+    try {
+        const address = await provider.getAddress();
+        const token = crypto.randomUUID();
 
-    sessions.set(token, provider);
+        sessions.set(token, provider);
 
-    setTimeout(() => {
-        provider.destroy();
-        sessions.delete(token);
-    }, 2 * 60 * 1000);
+        setTimeout(() => {
+            provider.destroy();
+            sessions.delete(token);
+        }, 2 * 60 * 1000);
 
-    return { address, token, provider: provider.constructor.name.replaceAll('$', '.') };
+        return { address, token, provider: providerName };
+    } catch (e) {
+        console.error(e);
+        return { error: 'failed to get address from provider', provider: providerName };
+    }
 });
 
 app.get('/api/v1/inbox/:address', async ({ params }) => {
