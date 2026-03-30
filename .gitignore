@@ -4,7 +4,6 @@ bun.lock
 
 # dev
 .env
-tests
 
 # macos
 .DS_Store

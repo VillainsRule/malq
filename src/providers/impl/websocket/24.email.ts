@@ -65,8 +65,6 @@ export default class _24$email extends Provider {
                             const bodyDOM = parse(bodyRes);
 
                             const bodySelected = bodyDOM.querySelector('body');
-                            bodySelected?.querySelector('img[src*="awstrack.me"]')?.remove();
-
                             const body = bodySelected?.innerHTML.trim() || '';
                             e.body = body;
                             this.bodies[e.id!] = body;

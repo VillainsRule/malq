@@ -95,8 +95,6 @@ export default class moakt$com extends Provider {
                 const bodyRes = await bodyReq.text();
                 const bodyDOM = parse(bodyRes);
 
-                bodyDOM?.querySelector('img[src*="awstrack.me"]')?.remove();
-
                 const html = bodyDOM.outerHTML.trim();
 
                 e.body = html;
