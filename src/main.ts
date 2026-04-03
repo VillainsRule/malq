@@ -36,7 +36,17 @@ const indexContent = await Bun.file(indexPath).text();
 const servedIndex = indexContent.replace('{NUM_PROVIDERS}', providers.size.toString());
 
 app.get('/', () => new Response(servedIndex, { headers: { 'Content-Type': 'text/html' } }));
-app.get('/robots.txt', () => new Response('User-agent: *\nDisallow: /', { headers: { 'Content-Type': 'text/plain' } }));
+app.get('/robots.txt', () => new Response(Bun.file(path.join(import.meta.dirname, 'app', 'robots.txt')), { headers: { 'Content-Type': 'text/plain' } }));
+app.get('/manifest.json', () => new Response(Bun.file(path.join(import.meta.dirname, 'app', 'manifest.json')), { headers: { 'Content-Type': 'application/json' } }));
+app.get('/sitemap.xml', () => new Response(Bun.file(path.join(import.meta.dirname, 'app', 'sitemap.xml')), { headers: { 'Content-Type': 'application/xml' } }));
+app.get('/favicon.ico', () => new Response(Bun.file(path.join(import.meta.dirname, 'app', 'icons', '32.png')), { headers: { 'Content-Type': 'image/png' } }));
+
+const iconPath = path.join(import.meta.dirname, 'app', 'icons');
+
+fs.readdirSync(iconPath).forEach((iconFile) => {
+    if (iconFile.endsWith('.png'))
+        app.get(`/icons/${iconFile}`, () => new Response(Bun.file(path.join(iconPath, iconFile))));
+});
 
 app.get('/api/v1/mail/*', ({ params, query, request }) => {
     const url = new URL(request.url);

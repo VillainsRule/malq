@@ -4,7 +4,43 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>malq documentation</title>
+
+        <meta name="theme-color" content="#000000" />
+        <title>malq - a simple temporary email API</title>
+        <meta name="canonical" href="https://malq.villainsrule.xyz" />
+        <meta name="description"
+            content="malq is a simple temporary mail API. 100s of domains, 50+ sources, 2 endpoints, and 0 credentials!" />
+        <meta property="og:site_name" content="malq" />
+        <meta property="og:title" content="malq - a simple temporary email API" />
+        <meta property="og:description"
+            content="malq is a simple temporary mail API. 100s of domains, 50+ sources, 2 endpoints, and 0 credentials!" />
+        <meta property="og:url" content="https://malq.villainsrule.xyz" />
+        <meta property="og:locale" content="en_US" />
+        <meta property="og:type" content="website" />
+        <script type="application/ld+json">
+            {
+                "@context": "https://schema.org",
+                "@type": "WebSite",
+                "name": "malq",
+                "url": "https://malq.villainsrule.xyz",
+                "description": "malq - a simple temporary email API",
+                "logo": {
+                    "@type": "ImageObject",
+                    "url": "https://malq.villainsrule.xyz/icons/64.png",
+                    "width": 64,
+                    "height": 64
+                }
+            }
+        </script>
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/icons/16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icons/32.png" />
+        <link rel="icon" type="image/png" sizes="96x96" href="/icons/96.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/icons/192.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="/icons/512.png" />
+        <link rel="apple-touch-icon" href="/icons/180.png" />
+        <link rel="apple-touch-icon" sizes="152x152" href="/icons/152.png" />
 
         <style>
             * {
@@ -12,7 +48,7 @@
                 margin: 0;
             }
 
-            body {
+            main {
                 background: lab(98.2596 -0.247031 -0.706708);
                 display: flex;
                 flex-direction: column;
@@ -67,7 +103,7 @@
             }
 
             @media (max-width: 600px) {
-                body {
+                main {
                     padding: 5vh;
                     width: calc(100% - 10vh);
                 }
@@ -80,23 +116,27 @@
     </head>
 
     <body>
-        <h1>malq</h1>
-        <h2>a temporary email service. no credentials, just mail.</h2>
-        <h3>there's only 2 endpoints that source from {NUM_PROVIDERS} temporary mail services!</h3>
+        <main>
+            <h1>malq</h1>
+            <h2>a temporary email service. no credentials, just mail.</h2>
+            <h3>there's only 2 endpoints that source from {NUM_PROVIDERS} temporary mail services!</h3>
 
-        <div class='a'>
-            <span><b>GET</b> <code>/api/v1/session</code> - creates a new mail session<br></span>
-            <pre>{<br><i></i>"address": "temp@mail",<br><i></i>"token": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",<br><i></i>"provider": "malq.com"<br>}</pre>
-            <br><br>
-            <span><b>GET</b> <code>/api/v1/inbox/:token</code> - retrieves emails for the session<br></span>
-            <pre>[<br><i></i>{<br><i></i><i></i>"from": "sender@mail",<br><i></i><i></i>"to": "temp@mail",<br><i></i><i></i>"subject": "Hello World!",<br><i></i><i></i>"body": "This is a temporary email service.",<br><i></i><i></i>"date": <n></n><br><i></i>},<br><i></i>...<br>]</pre>
+            <div class='a'>
+                <span><b>GET</b> <code>/api/v1/session</code> - creates a new mail session<br></span>
+                <pre>{<br><i></i>"address": "temp@mail",<br><i></i>"token": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",<br><i></i>"provider": "malq.com"<br>}</pre>
+                <br><br>
+                <span><b>GET</b> <code>/api/v1/inbox/:token</code> - retrieves emails for the session<br></span>
+                <pre>[<br><i></i>{<br><i></i><i></i>"from": "sender@mail",<br><i></i><i></i>"to": "temp@mail",<br><i></i><i></i>"subject": "Hello World!",<br><i></i><i></i>"body": "This is a temporary email service.",<br><i></i><i></i>"date": <n></n><br><i></i>},<br><i></i>...<br>]</pre>
 
-            <br><br>
-            <span><b>note:</b> due to our some of suppliers using websockets, emails are "destroyed" after 2 minutes. womp womp.</span>
+                <br><br>
+                <span><b>note:</b> due to our some of suppliers using websockets, emails are "destroyed" after 2
+                    minutes. womp womp.</span>
 
-            <br>
-            <span>this service is on <a href="https://github.com/VillainsRule/malq">github</a>. thank me later.</span>
-        </div>
+                <br>
+                <span>this service is on <a href="https://github.com/VillainsRule/malq">github</a>. thank me
+                    later.</span>
+            </div>
+        </main>
 
         <script>document.querySelector('n').innerText = Date.now();</script>
     </body>
