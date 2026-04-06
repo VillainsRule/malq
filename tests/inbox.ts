@@ -1,4 +1,4 @@
-import Provider from '../src/providers/impl/moakt.com'
+import Provider from '../src/providers/impl/lwMessage/purplemail.neweymail.com';
 
 const provider = new Provider();
 

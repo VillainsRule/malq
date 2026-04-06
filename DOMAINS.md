@@ -34,14 +34,12 @@ Y tempmailo.com
 Y smailpro.com
 Y 10minemail.com
 Y mail.paicha.cloud
-Y tempmailg.com
 Y postbox.cfd
 Y tempmail-plus.com
 Y zemail.me
 Y tempmail.io.vn
 Y mailtemp.net
 Y txen.de
-Y temp-mail.asia
 Y tempmailbank.com
 Y tmail.dark2web.com
 Y linshiyouxiang.net
@@ -384,6 +382,8 @@ N temp-mail.now [1 domain]
 N tempr.email [4 domains]
 N temporarymail.com [needs xtra req for...subject?? tf??]
 N trash-mail.de [3 domains]
+N temp-mail.asia [UAM]
+N tempmailg.com [recent maintenance]
 
 N unlimitmail.com [changed]
 N unstablemail.com [NXDOMAIN]

@@ -1,4 +1,4 @@
-import laravelCommons from './_constructor';
+import laravelCommons from '../impl/laravel/_constructor';
 
 export default class tempmailg$com extends laravelCommons {
     domain = 'tempmailg.com';
