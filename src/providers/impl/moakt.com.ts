@@ -76,7 +76,7 @@ export default class moakt$com extends Provider {
         }).filter(e => typeof e === 'object') as Mail[];
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
-            if (!e.date && e.id) await this.fetch(`https://moakt.com${e.id}`, {
+            if ((!e.date || !e.body) && e.id) await this.fetch(`https://moakt.com${e.id}/plain`, {
                 headers: { cookie: this.$cookie }
             }).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.text();
@@ -87,17 +87,10 @@ export default class moakt$com extends Provider {
 
                 e.date = date;
                 this.dates[e.id!] = e.date;
-            });
 
-            if (!e.body && e.id) await this.fetch(`https://moakt.com${e.id}/content`, {
-                headers: { cookie: this.$cookie }
-            }).then(async (bodyReq) => {
-                const bodyRes = await bodyReq.text();
-                const bodyDOM = parse(bodyRes);
+                const emailElement = bodyDOM.querySelector('.email-body')!.innerHTML.trim();
 
-                const html = bodyDOM.outerHTML.trim();
-
-                e.body = html;
+                e.body = emailElement;
                 this.bodies[e.id!] = e.body;
             });
 

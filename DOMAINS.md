@@ -41,7 +41,6 @@ Y tempmail.io.vn
 Y mailtemp.net
 Y txen.de
 Y tempmailbank.com
-Y tmail.dark2web.com
 Y linshiyouxiang.net
 Y 24.email
 Y nguyendoll.com
@@ -384,6 +383,7 @@ N temporarymail.com [needs xtra req for...subject?? tf??]
 N trash-mail.de [3 domains]
 N temp-mail.asia [UAM]
 N tempmailg.com [recent maintenance]
+N tmail.dark2web.com [UAM] [lwMessage]
 
 N unlimitmail.com [changed]
 N unstablemail.com [NXDOMAIN]

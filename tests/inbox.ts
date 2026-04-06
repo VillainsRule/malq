@@ -1,4 +1,4 @@
-import Provider from '../src/providers/impl/lwMessage/purplemail.neweymail.com';
+import Provider from '../src/providers/impl/mailtemp.us';
 
 const provider = new Provider();
 

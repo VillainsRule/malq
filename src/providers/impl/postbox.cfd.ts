@@ -96,6 +96,7 @@ export default class postbox$cfd extends Provider {
                 }).then(async (bodyReq) => {
                     const bodyRes = await bodyReq.json() as { bodyText: string, bodyHtml: string };
                     e.body = bodyRes.bodyText || bodyRes.bodyHtml;
+                    if (!e.body) console.log('failed to get email body for email', bodyRes);
                     this.bodies[e.id!] = bodyRes.bodyText || bodyRes.bodyHtml;
                 });
             }
