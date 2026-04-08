@@ -64,7 +64,27 @@ const createProxyTunnel = (origin: string): Promise<TLSSocket> => {
                         servername: targetUrl.hostname,
                         rejectUnauthorized: false,
                         checkServerIdentity: () => undefined,
-                        ALPNProtocols: ['h2'],
+                        ALPNProtocols: ['h2', 'http/1.1'],
+                        ciphers: [
+                            'TLS_AES_128_GCM_SHA256',
+                            'TLS_AES_256_GCM_SHA384',
+                            'TLS_CHACHA20_POLY1305_SHA256',
+                            'ECDHE-ECDSA-AES128-GCM-SHA256',
+                            'ECDHE-RSA-AES128-GCM-SHA256',
+                            'ECDHE-ECDSA-AES256-GCM-SHA384',
+                            'ECDHE-RSA-AES256-GCM-SHA384',
+                            'ECDHE-ECDSA-CHACHA20-POLY1305',
+                            'ECDHE-RSA-CHACHA20-POLY1305',
+                            'ECDHE-RSA-AES128-SHA',
+                            'ECDHE-RSA-AES256-SHA',
+                            'AES128-GCM-SHA256',
+                            'AES256-GCM-SHA384',
+                            'AES128-SHA',
+                            'AES256-SHA',
+                        ].join(':'),
+                        sigalgs: 'ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512',
+                        minVersion: 'TLSv1.2',
+                        ecdhCurve: 'X25519:P-256:P-384',
                     });
 
                     tlsSocket.on('secureConnect', () => {

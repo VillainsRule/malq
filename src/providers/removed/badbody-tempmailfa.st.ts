@@ -17,7 +17,7 @@ const getSign = (input: string) => {
     };
 };
 
-export default class postbox$cfd extends Provider {
+export default class tempmailfa$st extends Provider {
     $authToken = '';
 
     bodies: Record<string, string> = {};
