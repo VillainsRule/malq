@@ -1,3 +1,5 @@
+// very slow so usually fails testing but probably works
+
 import Provider, { type Mail } from '../Provider';
 
 export default class mailtemp$us extends Provider {

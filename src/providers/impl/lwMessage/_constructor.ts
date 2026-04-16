@@ -8,6 +8,8 @@ export default class lwMessageCommons extends Provider {
     domain = '';
     bypassWAF = true;
 
+    password = '';
+
     initialPath = '';
     refetchPath = '';
     allowsDomainChange = true;
@@ -24,6 +26,11 @@ export default class lwMessageCommons extends Provider {
 
     async getAddress(): Promise<string> {
         await this.livewire.pullHTML(this.initialPath);
+
+        if (this.password) {
+            await this.livewire.handlePassword(this.password);
+            await this.livewire.pullHTML(this.initialPath);
+        }
 
         if (this.allowsDomainChange) {
             const domains = this.livewire.html.match(/setDomain\('(.*?)'\)/g) || [];

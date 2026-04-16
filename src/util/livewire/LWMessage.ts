@@ -41,7 +41,7 @@ class LWMessage {
 
         const html = await req.text();
         this.html = html;
-        this.$csrfToken = html.match(/livewire_token = '(.*?)'/)?.[1] || '';
+        this.$csrfToken = html.match(/livewire_token = '(.*?)'/)?.[1] || html.match(/<meta name="csrf-token" content="(.*?)"/)?.[1] || '';
 
         const initialDataMatches = html.matchAll(/wire:initial-data="(.*?)"/gs);
         for (const match of initialDataMatches) {
@@ -183,6 +183,28 @@ class LWMessage {
 
         this.queue[component] = [];
         return this.send(component, updates);
+    }
+
+    async handlePassword(password: string): Promise<void> {
+        const req = await (this.mustByapssWaf ? wafFetch : fetch)(`https://${this.host}/unlock`, {
+            method: 'POST',
+            body: `_token=${this.$csrfToken}&password=${encodeURIComponent(password)}`,
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Cookie': this.$cookie,
+                'Origin': `https://${this.host}`,
+                'Referer': `https://${this.host}/mailbox`
+            },
+            redirect: 'manual'
+        });
+
+        if (!req.status.toString().startsWith('3')) {
+            const text = await req.text();
+            console.error(`[LWMessage] failed to submit password, HTTP ${req.status}`, text);
+            throw new Error(`failed to submit password, HTTP ${req.status}`);
+        }
+
+        this.updateCookies('cookies' in req ? req.cookies : req.headers.getSetCookie() || []);
     }
 }
 
