@@ -5,6 +5,15 @@ SOURCES:
 - https://usercheck.com
 - https://deviceandbrowserinfo.com/data/emails/providers
 
+to do:
+- altaddress.org
+- emailnator.com
+- fex.plus
+- jonasleo.top (same temp-mailo.org)
+- quickmails.eu (quickmails.eu)
+- temporarymail.com (allwebemails.com)
+- temp-mail.africa (mailingbox.us)
+
 **DOMAIN TRACKER**:
 
 Y boomlify.com
@@ -39,7 +48,6 @@ Y zemail.me
 Y tempmail.io.vn
 Y mailtemp.net
 Y txen.de
-Y tempmailbank.com
 Y linshiyouxiang.net
 Y 24.email
 Y nguyendoll.com
@@ -51,6 +59,10 @@ Y temp-mail.fyi
 Y mailtemp.us
 Y cs.email
 Y noemail.cc
+Y nguyendoll.com
+Y inspacebox.com
+Y tempmail100.com
+Y tempmailbank.com
 
 N 0mail.pro [NXDOMAIN]
 N 1secmail.cc [3 domains]
@@ -69,7 +81,7 @@ N 10-minutemail.net [mirror]
 N 24hour.email [1 domain]
 N 33mail.com [signup]
 N 48h.email [NXDOMAIN]
-N 48hr.email [broken] (cloudflare.gay)
+N 48hr.email [slow]
 N 5smail.email [4 domains]
 N 6d6f.com [broken] (mbejci.com)
 
@@ -78,7 +90,6 @@ N app.temailer.com [signup]
 N anonymmail.net [wrapper]
 N adguard.com [captcha]
 N addy.io [signup]
-N altaddress.org [broken] (hidefrom.us)
 N anonymster.com [changed]
 N adhoc-email.com [redirect]
 N alias.email [proxy]
@@ -130,7 +141,6 @@ N email-once.com [captcha]
 N emailgenerator.email [broken] (lovecutelife.xyz)
 N expressmail.app [4 domains]
 N edumail.biz [slow]
-N emailnator.com [broken] (femailtor.com)
 N emailsensei.com [1 domain]
 N edumailfree.com [broken] (student.gold.edu.pl)
 
@@ -143,7 +153,6 @@ N fakemailgenerator.com [IP]
 N freecustom.email [1 domain]
 N fakeemail.net [4 domains]
 N faxmail.co [timeout]
-N fex.plus [broken] (fexpost.com)
 
 N gmailcity.com [parked]
 N guerrillamail.com [branded domains]
@@ -164,9 +173,6 @@ N inboxes.com [doesnt send full subject ????]
 N internxt.com [wrapper]
 N instant-email.org [2 domains]
 N incognitomail.co [captcha]
-N inspacebox.com [broken] (bfhunter.online)
-
-N jonasleo.top [broken] (gmailking.co) (same temp-mailo.org)
 
 N lroid.com [1 domain]
 N linshi-email.com [1 domain]
@@ -182,12 +188,12 @@ N mailsac.com [1 domain]
 N mail.tm [1 domain]
 N mail.gw [5 domains]
 N mail.td [5 domains]
-N mailscr.us [broken] (greenbudgetstore.online)
+N mailscr.us [changed]
 N m.kuku.lu [UAM]
 N mailosaur.com [signup]
 N mailtam.com [3 domains]
 N mailinator.com [signup]
-N mailtemp.uk [broken] (emailterminal.info)
+N mailtemp.uk [broken] (binary-clock.pro)
 N minutemailbox.com [1 domain]
 N mostakbile.com [1 domain]
 N mailporary.com [5 domains]
@@ -205,7 +211,7 @@ N mailseven.io [1 domain]
 N maildrop.cc [1 domain]
 N mainnetmail.com [NXDOMAIN]
 N mail-temp.site [NXDOMAIN]
-N mailmask.cc [broken] (skipsend.io)
+N mailmask.cc [timeout; broken] (skipsend.io)
 N mohmalmail.com [5 domains]
 N mailticking.com [UAM for IP rep]
 N mailgw.com [1 domain]
@@ -226,13 +232,12 @@ N mailgen.biz [bad domains]
 N mailforspam.net [broken] (zakute.com)
 N mnx-family.com [broken] (sprytny.edu.pl)
 N mailyra.com [broken] (beauturn.com)
-N mail1s.net [broken] (mailkp.pro)
+N mail1s.net [signup] (also broken -> mailkp.pro)
 N mohmal.com [pmo]
 
 N notletters.com [signup]
 N noopmail.org [broken] (taohucom.store)
 N nospam.today [slow] (tempdukviet.click)
-N nguyendoll.com [broken] (ameliekovacek3.top)
 
 N onesecmail.xyz [parked]
 N onetempmail.com [NXDOMAIN]
@@ -243,11 +248,9 @@ N premiumisme.info [2 domains]
 N proxiedmail.com [proxy]
 N plingest.com [changed]
 N pinmx.net [2 domains]
-N postinbox.org [broken] (postinbox.pw) (same temp-mailo.org)
 N purplemail.neweymail.com [reputation captcha] (lwMessage)
 
 N quickemail.xyz [2 domains]
-N quickmails.eu [broken] (quickmails.eu)
 
 N rainmail.xyz [2 domains]
 N receivemail.org [4 domains]
@@ -309,7 +312,6 @@ N tempmailso.com [2 domains]
 N tempo-mail.com [UAM]
 N tempomail.top [1 domain]
 N tempp-mails.com [1 domain]
-N tempmail100.com [broken] (swsdz.com)
 N tempmailx.xyz [captcha]
 N tempmailbee.com [1 domain]
 N temporary-email.org [5 domains]
@@ -372,16 +374,14 @@ N thetemp.email [4 domains]
 N throwaway.io [slow]
 N tempmailx.xyz [captcha]
 N tempmail.plus [wrapper] (fex.plus)
-N temporarymail.com [broken] (allwebemails.com)
 N tempmailspin.com [serverr]
-N temp-mail.africa [broken] (mailingbox.us)
 N tempmail44.com [broken] (gmaiil.shop)
 N temp-mail.now [1 domain]
 N tempr.email [4 domains]
 N temporarymail.com [needs xtra req for...subject?? tf??]
 N trash-mail.de [3 domains]
 N temp-mail.asia [UAM]
-N tempmailg.com [recent maintenance]
+N tempmailg.com [UAM] [laravel]
 N tmail.dark2web.com [UAM] [lwMessage]
 N tempmailfa.st [body is sometimes missing]
 

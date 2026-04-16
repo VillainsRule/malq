@@ -1,5 +1,7 @@
 import Provider, { type Mail } from '../Provider';
 
+// UNFINISHED
+
 export default class dropmail$me extends Provider {
     $session = '';
     $token = '';
@@ -65,6 +67,7 @@ export default class dropmail$me extends Provider {
             to: email.toAddr,
             subject: email.headerSubject,
             body: email.text,
+            // @ts-expect-error this never worked
             date: new Date(email.sentDate).getTime()
         }));
 

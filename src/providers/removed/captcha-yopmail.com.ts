@@ -2,6 +2,8 @@ import getRandomName from '@/util/names';
 
 import Provider, { type Mail } from '../Provider';
 
+// UNFINISHED
+
 export default class yopmail$com extends Provider {
     bodies: Record<string, string> = {};
 

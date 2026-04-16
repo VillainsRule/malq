@@ -4,7 +4,7 @@ import Provider, { type Mail } from '../Provider';
 
 // some domains don't work (skipsend.io), so suspended for now
 
-export default class mailscr$us extends Provider {
+export default class maskmail$cc extends Provider {
     $domain = '';
     $email = '';
 
