@@ -9,12 +9,11 @@ to do:
 - temporarymail.com [ssr]
 - temp-mail.africa [ssr]
 - 1sec-mail.com (surl)
-- m2u.io
 - tempmail.ninja (websocket)
-- treemail.pro
 - trashmailr.com
-- onetempmail.com
 - mail.theloi.io.vn
+- mail.td
+- tempmail.id.vn [custom lwUpdate]
 
 **ERROR CODES:**
 - [C] NXDOMAIN: domain doesn't exist
@@ -48,7 +47,6 @@ to do:
 - USECAP: a captcha triggers after a few uses
 
 **DOMAIN TRACKER:**
-Y boomlify.com
 Y dropmail.me
 Y edumailfree.com
 Y email10min.com
@@ -97,6 +95,9 @@ Y tempmail100.com
 Y tempmailbank.com
 Y quickmails.eu
 Y altaddress.org
+Y onetempmail.com
+Y mailporary.com
+Y m2u.io
 
 N 0mail.pro [NXDOMAIN]
 N 1secmail.cc [serverr]
@@ -139,6 +140,7 @@ N boun.cr [forwarder]
 N barid.site [NXDOMAIN]
 N besttemporaryemail.com [3 domains]
 N beerhut.cc [1 domain]
+N boomlify.com [turnstile]
 
 N chat-tempmail.com [signup]
 N crazymailing.com [4 domains]
@@ -234,8 +236,7 @@ N minuteinbox.com [1 domain]
 N muellmail.com [turnstile]
 N mailsac.com [1 domain]
 N mail.tm [1 domain]
-N mail.gw [5 domains]
-N mail.td [5 domains]
+N mail.gw [1 domain]
 N mailscr.us [signup]
 N m.kuku.lu [UAM]
 N mailosaur.com [signup]
@@ -244,7 +245,6 @@ N mailinator.com [signup]
 N mailtemp.uk [broken] (binary-clock.pro)
 N minutemailbox.com [1 domain]
 N mostakbile.com [1 domain]
-N mailporary.com [5 domains]
 N mailcatch.com [1 domain]
 N maildax.com [1 domain]
 N mailforspam.com [1 domain]
@@ -320,7 +320,6 @@ N spoofer.me [broken] (kingmail.store)
 
 N temp2mail.top [parked]
 N tmail.delivery [signup]
-N tempmail.id.vn [5 domains]
 N tempmail.com.tr [5 domains]
 N tempmail.so [4 domains]
 N trashmail.com [3 domains]
@@ -434,6 +433,8 @@ N tempmail.us.com [serverr]
 N temp-mail.us [4 domains]
 N tempmail.altmails.com [1 domain]
 N tempmaily.com [NXDOMAIN]
+N treemail.pro [broken] (browsermax.xyz)
+N temporam.com [slow]
 
 N unlimitmail.com [signup]
 N unstablemail.com [NXDOMAIN]
