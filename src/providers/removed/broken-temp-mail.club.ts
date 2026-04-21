@@ -2,7 +2,7 @@ import LWMessage from '@/util/livewire/LWMessage';
 
 import getRandomName from '@/util/names';
 
-import Provider, { type Mail } from '../../Provider';
+import Provider, { type Mail } from '../Provider';
 
 // this site hides the domains until you create an email
 // so the setDomain is *slightly* different

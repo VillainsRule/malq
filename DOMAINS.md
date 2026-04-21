@@ -47,6 +47,7 @@ to do:
 - USECAP: a captcha triggers after a few uses
 
 **DOMAIN TRACKER:**
+Y tempmail.io.vn
 Y dropmail.me
 Y edumailfree.com
 Y email10min.com
@@ -300,6 +301,7 @@ N proxiedmail.com [forwarder]
 N plingest.com [changed]
 N pinmx.net [2 domains]
 N purplemail.neweymail.com [REPCAP] (lwMessage)
+N postinbox.org [UAM] (lwMessage, temp-mailo.org)
 
 N quickemail.xyz [2 domains]
 
@@ -435,6 +437,7 @@ N tempmail.altmails.com [1 domain]
 N tempmaily.com [NXDOMAIN]
 N treemail.pro [broken] (browsermax.xyz)
 N temporam.com [slow]
+N temp-mail.club [broken] (17.mailings.live)
 
 N unlimitmail.com [signup]
 N unstablemail.com [NXDOMAIN]
