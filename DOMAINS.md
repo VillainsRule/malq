@@ -14,6 +14,7 @@ to do:
 - mail.theloi.io.vn
 - mail.td
 - tempmail.id.vn [custom lwUpdate]
+- temp-mail.asia
 
 **ERROR CODES:**
 - [C] NXDOMAIN: domain doesn't exist
@@ -40,8 +41,8 @@ to do:
 - hcaptcha: hcaptcha is active
 - recaptcha: recaptcha is active
 - turnstile: cloudflare turnstile is active (NOT WAF)
-- UAM: under attack mode (cloudflare)
-- WAF: the security screen displays
+- [C] UAM: under attack mode (cloudflare)
+- [C] WAF: the security screen displays
 - POW: a proof of work captcha is active
 - REPCAP: a reputation-based captcha triggers
 - USECAP: a captcha triggers after a few uses
@@ -102,7 +103,7 @@ Y m2u.io
 
 N 0mail.pro [NXDOMAIN]
 N 1secmail.cc [serverr]
-N 1sec-mail.net [NXDOMAIN]
+N 1sec-mail.net [parked]
 N 10minuteemails.com [1 domain]
 N 10minutemail.one [2 domains]
 N 10minutesemail.net [serverr]
@@ -425,7 +426,6 @@ N temp-mail.now [1 domain]
 N tempr.email [4 domains]
 N temporarymail.com [bad] (needs extra req for subject im crine)
 N trash-mail.de [3 domains]
-N temp-mail.asia [UAM]
 N tempmailg.com [UAM] (laravel)
 N tmail.dark2web.com [serverr] (lwMessage)
 N tempmailfa.st [bad] (body is sometimes missing)

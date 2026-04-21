@@ -55,4 +55,22 @@ for (const domain of domains) {
                 else console.error(`domain ${domainPart} does not appear to be blank as expected!`);
             })
             .catch((err) => console.error(`domain ${domainPart} had an unexpected error:`, err));
+
+    if (domain.includes('UAM'))
+        fetch('http://' + domainPart, { method: 'GET', signal: AbortSignal.timeout(5000) })
+            .then(res => res.text())
+            .then((text) => {
+                if (text.includes('Just a moment')) console.log(`domain ${domainPart} expectedly appears to be behind a UAM.`);
+                else console.error(`domain ${domainPart} does not appear to be behind a UAM as expected!`);
+            })
+            .catch((err) => console.error(`domain ${domainPart} had an unexpected error:`, err));
+
+    if (domain.includes('WAF'))
+        fetch('http://' + domainPart, { method: 'GET', signal: AbortSignal.timeout(5000) })
+            .then(res => res.text())
+            .then((text) => {
+                if (text.includes('Attention Required!')) console.log(`domain ${domainPart} expectedly appears to be behind a WAF.`);
+                else console.error(`domain ${domainPart} does not appear to be behind a WAF as expected!`);
+            })
+            .catch((err) => console.error(`domain ${domainPart} had an unexpected error:`, err));
 }
