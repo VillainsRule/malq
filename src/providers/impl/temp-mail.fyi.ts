@@ -1,3 +1,5 @@
+// is slow, usually fails resend check
+
 import { ObjectDomainCache } from '@/util/domainCache';
 import Provider, { type Mail } from '../Provider';
 

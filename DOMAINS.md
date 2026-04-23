@@ -10,11 +10,8 @@ to do:
 - temp-mail.africa [ssr]
 - 1sec-mail.com (surl)
 - tempmail.ninja (websocket)
-- trashmailr.com
 - mail.theloi.io.vn
-- mail.td
-- tempmail.id.vn [custom lwUpdate]
-- temp-mail.asia
+- tempmail.id.vn [custom lwUpdate + SSR]
 
 **ERROR CODES:**
 - [C] NXDOMAIN: domain doesn't exist
@@ -71,7 +68,6 @@ Y tmailor.com
 Y temp-mail.io
 Y rootsh.com
 Y priyo.email
-Y 10minutemail.com
 Y tempmailo.com
 Y smailpro.com
 Y 10minemail.com
@@ -100,12 +96,14 @@ Y altaddress.org
 Y onetempmail.com
 Y mailporary.com
 Y m2u.io
+Y temp-mail.asia
 
 N 0mail.pro [NXDOMAIN]
 N 1secmail.cc [serverr]
 N 1sec-mail.net [parked]
 N 10minuteemails.com [1 domain]
 N 10minutemail.one [2 domains]
+N 10minutemail.com [REPCAP]
 N 10minutesemail.net [serverr]
 N 1secmail.com [serverr]
 N 1secmail.co [NXDOMAIN]
@@ -244,7 +242,6 @@ N m.kuku.lu [UAM]
 N mailosaur.com [signup]
 N mailtam.com [3 domains]
 N mailinator.com [signup]
-N mailtemp.uk [broken] (binary-clock.pro)
 N minutemailbox.com [1 domain]
 N mostakbile.com [1 domain]
 N mailcatch.com [1 domain]
@@ -286,6 +283,8 @@ N mail7.io [changed]
 N maildim.com [serverr]
 N mytemp-mail.com [1 domain]
 N mailmenot.io [1 domain]
+N mailtemp.uk [slow] (aiemail.studio)
+N mail.td [POW]
 
 N notletters.com [signup]
 N noopmail.org [broken] (taohucom.store)
@@ -395,7 +394,7 @@ N tempmailpro.org [1 domain]
 N tempmail.im [1 domain]
 N tempmail.ranzotech.com [3 domains]
 N tempmail.ac.id [signup]
-N tempboxmail.com [NXDOMAIN]
+N tempboxmail.com [IP]
 N trickadsagencyltd.com [1 domain]
 N tempmail.best [turnstile]
 N tmail.hp.gl [1 domain]
@@ -438,6 +437,7 @@ N tempmaily.com [NXDOMAIN]
 N treemail.pro [broken] (browsermax.xyz)
 N temporam.com [slow]
 N temp-mail.club [broken] (17.mailings.live)
+N trashmailr.com [mirror] (tempr.email)
 
 N unlimitmail.com [signup]
 N unstablemail.com [NXDOMAIN]

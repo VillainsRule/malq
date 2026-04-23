@@ -1,4 +1,4 @@
-import Provider from '../src/providers/impl/altaddress.org.ts'
+import Provider from '../src/providers/impl/lwUpdate/temp-mail.asia.ts'
 
 const provider = new Provider();
 
