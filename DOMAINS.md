@@ -40,6 +40,8 @@ to do:
 - turnstile: cloudflare turnstile is active (NOT WAF)
 - [C] UAM: under attack mode (cloudflare)
 - [C] WAF: the security screen displays
+- [C] jschallenge: cloudflare's js-based challenge
+- [C] recapwaf: the recaptcha WAF is active
 - POW: a proof of work captcha is active
 - REPCAP: a reputation-based captcha triggers
 - USECAP: a captcha triggers after a few uses
@@ -73,9 +75,7 @@ Y smailpro.com
 Y 10minemail.com
 Y mail.paicha.cloud
 Y tempmail-plus.com
-Y zemail.me
 Y tempmail.io.vn
-Y mailtemp.net
 Y txen.de
 Y linshiyouxiang.net
 Y 24.email
@@ -84,7 +84,6 @@ Y z4mails.com
 Y 10-minutemail.com
 Y driftz.net
 Y temp-mail.fyi
-Y mailtemp.us
 Y cs.email
 Y noemail.cc
 Y nguyendoll.com
@@ -97,6 +96,7 @@ Y onetempmail.com
 Y mailporary.com
 Y m2u.io
 Y temp-mail.asia
+Y throwaway.io
 
 N 0mail.pro [NXDOMAIN]
 N 1secmail.cc [serverr]
@@ -116,7 +116,7 @@ N 10minute-mail.org [parked]
 N 24hour.email [1 domain]
 N 33mail.com [signup]
 N 48h.email [NXDOMAIN]
-N 48hr.email [slow]
+N 48hr.email [slow] (cloudflare.gay)
 N 5smail.email [4 domains]
 N 6d6f.com [broken] (mbejci.com)
 
@@ -169,7 +169,7 @@ N eml.monster [signup]
 N emailondeck.com [recaptcha]
 N etempmail.com [4 domains]
 N etempmail.net [UAM]
-N eztempmail.com [slow] (laravel)
+N eztempmail.com [jschallenge] (laravel)
 N e4ward.com [1 domain]
 N email1.io [parked]
 N emailtemp.org [1 domain]
@@ -179,9 +179,9 @@ N emailgenerator.org [1 domain]
 N email10min.net [1 domain]
 N em.bjedu.tech [signup]
 N email-once.com [turnstile]
-N emailgenerator.email [broken] (lovecutelife.xyz)
+N emailgenerator.email [parked]
 N expressmail.app [4 domains]
-N edumail.biz [slow]
+N edumail.biz [3 domains]
 N emailsensei.com [1 domain]
 N emailnator.com [pmo]
 N eyepaste.com [1 domain]
@@ -199,7 +199,7 @@ N fakeemail.net [4 domains]
 N faxmail.co [timeout]
 N fex.plus [recaptcha]
 
-N gmailcity.com [parked]
+N gmailcity.com [changed]
 N guerrillamail.com [branded domains]
 N getnada.cc [timeout]
 N gpa.lu [serverr]
@@ -256,7 +256,7 @@ N mailseven.io [1 domain]
 N maildrop.cc [1 domain]
 N mainnetmail.com [NXDOMAIN]
 N mail-temp.site [NXDOMAIN]
-N mailmask.cc [broken] (skipsend.io)
+N mailmask.cc [parked]
 N mohmalmail.com [3 domains]
 N mailticking.com [REPCAP]
 N mailgw.com [1 domain]
@@ -285,13 +285,15 @@ N mytemp-mail.com [1 domain]
 N mailmenot.io [1 domain]
 N mailtemp.uk [slow] (aiemail.studio)
 N mail.td [POW]
+N mailtemp.us [slow] (nik.edu.pl)
+N mailtemp.net [2 domains] [lwmessage]
 
 N notletters.com [signup]
 N noopmail.org [broken] (taohucom.store)
-N nospam.today [slow] (tempdukviet.click)
+N nospam.today [REPCAP]
 N no-spammers.com [2 domains]
 
-N onesecmail.xyz [blank]
+N onesecmail.xyz [serverr]
 N onetimeinbox.com [4 domains]
 N onetime-mail.com [1 domain]
 N one-off.email [parked]
@@ -316,7 +318,7 @@ N spam4.me [mirror] (guerrillamail.com)
 N spamgourmet.com [signup]
 N schutz-mail.de [serverr]
 N snapchat.email [4 domains]
-N spoofmail.de [broken] (funnymail.de)
+N spoofmail.de [slow] (funnymail.de)
 N sqrx.com [changed]
 N spoofer.me [broken] (kingmail.store)
 
@@ -417,7 +419,6 @@ N tempmail.dev [timeout]
 N tempmail.quest [turnstile]
 N tempmailid.com [NXDOMAIN]
 N thetemp.email [4 domains]
-N throwaway.io [slow]
 N tempmail.plus [wrapper] (fex.plus)
 N tempmailspin.com [serverr]
 N tempmail44.com [broken] (gmaiil.shop)
@@ -434,8 +435,8 @@ N tempmail.us.com [serverr]
 N temp-mail.us [4 domains]
 N tempmail.altmails.com [1 domain]
 N tempmaily.com [NXDOMAIN]
-N treemail.pro [broken] (browsermax.xyz)
-N temporam.com [slow]
+N treemail.pro [turnstile]
+N temporam.com [slow] (entire api)
 N temp-mail.club [broken] (17.mailings.live)
 N trashmailr.com [mirror] (tempr.email)
 
@@ -454,3 +455,5 @@ N wwpager.com [signup]
 
 N yopmail.com [recaptcha]
 N yours.tools [3 domains]
+
+N zemail.me [recapwaf]

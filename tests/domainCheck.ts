@@ -57,7 +57,7 @@ for (const domain of domains) {
             .catch((err) => console.error(`domain ${domainPart} had an unexpected error:`, err));
 
     if (domain.includes('UAM'))
-        fetch('http://' + domainPart, { method: 'GET', signal: AbortSignal.timeout(5000) })
+        fetch('http://' + domainPart, { method: 'GET', signal: AbortSignal.timeout(5000), proxy: Bun.env.PROXY })
             .then(res => res.text())
             .then((text) => {
                 if (text.includes('Just a moment')) console.log(`domain ${domainPart} expectedly appears to be behind a UAM.`);
@@ -66,11 +66,29 @@ for (const domain of domains) {
             .catch((err) => console.error(`domain ${domainPart} had an unexpected error:`, err));
 
     if (domain.includes('WAF'))
-        fetch('http://' + domainPart, { method: 'GET', signal: AbortSignal.timeout(5000) })
+        fetch('http://' + domainPart, { method: 'GET', signal: AbortSignal.timeout(5000), proxy: Bun.env.PROXY })
             .then(res => res.text())
             .then((text) => {
                 if (text.includes('Attention Required!')) console.log(`domain ${domainPart} expectedly appears to be behind a WAF.`);
                 else console.error(`domain ${domainPart} does not appear to be behind a WAF as expected!`);
+            })
+            .catch((err) => console.error(`domain ${domainPart} had an unexpected error:`, err));
+
+    if (domain.includes('jschallenge'))
+        fetch('http://' + domainPart, { method: 'GET', signal: AbortSignal.timeout(5000), proxy: Bun.env.PROXY })
+            .then(res => res.text())
+            .then((text) => {
+                if (text.includes('/jschallenge')) console.log(`domain ${domainPart} expectedly appears to be behind a js challenge.`);
+                else console.error(`domain ${domainPart} does not appear to be behind a js challenge as expected!`);
+            })
+            .catch((err) => console.error(`domain ${domainPart} had an unexpected error:`, err));
+
+    if (domain.includes('recapwaf'))
+        fetch('http://' + domainPart, { method: 'GET', signal: AbortSignal.timeout(5000), proxy: Bun.env.PROXY })
+            .then(res => res.text())
+            .then((text) => {
+                if (text.includes('recaptchadiv')) console.log(`domain ${domainPart} expectedly appears to be behind a recaptcha WAF.`);
+                else console.error(`domain ${domainPart} does not appear to be behind a recaptcha WAF as expected!`);
             })
             .catch((err) => console.error(`domain ${domainPart} had an unexpected error:`, err));
 }

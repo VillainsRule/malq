@@ -2,7 +2,7 @@ import LWUpdate from '@/util/livewire/LWUpdate';
 
 import getRandomName from '@/util/names';
 
-import Provider, { type Mail } from '../../Provider';
+import Provider, { type Mail } from '../Provider';
 
 export default class zemail$me extends Provider {
     livewire: LWUpdate = new LWUpdate('zemail.me');
