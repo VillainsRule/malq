@@ -17,12 +17,8 @@ to do:
 - vip.215.im
 - tempmailmmo.com
 - emailqu.com
-- tempmailc.com
 - 5min.email
 - nukemail.app
-- tempmailget.com
-- run2mail.com
-- mailtemp.tech
 - tempmailed.com
 
 **ERROR CODES:**
@@ -110,6 +106,10 @@ Y fmail.men
 Y cheapluxurymail.xyz
 Y cleantempmail.com
 Y mailmomy.com
+Y tempmailc.com
+Y run2mail.com
+Y mailtemp.tech
+Y tempmailget.com
 
 N 0mail.pro [NXDOMAIN]
 N 1secmail.cc [serverr]
