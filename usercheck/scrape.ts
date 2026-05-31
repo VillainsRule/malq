@@ -32,7 +32,7 @@ console.log('captcha solved');
 
 const providers: { name: string, domainCount: number, page: number }[] = [];
 
-for (let i = 0; i < 20; i++) {
+for (let i = 0; i < 22; i++) {
     const req = await wafFetch('https://www.usercheck.com/providers?page=' + (i + 1), {
         headers: { 'Cookie': x },
         noProxy: true
@@ -46,8 +46,8 @@ for (let i = 0; i < 20; i++) {
     console.log('scraped page', i + 1);
 }
 
-const existingProviders = fs.existsSync(path.join(import.meta.dirname, 'out.json')) ? JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'out.json'), 'utf-8')) : [];
-console.log('new providers:', providers.filter(p => !existingProviders.some((ep: any) => ep.name === p.name)).map(p => p.name));
+const domainFile = path.join(import.meta.dirname, '..', 'DOMAINS.md');
+const domainsFromFile = fs.readFileSync(domainFile, 'utf-8').split('\n').filter(l => l.startsWith('Y ') || l.startsWith('N ') || l.startsWith('- ')).map(l => l.split(' ')[1]);
 
-fs.writeFileSync(path.join(import.meta.dirname, 'out.json'), JSON.stringify(providers, null, 4));
-console.log('done!');
+const newDomains = providers.map(p => p.name).filter(d => !domainsFromFile.includes(d));
+console.log('new domains found:', newDomains);
