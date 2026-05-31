@@ -39,7 +39,7 @@ export default class driftz$net extends Provider {
             to: email.toAddress,
             subject: email.subject,
             body: this.bodies[email.id] || '',
-            date: new Date(email.receivedAt * 1000).getTime()
+            date: email.receivedAt * 1000
         }));
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {

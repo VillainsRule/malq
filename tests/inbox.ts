@@ -1,4 +1,4 @@
-import Provider from '../src/providers/impl/lwUpdate/temp-mail.asia.ts'
+import Provider from '../src/providers/impl/mailmomy.com'
 
 const provider = new Provider();
 

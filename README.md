@@ -28,4 +28,10 @@ malq has a demo setup at https://malq.villainsrule.xyz. please don't spam it too
 > if your provider supports it, use proxies in the Americas (you can usually append `-country-us` or `-region-us`). some tempmail providers block countries such as India.
 
 <br><br>
+
+## takedowns
+
+if your provider is here and you want it removed, email `legal@villainsrule.xyz` from `admin@{primary domain of provider}` with proof of ownership. i do not directly remove providers, as malq is not the only service out there that uses temp mail domains at this scale. instead, i'll help you implement a captcha (my personal recommendation is a PoW) that makes it inefficient to automate your specific site. malq does not keep providers who add captchas.
+
+<br><br>
 <h5 align='center'>made with :heart:</a></h5>

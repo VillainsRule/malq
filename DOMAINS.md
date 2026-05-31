@@ -12,15 +12,11 @@ to do:
 - tempmail.ninja (websocket)
 - mail.theloi.io.vn (clean-ish api)
 - tempmail.id.vn [custom lwUpdate + SSR]
-- fmail.men (clean api)
 - getnada.net (clean api)
-- cleantempmail.com
-- cheapluxurymail.xyz
 - tempmailv5.site
 - vip.215.im
 - tempmailmmo.com
 - emailqu.com
-- mailmomy.com
 - tempmailc.com
 - 5min.email
 - nukemail.app
@@ -110,6 +106,10 @@ Y mailporary.com
 Y m2u.io
 Y temp-mail.asia
 Y throwaway.io
+Y fmail.men
+Y cheapluxurymail.xyz
+Y cleantempmail.com
+Y mailmomy.com
 
 N 0mail.pro [NXDOMAIN]
 N 1secmail.cc [serverr]

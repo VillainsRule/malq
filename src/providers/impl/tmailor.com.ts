@@ -45,7 +45,7 @@ export default class tmailor$com extends Provider {
             to: this.address,
             subject: email.subject,
             body: this.bodies[email.id] || '',
-            date: new Date(email.receive_time * 1000).getTime()
+            date: email.receive_time * 1000
         }));
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
