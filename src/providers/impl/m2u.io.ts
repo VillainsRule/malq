@@ -17,10 +17,8 @@ export default class m2u$io extends Provider {
         this.token = res.mailbox.token;
         this.viewToken = res.mailbox.view_token;
 
-        const email = `${res.mailbox.local_part}@${res.mailbox.domain}`;
-
-        this.address = email;
-        return email;
+        this.address = `${res.mailbox.local_part}@${res.mailbox.domain}`;
+        return this.address;
     }
 
     async getMail(): Promise<Mail[]> {

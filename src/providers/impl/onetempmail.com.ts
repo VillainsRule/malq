@@ -16,10 +16,8 @@ export default class onetempmail$com extends Provider {
             domainCache.set(res);
         }
 
-        const email = `${getRandomName().slice(0, 10)}@${domainCache.pull()}`;
-
-        this.address = email;
-        return email;
+        this.address = `${getRandomName().slice(0, 10)}@${domainCache.pull()}`;
+        return this.address;
     }
 
     async getMail(): Promise<Mail[]> {
