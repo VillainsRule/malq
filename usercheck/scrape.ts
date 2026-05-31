@@ -12,7 +12,7 @@ const { page, browser } = await connect({
     turnstile: true,
 });
 
-await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36');
+await page.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36');
 await page.goto('https://usercheck.com/providers');
 
 let x = await new Promise<string>((resolve) => {
@@ -45,6 +45,9 @@ for (let i = 0; i < 20; i++) {
 
     console.log('scraped page', i + 1);
 }
+
+const existingProviders = fs.existsSync(path.join(import.meta.dirname, 'out.json')) ? JSON.parse(fs.readFileSync(path.join(import.meta.dirname, 'out.json'), 'utf-8')) : [];
+console.log('new providers:', providers.filter(p => !existingProviders.some((ep: any) => ep.name === p.name)).map(p => p.name));
 
 fs.writeFileSync(path.join(import.meta.dirname, 'out.json'), JSON.stringify(providers, null, 4));
 console.log('done!');

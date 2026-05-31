@@ -1,4 +1,4 @@
-import lwMessageCommons from './_constructor';
+import lwMessageCommons from '../impl/lwMessage/_constructor';
 
 export default class tmail$xuanlich$com extends lwMessageCommons {
     initialPath = '/mailbox';
