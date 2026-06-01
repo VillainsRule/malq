@@ -1,4 +1,4 @@
-import Provider from '../src/providers/impl/mailmomy.com'
+import Provider from '../src/providers/impl/getnada.net'
 
 const provider = new Provider();
 

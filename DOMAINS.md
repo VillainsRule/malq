@@ -12,14 +12,14 @@ to do:
 - tempmail.ninja (websocket)
 - mail.theloi.io.vn (clean-ish api)
 - tempmail.id.vn [custom lwUpdate + SSR]
-- getnada.net (clean api)
-- tempmailv5.site
+- tempmailed.com
+
+easy:
 - vip.215.im
 - tempmailmmo.com
 - emailqu.com
 - 5min.email
 - nukemail.app
-- tempmailed.com
 - qaz.im
 
 **ERROR CODES:**
@@ -112,6 +112,7 @@ Y tempmailc.com
 Y run2mail.com
 Y mailtemp.tech
 Y tempmailget.com
+Y getnada.net
 
 N 0mail.pro [NXDOMAIN]
 N 1secmail.cc [serverr]
@@ -559,6 +560,7 @@ N tempmail.cx [1 domain]
 N tempmailaddress.com [redirect]
 N temp-mail-365.com [2 domains]
 N tempsmail.org [3 domains]
+N tempmailv5.site [broken] (mailvinhcuu.dpdns.org)
 
 N unlimitmail.com [signup]
 N unstablemail.com [NXDOMAIN]
