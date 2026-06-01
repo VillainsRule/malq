@@ -35,7 +35,7 @@ const indexPath = path.join(import.meta.dirname, 'app', 'index.html');
 const indexContent = await Bun.file(indexPath).text();
 const servedIndex = indexContent.replace('{NUM_PROVIDERS}', providers.size.toString());
 
-app.get('/', () => new Response(servedIndex, { headers: { 'Content-Type': 'text/html' } }));
+app.get('/', () => new Response(servedIndex.replace('{DATE}', Date.now().toString()), { headers: { 'Content-Type': 'text/html' } }));
 app.get('/robots.txt', () => new Response(Bun.file(path.join(import.meta.dirname, 'app', 'robots.txt')), { headers: { 'Content-Type': 'text/plain' } }));
 app.get('/manifest.json', () => new Response(Bun.file(path.join(import.meta.dirname, 'app', 'manifest.json')), { headers: { 'Content-Type': 'application/json' } }));
 app.get('/sitemap.xml', () => new Response(Bun.file(path.join(import.meta.dirname, 'app', 'sitemap.xml')), { headers: { 'Content-Type': 'application/xml' } }));

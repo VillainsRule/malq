@@ -125,10 +125,10 @@
 
             <div class='a'>
                 <span><b>GET</b> <code>/api/v1/session</code> - creates a new mail session<br></span>
-                <pre>{<br><i></i>"address": "temp@mail",<br><i></i>"token": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",<br><i></i>"provider": "malq.com"<br>}</pre>
+                <pre>{<br><i></i>"address": "email@sometempmail.com",<br><i></i>"token": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",<br><i></i>"provider": "sometempmail.com"<br>}</pre>
                 <br><br>
                 <span><b>GET</b> <code>/api/v1/inbox/:token</code> - retrieves emails for the session<br></span>
-                <pre>[<br><i></i>{<br><i></i><i></i>"from": "sender@mail",<br><i></i><i></i>"to": "temp@mail",<br><i></i><i></i>"subject": "Hello World!",<br><i></i><i></i>"body": "This is a temporary email service.",<br><i></i><i></i>"date": <n></n><br><i></i>},<br><i></i>...<br>]</pre>
+                <pre>[<br><i></i>{<br><i></i><i></i>"from": "noreply@company.com",<br><i></i><i></i>"to": "email@sometempmail.com",<br><i></i><i></i>"subject": "Hello World!",<br><i></i><i></i>"body": "This is a temporary email service.",<br><i></i><i></i>"date": {DATE}<br><i></i>},<br><i></i>...<br>]</pre>
 
                 <br><br>
                 <span><b>note:</b> due to our some of suppliers using websockets, emails are "destroyed" after 2
@@ -139,8 +139,6 @@
                     later.</span>
             </div>
         </main>
-
-        <script>document.querySelector('n').innerText = Date.now();</script>
     </body>
 
 </html>
