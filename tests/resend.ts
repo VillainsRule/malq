@@ -15,6 +15,8 @@ for (const subdir of providerSubdirs) {
 
 const providers: Map<string, { new(): Provider }> = new Map();
 
+providerFiles.sort();
+
 for (const providerFile of providerFiles) {
     if (providerFile.includes('_')) continue;
 

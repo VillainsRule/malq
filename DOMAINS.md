@@ -15,12 +15,8 @@ to do:
 - tempmailed.com
 
 easy:
-- vip.215.im
-- tempmailmmo.com
 - emailqu.com
-- 5min.email
 - nukemail.app
-- qaz.im
 
 **ERROR CODES:**
 - [C] NXDOMAIN: domain doesn't exist
@@ -113,11 +109,15 @@ Y run2mail.com
 Y mailtemp.tech
 Y tempmailget.com
 Y getnada.net
+Y qaz.im
+Y vip.215.im
+Y tempmailmmo.com
 
 N 0mail.pro [NXDOMAIN]
 N 1secmail.cc [serverr]
 N 1sec-mail.net [parked]
 N 1secmail.io [changed]
+N 1timeemail.com [5 domains]
 N 10minuteemails.com [1 domain]
 N 10minutemail.one [2 domains]
 N 10minutemail.com [REPCAP]
@@ -131,6 +131,7 @@ N 10minuteinbox.com [changed]
 N 10minutemail.now [4 domains]
 N 10-minutemail.net [mirror] (?)
 N 10minute-mail.org [parked]
+N 10minutemail.org [USECAP]
 N 24hour.email [1 domain]
 N 22.do [1 domain]
 N 33mail.com [signup]
@@ -138,6 +139,7 @@ N 48h.email [NXDOMAIN]
 N 48hr.email [slow] (cloudflare.gay)
 N 5smail.email [4 domains]
 N 5minmail.com [1 domain]
+N 5min.email [broken] (videosave.me)
 N 6d6f.com [broken] (mbejci.com)
 
 N anonbox.net [1 domain]
@@ -351,6 +353,7 @@ N mtempmail.com [2 domains]
 N my-tempmail.com [1 domain]
 N mytempemail.com [changed]
 N mail-temporaire.fr [forwarder]
+N mail1a.de [2 domains]
 
 N notletters.com [signup]
 N noopmail.org [broken] (taohucom.store)
@@ -402,6 +405,7 @@ N sandvpn.com [signup]
 N shitmail.org [2 domains]
 N smvmail.com [1 domain]
 N spamdecoy.net [5 domains]
+N sendbun.com [signup]
 
 N temp2mail.top [parked]
 N tmail.delivery [signup]
@@ -580,6 +584,7 @@ N worldtempmail.com [parked]
 N xeramail.com [2 domains]
 
 N yopmail.com [recaptcha]
+N yopmail.fr [mirror] (yopmail.com)
 N yours.tools [3 domains]
 N youxiang.dev [2 domains]
 

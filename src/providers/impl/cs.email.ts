@@ -45,7 +45,7 @@ export default class cs$email extends Provider {
         const returnableMail: Mail[] = res.list.map((mail) => ({
             id: mail.mail_id,
             from: mail.mail_from,
-            to: this.address!,
+            to: this.address,
             subject: mail.mail_subject,
             body: this.bodies[mail.mail_id] || '',
             date: parseInt(mail.mail_timestamp) * 1000

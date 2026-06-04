@@ -12,7 +12,7 @@ export default class nguyendoll$com extends Provider {
 
         const domains = res.match(/"domain":"(.*?)"/g) || [];
 
-        while (!domain && attempts < 10) {
+        while (!domain && attempts < 5) {
             let attemptingDomain = domains[Math.floor(Math.random() * domains.length)];
             let extractedDomain = attemptingDomain.match(/"domain":"(.*?)"/)?.[1];
 
