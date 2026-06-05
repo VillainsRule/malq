@@ -18,7 +18,7 @@ malq has a demo setup at https://malq.villainsrule.xyz. please don't spam it too
 
 ## setup
 
-1. install [bun](https://bun.sh)
+1. install [bun](https://bun.sh) (bun required for cloudflare WAF bypass + `proxy` opt)
 2. `bun i`
 3. `cp .env.example .env`
 4. add a **rotating** proxy to `.env`
