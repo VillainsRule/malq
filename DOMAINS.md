@@ -1,9 +1,4 @@
-CHECKERS:
-- https://sendtestmail.com
-
-SOURCES:
-- https://usercheck.com
-- https://deviceandbrowserinfo.com/data/emails/providers
+CHECKER: https://sendtestmail.com
 
 to do:
 - temporarymail.com [ssr]

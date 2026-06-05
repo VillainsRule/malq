@@ -32,20 +32,20 @@ const app = new Elysia();
 const sessions = new Map<string, Provider>();
 
 const indexPath = path.join(import.meta.dirname, 'app', 'index.html');
-const indexContent = await Bun.file(indexPath).text();
+const indexContent = fs.readFileSync(indexPath, 'utf-8');
 const servedIndex = indexContent.replace('{NUM_PROVIDERS}', providers.size.toString());
 
 app.get('/', () => new Response(servedIndex.replace('{DATE}', Date.now().toString()), { headers: { 'Content-Type': 'text/html' } }));
-app.get('/robots.txt', () => new Response(Bun.file(path.join(import.meta.dirname, 'app', 'robots.txt')), { headers: { 'Content-Type': 'text/plain' } }));
-app.get('/manifest.json', () => new Response(Bun.file(path.join(import.meta.dirname, 'app', 'manifest.json')), { headers: { 'Content-Type': 'application/json' } }));
-app.get('/sitemap.xml', () => new Response(Bun.file(path.join(import.meta.dirname, 'app', 'sitemap.xml')), { headers: { 'Content-Type': 'application/xml' } }));
-app.get('/favicon.ico', () => new Response(Bun.file(path.join(import.meta.dirname, 'app', 'icons', '32.png')), { headers: { 'Content-Type': 'image/png' } }));
+app.get('/robots.txt', () => new Response(fs.createReadStream(path.join(import.meta.dirname, 'app', 'robots.txt')), { headers: { 'Content-Type': 'text/plain' } }));
+app.get('/manifest.json', () => new Response(fs.createReadStream(path.join(import.meta.dirname, 'app', 'manifest.json')), { headers: { 'Content-Type': 'application/json' } }));
+app.get('/sitemap.xml', () => new Response(fs.createReadStream(path.join(import.meta.dirname, 'app', 'sitemap.xml')), { headers: { 'Content-Type': 'application/xml' } }));
+app.get('/favicon.ico', () => new Response(fs.createReadStream(path.join(import.meta.dirname, 'app', 'icons', '32.png')), { headers: { 'Content-Type': 'image/png' } }));
 
 const iconPath = path.join(import.meta.dirname, 'app', 'icons');
 
 fs.readdirSync(iconPath).forEach((iconFile) => {
     if (iconFile.endsWith('.png'))
-        app.get(`/icons/${iconFile}`, () => new Response(Bun.file(path.join(iconPath, iconFile))));
+        app.get(`/icons/${iconFile}`, () => new Response(fs.createReadStream(path.join(iconPath, iconFile)), { headers: { 'Content-Type': 'image/png' } }));
 });
 
 app.get('/api/v1/mail/*', ({ params, query, request }) => {
@@ -58,7 +58,7 @@ app.get('/api/v1/mail/*', ({ params, query, request }) => {
 app.get('/api/v1/session', async ({ query }) => {
     let provider: Provider;
 
-    if (query.provider && Bun.env.ALLOW_PROVIDER_SPECIFY === '1') {
+    if (query.provider && process.env.ALLOW_PROVIDER_SPECIFY === '1') {
         const specifiedProvider = providers.get(query.provider);
         if (!specifiedProvider) return { error: 'invalid provider specified' };
         provider = new specifiedProvider();
