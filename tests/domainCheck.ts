@@ -43,7 +43,7 @@ for (const domain of domains) {
                 else console.error(`domain ${domainPart} does not appear to be parked as expected!`);
             })
             .catch((err) => {
-                if (err.name === 'TimeoutError' || err.code === 'ECONNRESET' || err.code === 'ConnectionRefused') console.log(`domain ${domainPart} expectedly timed out (parkeds are unreliable)`);
+                if (err.name === 'TimeoutError' || err.code === 'ECONNRESET' || err.code === 'ConnectionRefused' || err.code === 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY') console.log(`domain ${domainPart} expectedly timed out (parkeds are unreliable)`);
                 else console.error(`domain ${domainPart} had an unexpected error:`, err)
             });
 

@@ -1,25 +1,19 @@
-import { StringDomainCache } from '@/util/domainCache';
 import getRandomName from '@/util/names';
 
 import Provider, { type Mail } from '../Provider';
-
-const domainCache = new StringDomainCache();
 
 export default class tinyhost$shop extends Provider {
     $domain = '';
     $email = '';
 
     async getAddress(): Promise<string> {
-        if (!domainCache.hasItems()) {
-            const req = await this.fetch('https://tinyhost.shop/api/random-domains/?page=1&limit=1');
-            const res = await req.json() as { domains: string[] };
-            domainCache.set(res.domains);
-        }
+        const req = await this.fetch('https://tinyhost.shop/api/random-domains/?page=1&limit=1');
+        const res = await req.json() as { domains: string[] };
 
-        this.$domain = domainCache.pull();
+        this.$domain = res.domains[0];
         this.$email = getRandomName();
-        this.address = `${this.$email}@${this.$domain}`;
 
+        this.address = `${this.$email}@${res.domains[0]}`;
         return this.address;
     }
 
