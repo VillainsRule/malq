@@ -1,9 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const domains = fs.readFileSync(path.join(import.meta.dirname, '..', 'DOMAINS.md'), 'utf-8').split('\n').filter(line => line.startsWith('N '));
+const domains = fs.readFileSync(path.join(import.meta.dirname, '..', 'DOMAINS.md'), 'utf-8');
 
-for (const domain of domains) {
+for (const domain of domains.split('\n').filter(line => line.startsWith('N '))) {
     const domainPart = domain.split(' ')[1];
 
     if (domain.includes('NXDOMAIN'))
@@ -91,4 +91,12 @@ for (const domain of domains) {
                 else console.error(`domain ${domainPart} does not appear to be behind a recaptcha WAF as expected!`);
             })
             .catch((err) => console.error(`domain ${domainPart} had an unexpected error:`, err));
+}
+
+const impl = path.join(import.meta.dirname, '..', 'src', 'providers', 'impl');
+const scan = new Bun.Glob('**/*.ts').scan(impl);
+for await (const file of scan) {
+    const filename = path.basename(file, '.ts');
+    if (filename !== '_constructor' && !domains.includes(`Y ${filename.replaceAll('_', '-')}`))
+        console.error(`implementation file ${filename} is missing from DOMAINS.md!`);
 }

@@ -1,17 +1,21 @@
 CHECKER: https://sendtestmail.com
 
+write reference:
+- getaddress; nomailfetch - cheapluxurymail.xyz
+- getaddress; mailfetch - temp-mail.org
+- domainlist; nomailfetch - mailmomy.com
+- domainlist; mailfetch - driftz.net
+
 to do:
 - temporarymail.com [ssr]
 - temp-mail.africa [ssr]
-- 1sec-mail.com (surl)
 - tempmail.ninja (websocket)
 - mail.theloi.io.vn (clean-ish api)
 - tempmail.id.vn [custom lwUpdate + SSR]
-- tempmailed.com
+- tempmailed.com [weird]
+- nukemail.app [next parsing hell]
 
 easy:
-- emailqu.com
-- nukemail.app
 - tmaily.com
 
 **ERROR CODES:**
@@ -105,6 +109,7 @@ Y getnada.net
 Y qaz.im
 Y vip.215.im
 Y tempmailmmo.com
+Y emailqu.com
 
 N 0mail.pro [NXDOMAIN]
 N 1secmail.cc [serverr]
@@ -119,6 +124,7 @@ N 1secmail.com [serverr]
 N 1secemail.com [1 domain]
 N 1secmail.co [NXDOMAIN]
 N 1secmail.site [NXDOMAIN]
+N 1sec-mail.com [broken] (api)
 N 10minutemail.net [USECAP]
 N 10minuteinbox.com [changed]
 N 10minutemail.now [4 domains]
