@@ -11,7 +11,7 @@ export default class rootsh$com extends Provider {
     bodies: Record<string, string> = {};
 
     async getAddress(): Promise<string> {
-        const domainReq = await fetch('https://rootsh.com');
+        const domainReq = await this.fetch('https://rootsh.com');
         const domainRes = await domainReq.text();
 
         this.atExpression = domainRes.match(/\.replace\("@","(.*?)"\)/)?.[1] || '';
@@ -43,7 +43,7 @@ export default class rootsh$com extends Provider {
     }
 
     async getMail(): Promise<Mail[]> {
-        const fetchReq = await fetch('https://rootsh.com/getmail', {
+        const fetchReq = await this.fetch('https://rootsh.com/getmail', {
             method: 'POST',
             body: `mail=${encodeURIComponent(this.address)}&time=0&_=${Date.now()}`,
             headers: { 'content-type': 'application/x-www-form-urlencoded', cookie: this.$cookie }

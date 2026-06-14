@@ -49,7 +49,7 @@ export default class tmailor$com extends Provider {
         }));
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
-            if (!e.body && e.id) await fetch(`https://tmailor.com/api`, {
+            if (!e.body && e.id) await this.fetch(`https://tmailor.com/api`, {
                 method: 'POST',
                 body: JSON.stringify({
                     action: 'read',

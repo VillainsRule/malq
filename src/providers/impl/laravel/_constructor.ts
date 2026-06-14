@@ -15,7 +15,7 @@ export default class laravelCommons extends Provider {
     $emailCookie = '';
 
     async getAddress(): Promise<string> {
-        const req = await fetch(`https://${this.domain}/en`, {
+        const req = await this.fetch(`https://${this.domain}/en`, {
             headers: {
                 'Referer': `https://${this.domain}/en`,
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'
@@ -28,7 +28,7 @@ export default class laravelCommons extends Provider {
 
         const mailCookie = `XSRF-TOKEN=${this.$xsrfCookie}; ${this.customLaravelCookie}=${this.$sessionCookie}; locale=${this.$localeCookie}`;
 
-        const req2 = await fetch(`https://${this.domain}/${this.messageEndpoint}?${Date.now()}`, {
+        const req2 = await this.fetch(`https://${this.domain}/${this.messageEndpoint}?${Date.now()}`, {
             method: 'POST',
             headers: {
                 'content-type': this.isFormData ? 'application/x-www-form-urlencoded; charset=UTF-8' : 'application/json',
