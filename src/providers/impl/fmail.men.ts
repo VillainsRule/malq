@@ -42,7 +42,7 @@ export default class fmail$men extends Provider {
             to: this.address,
             subject: email.subject,
             body: this.bodies[email.token] || '',
-            date: email.received_at * 1000
+            date: email.received_at
         }));
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {

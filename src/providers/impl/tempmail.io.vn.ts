@@ -41,7 +41,7 @@ export default class tempmail$io$vn extends Provider {
             to: email.to_address,
             subject: email.subject,
             body: this.bodies[email.id] || '',
-            date: new Date(email.received_at).getTime()
+            date: email.received_at * 1000
         }));
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {

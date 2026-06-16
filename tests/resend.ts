@@ -61,6 +61,14 @@ for (let i = 0; i < values.length; i++) {
             const mail = await provider.getMail();
             if (mail.length >= 1) {
                 console.log('it got the mail', mail);
+
+                if (mail.length > 1) console.error('>1 in inbox');
+                if (!mail[0].from.includes('newsletter')) console.error('mail sender mismatch');
+                if (mail[0].to !== address) console.error('mail recipient mismatch');
+                if (mail[0].subject !== 'good morning!!') console.error('mail subject mismatch');
+                if (mail[0].date > (Date.now() + 1000) || mail[0].date < (Date.now() - 1000 * 60 * 5)) console.error('mail date mismatch');
+                if (!mail[0].body.includes('how r u doing this morning?')) console.error('mail body mismatch');
+
                 didGetTheMail = true;
                 break;
             } else console.log(`no mail on try ${i + 1}/5 :<`)
