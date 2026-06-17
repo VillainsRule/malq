@@ -41,7 +41,7 @@ export default class noemail$cc extends Provider {
                 to: details[0].trim().slice(4),
                 subject: details[4].trim().slice(9),
                 body: kid.querySelector('.card-text')?.innerHTML.trim() || '',
-                date: new Date(dateStamp).getTime()
+                date: this.toEST(new Date(dateStamp).getTime(), 0)
             }
         });
 

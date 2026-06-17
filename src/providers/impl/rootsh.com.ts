@@ -67,7 +67,7 @@ export default class rootsh$com extends Provider {
             to: fetchRes.to,
             subject: email[2],
             body: this.bodies[email[4]] || '',
-            date: new Date(email[3]).getTime()
+            date: this.toEST(new Date(email[3]).getTime(), 8)
         }));
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {

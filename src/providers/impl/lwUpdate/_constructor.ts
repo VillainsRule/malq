@@ -4,8 +4,14 @@ import getRandomName from '@/util/names';
 
 import Provider, { type Mail } from '../../Provider';
 
-export default class temp_mailo$org extends Provider {
-    livewire: LWUpdate = new LWUpdate('temp-mailo.org');
+export default class lwUpdateCommons extends Provider {
+    livewire: LWUpdate;
+
+    constructor(domain: string) {
+        super();
+
+        this.livewire = new LWUpdate(domain);
+    }
 
     async getAddress(): Promise<string> {
         await this.livewire.pullHTML();
@@ -48,7 +54,7 @@ export default class temp_mailo$org extends Provider {
             to: this.address,
             subject: msg.subject,
             body: msg.content,
-            date: new Date(msg.date).getTime()
+            date: this.toEST(new Date(msg.date).getTime(), 0)
         }));
     }
 }

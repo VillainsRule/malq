@@ -80,7 +80,6 @@ Y tempmail.io.vn
 Y txen.de
 Y linshiyouxiang.net
 Y 24.email
-Y temp-mailo.org
 Y z4mails.com
 Y 10-minutemail.com
 Y driftz.net
@@ -570,6 +569,8 @@ N tempsmail.org [3 domains]
 N tempmailv5.site [broken] (mailvinhcuu.dpdns.org)
 N temp-mail.io [broken] (gmeenramy.com)
 N tempdukviet.click [badsel] (lwMessage)
+N temp-mailo.org [broken] (nutioan.online)
+N throwaway.io [broken] (pembrookgroup.net)
 
 N unlimitmail.com [signup]
 N unstablemail.com [NXDOMAIN]

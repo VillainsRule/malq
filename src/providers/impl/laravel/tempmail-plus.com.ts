@@ -5,4 +5,5 @@ export default class tempmailplus$com extends laravelCommons {
     messageEndpoint = 'get_messages';
     customLaravelCookie = 'temp_mail_plus_session';
     isFormData = false;
+    utcOffset = 1;
 }

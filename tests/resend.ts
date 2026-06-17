@@ -69,13 +69,15 @@ for (let i = 0; i < values.length; i++) {
                 if (mail[0].date > (Date.now() + 1000) || mail[0].date < (Date.now() - 1000 * 60 * 5)) console.error('mail date mismatch');
                 if (!mail[0].body.includes('how r u doing this morning?')) console.error('mail body mismatch');
 
+                console.log('sent time:', new Date(mail[0].date).toLocaleTimeString());
+
                 didGetTheMail = true;
                 break;
             } else console.log(`no mail on try ${i + 1}/5 :<`)
         }
 
         if (!didGetTheMail) console.error(provider.constructor.name, 'might be broken :<')
-        else console.log('done with', provider.constructor.name, '...moving on...')
+        else console.log(`done with ${provider.constructor.name}, moving on...`);
 
         provider.destroy()
     } catch (e) {

@@ -83,10 +83,10 @@ export default class moakt$com extends Provider {
                 const bodyDOM = parse(bodyRes);
 
                 const dateElement = bodyDOM.querySelector('.date')!.querySelector('span')!.innerText;
-                const date = new Date(dateElement).getTime();
+                const date = this.toEST(new Date(dateElement).getTime(), 0);
 
                 e.date = date;
-                this.dates[e.id!] = e.date;
+                this.dates[e.id!] = e.date, 0;
 
                 const emailElement = bodyDOM.querySelector('.email-body')!.innerHTML.trim();
 

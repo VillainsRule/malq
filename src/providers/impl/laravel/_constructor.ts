@@ -4,8 +4,8 @@ export default class laravelCommons extends Provider {
     domain = '';
     messageEndpoint = 'get_messages';
     customLaravelCookie = '';
-    hasAddress = false;
     isFormData = false;
+    utcOffset = 0;
 
     $csrfToken = '';
 
@@ -84,10 +84,10 @@ export default class laravelCommons extends Provider {
 
         const returnableMail: Mail[] = res.messages.map((email) => ({
             from: email.from_email,
-            to: this.hasAddress ? email.to : this.address,
+            to: this.address,
             subject: email.subject,
             body: email.content,
-            date: new Date(email.receivedAt).getTime()
+            date: this.toEST(new Date(email.receivedAt).getTime(), this.utcOffset)
         }));
 
         return returnableMail;

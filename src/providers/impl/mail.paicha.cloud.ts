@@ -29,7 +29,7 @@ export default class mail$paicha$cloud extends Provider {
             to: this.address,
             subject: email.subject,
             body: this.bodies[email.id] || '',
-            date: new Date(email.created_at).getTime()
+            date: this.toEST(new Date(email.created_at).getTime(), 0)
         }));
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {

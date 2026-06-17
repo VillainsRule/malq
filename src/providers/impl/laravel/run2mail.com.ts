@@ -5,4 +5,5 @@ export default class run2mail$com extends laravelCommons {
     messageEndpoint = 'en/get_messages';
     customLaravelCookie = 't_mail_session';
     isFormData = false;
+    utcOffset = 1;
 }

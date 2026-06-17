@@ -69,7 +69,7 @@ export default class surlCommons extends Provider {
                 to: this.address,
                 subject,
                 body: this.bodies[id!] || body,
-                date: new Date(date).getTime()
+                date: this.toEST(new Date(date).getTime(), 0)
             };
         }).filter(e => Array.isArray(e) || e) as Mail[];
 

@@ -31,7 +31,7 @@ export default class qaz$im extends Provider {
             to: this.address,
             subject: email.subject,
             body: email.content,
-            date: new Date(email.receivedAt).getTime()
+            date: this.toEST(new Date(email.receivedAt).getTime(), 0)
         }));
 
         return returnableMail;

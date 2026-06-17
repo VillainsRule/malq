@@ -5,4 +5,5 @@ export default class email10min$com extends laravelCommons {
     messageEndpoint = 'messages';
     customLaravelCookie = '10minutemail_session';
     isFormData = true;
+    utcOffset = 0;
 }

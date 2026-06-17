@@ -35,7 +35,7 @@ export default class tinyhost$shop extends Provider {
             to: this.address,
             subject: email.subject,
             body: email.body || email.html_body,
-            date: new Date(email.date).getTime()
+            date: this.toEST(new Date(email.date).getTime(), 0)
         }));
 
         return returnableMail;

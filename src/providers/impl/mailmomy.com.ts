@@ -37,7 +37,7 @@ export default class mailmomy$com extends Provider {
             to: email.recipient,
             subject: email.subject,
             body: email.bodyText || email.message,
-            date: new Date(email.receivedAt).getTime()
+            date: this.toEST(new Date(email.receivedAt).getTime(), 7)
         }));
 
         return returnableMail;

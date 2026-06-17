@@ -49,7 +49,7 @@ export default class nguyendoll$com extends Provider {
             to: this.address,
             subject: email.subject,
             body: email.html_content,
-            date: new Date(email.date).getTime()
+            date: this.toEST(new Date(email.date).getTime(), 7)
         }));
 
         return returnableMail;

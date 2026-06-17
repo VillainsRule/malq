@@ -5,4 +5,5 @@ export default class tempmailbank$com extends laravelCommons {
     messageEndpoint = 'get_messages';
     customLaravelCookie = 'tempmail_bank_session';
     isFormData = false;
+    utcOffset = 6;
 }

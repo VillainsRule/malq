@@ -33,7 +33,7 @@ export default class priyo$email extends Provider {
             to: this.address,
             subject: msg.subject,
             body: msg.content,
-            date: new Date(msg.date).getTime()
+            date: this.toEST(new Date(msg.date).getTime(), 0)
         }));
     }
 }
