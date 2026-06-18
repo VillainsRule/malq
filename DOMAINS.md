@@ -69,7 +69,6 @@ Y mail.chatgpt.org.uk
 Y temp-mail.org
 Y tmail.thangdeptrai.net
 Y moakt.com
-Y tmailor.com
 Y rootsh.com
 Y priyo.email
 Y tempmailo.com
@@ -95,7 +94,6 @@ Y onetempmail.com
 Y mailporary.com
 Y m2u.io
 Y temp-mail.asia
-Y throwaway.io
 Y fmail.men
 Y cheapluxurymail.xyz
 Y cleantempmail.com
@@ -571,6 +569,7 @@ N temp-mail.io [broken] (gmeenramy.com)
 N tempdukviet.click [badsel] (lwMessage)
 N temp-mailo.org [broken] (nutioan.online)
 N throwaway.io [broken] (pembrookgroup.net)
+N tmailor.com [4 domains] (etubemail.com broken)
 
 N unlimitmail.com [signup]
 N unstablemail.com [NXDOMAIN]
