@@ -75,10 +75,7 @@ app.get('/api/v1/session', async ({ query }) => {
 
         sessions.set(token, provider);
 
-        setTimeout(() => {
-            provider.destroy();
-            sessions.delete(token);
-        }, 2 * 60 * 1000);
+        setTimeout(() => sessions.delete(token), 2 * 60 * 1000);
 
         return { address, token, provider: providerName };
     } catch (e) {

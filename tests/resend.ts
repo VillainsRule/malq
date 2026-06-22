@@ -78,8 +78,6 @@ for (let i = 0; i < values.length; i++) {
 
         if (!didGetTheMail) console.error(provider.constructor.name, 'might be broken :<')
         else console.log(`done with ${provider.constructor.name}, moving on...`);
-
-        provider.destroy()
     } catch (e) {
         console.error(`well well WELL...the above provider errors. moving on i guess...`);
         console.error(e);

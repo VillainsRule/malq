@@ -19,8 +19,6 @@ class Provider {
         throw new Error(this.constructor.name + ' has not implemented getMail()');
     }
 
-    destroy(): void { }
-
     fetch(url: string, options: RequestInit = {}) {
         if (process.env.PROXY) (options as any).proxy = process.env.PROXY;
         return fetch(url, options);
