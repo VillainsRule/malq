@@ -70,6 +70,7 @@ export default class laravelCommons extends Provider {
             },
             body: this.isFormData ? `_token=${this.$csrfToken}&captcha=` : JSON.stringify({ _token: this.$csrfToken })
         });
+
         const res = await req.json() as {
             messages: {
                 subject: string,

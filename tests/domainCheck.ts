@@ -1,3 +1,4 @@
+import dns from 'node:dns';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -10,6 +11,28 @@ for (const domain of domains.split('\n').filter(line => line.startsWith('N '))) 
         fetch('http://' + domainPart, { method: 'HEAD', signal: AbortSignal.timeout(5000) })
             .then(() => console.error(`domain ${domainPart} unexpectedly resolved!`))
             .catch(() => console.log(`domain ${domainPart} expectedly did not resolve.`));
+
+    if (domain.includes('serverr'))
+        fetch('http://' + domainPart, { signal: AbortSignal.timeout(5000) })
+            .then(async (res) => {
+                if (res.status >= 200 && res.status < 300) {
+                    const body = await res.text();
+                    if (!body.includes('undergoing maintenance') && !body.includes('<title>Account Suspended</title>') && !body.includes('<title>Index of /</title>'))
+                        return console.error(`domain ${domainPart} unexpectedly sent a valid code!`)
+                }
+
+                console.log(`domain ${domainPart} expectedly errored.`)
+            })
+            .catch(() => console.log(`domain ${domainPart} expectedly errored.`));
+
+    if (domain.includes('blank'))
+        fetch('http://' + domainPart, { signal: AbortSignal.timeout(5000) })
+            .then(async (res) => {
+                const body = await res.text();
+                if (body.trim() === '') console.log(`domain ${domainPart} is expectedly blank`);
+                else console.error(`domain ${domainPart} is NOT blank!`)
+            })
+            .catch(() => console.error(`domain ${domainPart} is not blank!`));
 
     if (domain.includes('timeout'))
         fetch('http://' + domainPart, { method: 'HEAD', signal: AbortSignal.timeout(5000) })
@@ -43,7 +66,13 @@ for (const domain of domains.split('\n').filter(line => line.startsWith('N '))) 
                 else console.error(`domain ${domainPart} does not appear to be parked as expected!`);
             })
             .catch((err) => {
-                if (err.name === 'TimeoutError' || err.code === 'ECONNRESET' || err.code === 'ConnectionRefused' || err.code === 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY') console.log(`domain ${domainPart} expectedly timed out (parkeds are unreliable)`);
+                if (
+                    err.name === 'TimeoutError' ||
+                    err.code === 'ECONNRESET' ||
+                    err.code === 'ConnectionRefused' ||
+                    err.code === 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY' ||
+                    err.code === 'UNKNOWN_CERTIFICATE_VERIFICATION_ERROR'
+                ) console.log(`domain ${domainPart} expectedly timed out (parkeds are unreliable)`);
                 else console.error(`domain ${domainPart} had an unexpected error:`, err)
             });
 
@@ -91,6 +120,17 @@ for (const domain of domains.split('\n').filter(line => line.startsWith('N '))) 
                 else console.error(`domain ${domainPart} does not appear to be behind a recaptcha WAF as expected!`);
             })
             .catch((err) => console.error(`domain ${domainPart} had an unexpected error:`, err));
+
+    if (domain.includes('seized')) dns.resolveNs(domainPart.split('.').slice(-2).join('.'), (err, addresses) => {
+        if (err) return console.error('error fetching DNS records for', domainPart);
+
+        if (addresses.some(addr =>
+            addr.endsWith('fbi.seized.gov') ||
+            addr.endsWith('usssdomainseizure.com') ||
+            addr.endsWith('seizedservers.com')
+        )) console.log(`domain ${domainPart} is seized as expected (lol)`)
+        else console.error(`domain ${domainPart} is NOT seized as expected!`)
+    });
 }
 
 const impl = path.join(import.meta.dirname, '..', 'src', 'providers', 'impl');

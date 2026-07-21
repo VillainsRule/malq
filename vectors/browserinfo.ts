@@ -1,3 +1,7 @@
+const IGNORE_LIST = [
+    'paicha.cloud'
+]
+
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -14,5 +18,5 @@ const domains = providers.map((p) => p.children[0].children[0].innerText.trim())
 const domainFile = path.join(import.meta.dirname, '..', 'DOMAINS.md');
 const domainsFromFile = fs.readFileSync(domainFile, 'utf-8').split('\n').filter(l => l.startsWith('Y ') || l.startsWith('N ') || l.startsWith('- ')).map(l => l.split(' ')[1]);
 
-const newDomains = domains.filter(d => !domainsFromFile.includes(d) && d.includes('.'));
-console.log('new domains found:', newDomains.sort());
+const newDomains = domains.filter(d => !domainsFromFile.includes(d) && d.includes('.') && !IGNORE_LIST.includes(d)).sort();
+console.log(newDomains.length ? `new domains found: ${newDomains}` : 'no new domains :D');

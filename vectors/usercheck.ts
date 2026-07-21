@@ -1,3 +1,7 @@
+const IGNORE_LIST = [
+    'tempmailapi.io.vn'
+]
+
 import fs from 'fs';
 import path from 'path';
 
@@ -49,5 +53,5 @@ for (let i = 0; i < 22; i++) {
 const domainFile = path.join(import.meta.dirname, '..', 'DOMAINS.md');
 const domainsFromFile = fs.readFileSync(domainFile, 'utf-8').split('\n').filter(l => l.startsWith('Y ') || l.startsWith('N ') || l.startsWith('- ')).map(l => l.split(' ')[1]);
 
-const newDomains = providers.map(p => p.name).filter(d => !domainsFromFile.includes(d));
-console.log('new domains found:', newDomains);
+const newDomains = providers.map(p => p.name).filter(d => !domainsFromFile.includes(d) && !IGNORE_LIST.includes(d)).sort();
+console.log(newDomains.length ? `new domains found: ${newDomains}` : 'no new domains :D');

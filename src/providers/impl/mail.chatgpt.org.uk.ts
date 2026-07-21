@@ -1,39 +1,45 @@
+import { StringDomainCache } from '@/util/domainCache';
+import getRandomName from '@/util/names';
+
 import Provider, { type Mail } from '../Provider';
 
+const domainCache = new StringDomainCache();
+
 export default class mail$chatgpt$org$uk extends Provider {
+    bodies: Record<string, string> = {};
+
     $token = '';
     $cookie = '';
 
-    lastMail: Mail[] = [];
-
     async getAddress(): Promise<string> {
-        const tokenReq = await this.fetch('https://mail.chatgpt.org.uk/');
-        const tokenRes = await tokenReq.text();
+        if (!domainCache.hasItems()) {
+            const domainReq = await this.fetch('https://mail.chatgpt.org.uk/api/domains/public');
+            const domainRes = await domainReq.json() as { data: { domains: { domain_name: string, is_active: 1 | 0 }[] } };
 
-        this.$token = tokenRes.match(/"token":"(.*?)"/)![1];
-        this.$cookie = tokenReq.headers.get('set-cookie')!.split(';')[0].split('=')[1];
+            domainCache.set(domainRes.data.domains.filter(e => e.is_active).map(e => e.domain_name));
+        }
 
-        const req = await this.fetch('https://mail.chatgpt.org.uk/api/generate-email', {
-            headers: {
-                'Cookie': `gm_sid=${this.$cookie}`,
-                'Referer': 'https://mail.chatgpt.org.uk/',
-                'X-Inbox-Token': this.$token
-            }
+        const address = `${getRandomName()}@${domainCache.pull()}`;
+
+        const tokenReq = await this.fetch('https://mail.chatgpt.org.uk/api/inbox-token', {
+            method: 'POST',
+            body: JSON.stringify({ email: address }),
+            headers: { 'content-type': 'application/json' }
         });
 
-        const res = await req.json() as { data: { email: string }, auth: { token: string } };
+        const tokenRes = await tokenReq.json() as { auth: { token: string } };
 
-        this.$cookie = req.headers.get('set-cookie')!.split(';')[0].split('=')[1];
-        this.$token = res.auth.token;
+        this.$token = tokenRes.auth.token;
+        this.$cookie = tokenReq.headers.getSetCookie().map(e => e.split('; ')[0]).join('; ');
 
-        this.address = res.data.email;
-        return res.data.email;
+        this.address = address;
+        return address;
     }
 
     async getMail(): Promise<Mail[]> {
         const req = await this.fetch('https://mail.chatgpt.org.uk/api/emails?email=' + this.address, {
             headers: {
-                'Cookie': `gm_sid=${this.$cookie}`,
+                'Cookie': this.$cookie,
                 'Referer': 'https://mail.chatgpt.org.uk/',
                 'X-Inbox-Token': this.$token
             }
@@ -46,34 +52,35 @@ export default class mail$chatgpt$org$uk extends Provider {
                     from_address: string,
                     email_address: string,
                     subject: string,
-                    content: string,
-                    html_content: string,
                     timestamp: number
                 }[]
             },
             auth: {
                 token: string
             }
-        } | { error: string };
+        };
 
-        this.$cookie = req.headers.get('set-cookie')?.split(';')[0].split('=')[1] || '';
-        this.$token = ('auth' in res && res.auth.token) || '';
-
-        if (('error' in res)) {
-            if (res.error.includes('Too many requests')) return this.lastMail;
-            else console.error('mail.chatgpt.org.uk error', res);
-        }
-
-        const returnableMail: Mail[] = ('data' in res) ? res.data.emails.map((email) => ({
+        const returnableMail: Mail[] = res.data.emails.map((email) => ({
+            id: email.id,
             from: email.from_address,
             to: email.email_address,
             subject: email.subject,
-            body: email.content || email.html_content,
+            body: this.bodies[email.id] || '',
             date: email.timestamp * 1000
-        })) : [];
+        }));
 
-        this.lastMail = returnableMail;
+        const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
+            if (!e.body && e.id) await this.fetch(`https://mail.chatgpt.org.uk/api/email/${e.id}?email=${encodeURIComponent(this.address)}&include_raw=0`, {
+                headers: { cookie: this.$cookie, 'x-inbox-token': this.$token }
+            }).then(async (bodyReq) => {
+                const bodyRes = await bodyReq.json() as { data: { content: string, html_content: string } };
+                e.body = bodyRes.data.content;
+                this.bodies[e.id!] = e.body;
+            });
 
-        return returnableMail;
+            return e;
+        }));
+
+        return finalMail;
     }
 }
