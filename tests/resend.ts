@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-import type Provider from '../src/providers/Provider';
+import type { ProviderImpl } from '@/providers/Provider';
 
 const providerDir = path.join(import.meta.dirname, '..', 'src', 'providers', 'impl');
 const providerFiles = fs.readdirSync(providerDir).filter((file) => file.endsWith('.ts') || file.endsWith('.js'));
@@ -13,7 +13,7 @@ for (const subdir of providerSubdirs) {
     for (const file of subdirFiles) providerFiles.push(path.join(subdir, file));
 }
 
-const providers: Map<string, { new(): Provider }> = new Map();
+const providers: Map<string, { new(): ProviderImpl }> = new Map();
 
 providerFiles.sort();
 
@@ -33,13 +33,18 @@ for (let i = 0; i < values.length; i++) {
         const provider = new ProviderClass();
         console.log(`testing provider ${provider.constructor.name} (${i + 1}/${values.length})...`);
 
-        const address = await provider.getAddress();
-        console.log('got address', address);
+        const domains = await provider.getDomains();
+        const address = `xo${Math.random().toString(36).slice(2)}@${domains[domains.length * Math.random() | 0]}`;
+        console.log('decided address', address);
 
-        const res = await fetch('https://api.resend.com/emails', {
+        await provider.createInbox(address);
+        console.log('created inbox...');
+
+        const res = await fetch('https://api.brevo.com/v3/smtp/email', {
             method: 'POST',
             headers: {
-                'Authorization': 'Bearer ' + Bun.env.RESEND_API_KEY,
+                'Accept': 'application/json',
+                'Api-Key': Bun.env.BREVO_API_KEY!,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
@@ -58,7 +63,7 @@ for (let i = 0; i < values.length; i++) {
             if (i < 3) await new Promise((r) => setTimeout(r, 1500));
             else await new Promise((r) => setTimeout(r, 3000));
 
-            const mail = await provider.getMail();
+            const mail = await provider.getMail(address);
             if (mail.length >= 1) {
                 console.log('it got the mail', mail);
 

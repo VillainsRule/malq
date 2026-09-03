@@ -1,44 +1,33 @@
 import parse from 'node-html-parser';
 
-import { StringDomainCache } from '@/util/domainCache';
-import getRandomName from '@/util/names';
+import { fish, toEST } from '@/util/util';
 
-import Provider, { type Mail } from '../../Provider';
+import type { Mail, ProviderImpl } from '../../Provider';
 
-const domainCache = new StringDomainCache();
-
-export default class surlCommons extends Provider {
+export default class surlCommons implements ProviderImpl {
     host = '';
-
-    $domain = '';
-    $user = '';
 
     bodies: Record<string, string> = {};
 
-    async getAddress(): Promise<string> {
-        if (!domainCache.hasItems()) {
-            const req = await this.fetch(`https://${this.host}`);
-            const res = await req.text();
+    async getDomains(): Promise<string[]> {
+        const req = await fish(`https://${this.host}`);
+        const res = await req.text();
 
-            const domains = res.match(/change_dropdown_list\(this\.innerHTML\)" id="(.*?)"/g) || [];
-            const cleanedDomains = domains.map(d => d.match(/change_dropdown_list\(this\.innerHTML\)" id="(.*?)"/)?.[1] || '').filter(d => d);
+        const domains = res.match(/change_dropdown_list\(this\.innerHTML\)" id="(.*?)"/g) || [];
+        const cleanedDomains = domains.map(d => d.match(/change_dropdown_list\(this\.innerHTML\)" id="(.*?)"/)?.[1] || '').filter(d => d);
 
-            domainCache.set(cleanedDomains);
-        }
-
-        const domain = domainCache.pull();
-        const user = getRandomName();
-
-        this.address = `${user}@${domain}`;
-        this.$domain = domain;
-        this.$user = user;
-
-        return this.address;
+        return cleanedDomains;
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch(`https://${this.host}`, {
-            headers: { cookie: `embx=%5B%22${encodeURIComponent(this.address)}%22%5D; surl=${this.$domain}/${this.$user}` }
+    async createInbox(_address: string): Promise<void> {
+        void 0;
+    }
+
+    async getMail(address: string): Promise<Mail[]> {
+        const [user, domain] = address.split('@');
+
+        const req = await fish(`https://${this.host}`, {
+            headers: { cookie: `embx=%5B%22${encodeURIComponent(address)}%22%5D; surl=${user}/${domain}` }
         });
 
         const res = await req.text();
@@ -66,16 +55,16 @@ export default class surlCommons extends Provider {
             return {
                 id,
                 from,
-                to: this.address,
+                to: address,
                 subject,
                 body: this.bodies[id!] || body,
-                date: this.toEST(new Date(date).getTime(), 0)
+                date: toEST(new Date(date).getTime(), 0)
             };
         }).filter(e => Array.isArray(e) || e) as Mail[];
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
-            if (!e.body && e.id) await this.fetch(`https://${this.host}/${this.$domain}/${this.$user}/${e.id}`, {
-                headers: { cookie: `embx=%5B%22${encodeURIComponent(this.address)}%22%5D; surl=${this.$domain}/${this.$user}/${e.id}` }
+            if (!e.body && e.id) await fish(`https://${this.host}/${domain}/${user}/${e.id}`, {
+                headers: { cookie: `embx=%5B%22${encodeURIComponent(address)}%22%5D; surl=${domain}/${user}/${e.id}` }
             }).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.text();
                 const bodyDOM = parse(bodyRes);

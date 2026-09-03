@@ -1,21 +1,31 @@
-import Provider, { type Mail } from '../Provider';
+import { fish } from '@/util/util';
 
-export default class cleantempmail$com extends Provider {
+import type { Mail, ProviderImpl } from '../Provider';
+
+export default class cleantempmail$com implements ProviderImpl {
     bodies: Record<string, string> = {};
 
-    async getAddress(): Promise<string> {
-        const mailReq = await this.fetch('https://cleantempmail.com/api/generate-email', {
+    async getDomains(): Promise<string[]> {
+        const req = await fish('https://cleantempmail.com/api/domains', {
             headers: { 'referer': 'https://cleantempmail.com/' }
         });
 
-        const mailRes = await mailReq.json() as { data: { email: string } };
-
-        this.address = mailRes.data.email;
-        return this.address;
+        const res = await req.json() as { data: { domains: string[] } };
+        return res.data.domains;
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch('https://cleantempmail.com/api/emails?email=' + this.address, {
+    async createInbox(address: string): Promise<void> {
+        const [prefix, domain] = address.split('@');
+
+        await fish('https://cleantempmail.com/api/generate-email', {
+            method: 'POST',
+            headers: { 'content-type': 'application/json', 'referer': 'https://cleantempmail.com/' },
+            body: JSON.stringify({ prefix, domain })
+        });
+    }
+
+    async getMail(address: string): Promise<Mail[]> {
+        const req = await fish('https://cleantempmail.com/api/emails?email=' + address, {
             headers: { 'referer': 'https://cleantempmail.com/' }
         });
 

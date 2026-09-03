@@ -1,28 +1,33 @@
-import Provider, { type Mail } from '../Provider';
+import { fish } from '@/util/util';
 
-export default class cheapluxurymail$xyz extends Provider {
+import type { Mail, ProviderImpl } from '../Provider';
+
+export default class cheapluxurymail$xyz implements ProviderImpl {
     bodies: Record<string, string> = {};
 
-    password = '';
+    $password = '';
 
-    async getAddress(): Promise<string> {
-        const mailReq = await this.fetch('https://cheapluxurymail.xyz/random_email');
-        const mailRes = await mailReq.json() as { data: { email: string, password: string } };
+    async getDomains(): Promise<string[]> {
+        const domainReq = await fetch('https://cheapluxurymail.xyz/domains');
+        const domainRes = await domainReq.json() as { data: { domains: string[] } };
 
-        this.address = mailRes.data.email;
-        this.password = mailRes.data.password;
-
-        return this.address;
+        return domainRes.data.domains;
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch('https://cheapluxurymail.xyz/email/get', {
+    async createInbox(address: string): Promise<void> {
+        this.$password = Math.random().toString(36).slice(2).toUpperCase() + Math.random().toString(36).slice(2).toLowerCase();
+
+        await fish('https://cheapluxurymail.xyz/register', {
+            method: 'POST',
+            body: JSON.stringify({ email: address, password: this.$password })
+        });
+    }
+
+    async getMail(address: string): Promise<Mail[]> {
+        const req = await fish('https://cheapluxurymail.xyz/email/get', {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({
-                email: this.address,
-                password: this.password
-            })
+            body: JSON.stringify({ email: address, password: this.$password })
         });
 
         const res = await req.json() as {

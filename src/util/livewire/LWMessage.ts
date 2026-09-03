@@ -1,6 +1,6 @@
 import wafFetch from '../waf/fetch';
 
-class LWMessage {
+export default class LWMessage {
     host: string;
     mustByapssWaf: boolean;
 
@@ -207,5 +207,3 @@ class LWMessage {
         this.updateCookies('cookies' in req ? req.cookies : req.headers.getSetCookie() || []);
     }
 }
-
-export default LWMessage;

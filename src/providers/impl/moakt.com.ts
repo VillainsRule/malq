@@ -1,35 +1,27 @@
 import parse from 'node-html-parser';
 
-import { StringDomainCache } from '@/util/domainCache';
-import getRandomName from '@/util/names';
+import { fish, toEST } from '@/util/util';
 
-import Provider, { type Mail } from '../Provider';
+import type { Mail, ProviderImpl } from '../Provider';
 
-const domainCache = new StringDomainCache();
-
-export default class moakt$com extends Provider {
+export default class moakt$com implements ProviderImpl {
     bodies: Record<string, string> = {};
     dates: Record<string, number> = {};
 
     $cookie = '';
 
-    async getAddress(): Promise<string> {
-        if (!domainCache.hasItems()) {
-            const req = await this.fetch('https://moakt.com');
-            const res = await req.text();
+    async getDomains(): Promise<string[]> {
+        const req = await fish('https://moakt.com');
+        const res = await req.text();
 
-            const matchedDomains = res.match(/<option value="(.*?)">/g) || [];
-            const cleanDomains = matchedDomains.map(d => d.match(/<option value="(.*?)">/)![1]);
+        const matchedDomains = res.match(/<option value="(.*?)">/g) || [];
+        return matchedDomains.map(d => d.match(/<option value="(.*?)">/)![1]);
+    }
 
-            domainCache.set(cleanDomains);
-        }
+    async createInbox(address: string): Promise<void> {
+        const [name, domain] = address.split('@');
 
-        const domain = domainCache.pull();
-        const name = getRandomName();
-
-        this.address = `${name}@${domain}`;
-
-        const activateReq = await this.fetch('https://moakt.com/en/inbox', {
+        const activateReq = await fish('https://moakt.com/en/inbox', {
             method: 'POST',
             body: `domain=${domain}&username=${name}&setemail=&preferred_domain=disbox.net`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
@@ -40,12 +32,10 @@ export default class moakt$com extends Provider {
         const cookie = rawCookie[0].split(';')[0];
 
         this.$cookie = cookie;
-
-        return this.address;
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch('https://moakt.com/en/inbox', {
+    async getMail(address: string): Promise<Mail[]> {
+        const req = await fish('https://moakt.com/en/inbox', {
             headers: { cookie: this.$cookie }
         });
 
@@ -68,7 +58,7 @@ export default class moakt$com extends Provider {
             return {
                 id: href,
                 from: sender.trim(),
-                to: this.address,
+                to: address,
                 subject: subject.trim(),
                 body: this.bodies[href] || '',
                 date: this.dates[href] || 0
@@ -76,14 +66,14 @@ export default class moakt$com extends Provider {
         }).filter(e => typeof e === 'object') as Mail[];
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
-            if ((!e.date || !e.body) && e.id) await this.fetch(`https://moakt.com${e.id}/plain`, {
+            if ((!e.date || !e.body) && e.id) await fish(`https://moakt.com${e.id}/plain`, {
                 headers: { cookie: this.$cookie }
             }).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.text();
                 const bodyDOM = parse(bodyRes);
 
                 const dateElement = bodyDOM.querySelector('.date')!.querySelector('span')!.innerText;
-                const date = this.toEST(new Date(dateElement).getTime(), 0);
+                const date = toEST(new Date(dateElement).getTime(), 0);
 
                 e.date = date;
                 this.dates[e.id!] = e.date, 0;

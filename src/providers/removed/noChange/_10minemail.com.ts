@@ -1,22 +1,28 @@
-import Provider, { type Mail } from '../Provider';
+import { fish } from '@/util/util';
 
-export default class _10minemail$com extends Provider {
+import type { Mail, ProviderImpl } from '../../Provider';
+
+export default class _10minemail$com implements ProviderImpl {
     $token = '';
 
     bodies: Record<string, string> = {};
 
-    async getAddress(): Promise<string> {
-        const req = await this.fetch('https://web2.10minemail.com/mailbox', { method: 'POST' });
+    async getDomains(): Promise<string[]> {
+        return [];
+    }
+
+    async createInbox(address: string): Promise<void> {
+        const req = await fish('https://web2.10minemail.com/mailbox', { method: 'POST' });
         const res = await req.json() as { mailbox: string, token: string };
 
         this.$token = res.token;
-        this.address = res.mailbox;
+        address = res.mailbox;
 
-        return res.mailbox;
+        void 0;
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch('https://web2.10minemail.com/messages', {
+    async getMail(address: string): Promise<Mail[]> {
+        const req = await fish('https://web2.10minemail.com/messages', {
             headers: { 'Authorization': `Bearer ${this.$token}` }
         });
 
@@ -41,7 +47,7 @@ export default class _10minemail$com extends Provider {
 
         const finalMail = await Promise.all(returnableMail.map(async (e) => {
             if (!e.body && e.id) {
-                const bodyReq = await this.fetch(`https://web2.10minemail.com/messages/${e.id}`, {
+                const bodyReq = await fish(`https://web2.10minemail.com/messages/${e.id}`, {
                     headers: { 'Authorization': `Bearer ${this.$token}` }
                 });
 

@@ -1,24 +1,23 @@
-import getRandomName from '@/util/names';
+import { fish, toEST } from '@/util/util';
 
-import Provider, { type Mail } from '../Provider';
+import type { Mail, ProviderImpl } from '../Provider';
 
-export default class tinyhost$shop extends Provider {
-    $domain = '';
-    $email = '';
-
-    async getAddress(): Promise<string> {
-        const req = await this.fetch('https://tinyhost.shop/api/random-domains/?page=1&limit=1');
+export default class tinyhost$shop implements ProviderImpl {
+    async getDomains(): Promise<string[]> {
+        const req = await fish('https://tinyhost.shop/api/all-domains/');
         const res = await req.json() as { domains: string[] };
 
-        this.$domain = res.domains[0];
-        this.$email = getRandomName();
-
-        this.address = `${this.$email}@${res.domains[0]}`;
-        return this.address;
+        return res.domains;
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch(`https://tinyhost.shop/api/email/${this.$domain}/${this.$email}/?page=1&limit=50`);
+    async createInbox(_address: string): Promise<void> {
+        void 0;
+    }
+
+    async getMail(address: string): Promise<Mail[]> {
+        const [email, domain] = address.split('@');
+
+        const req = await fish(`https://tinyhost.shop/api/email/${domain}/${email}/?page=1&limit=50`);
         const res = await req.json() as {
             emails: {
                 id: string,
@@ -32,10 +31,10 @@ export default class tinyhost$shop extends Provider {
 
         const returnableMail: Mail[] = res.emails.map((email) => ({
             from: email.sender,
-            to: this.address,
+            to: address,
             subject: email.subject,
             body: email.body || email.html_body,
-            date: this.toEST(new Date(email.date).getTime(), 0)
+            date: toEST(new Date(email.date).getTime(), 0)
         }));
 
         return returnableMail;

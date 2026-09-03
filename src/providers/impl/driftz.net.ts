@@ -1,26 +1,22 @@
-import { StringDomainCache } from '@/util/domainCache';
-import getRandomName from '@/util/names';
+import { fish } from '@/util/util';
 
-import Provider, { type Mail } from '../Provider';
+import type { Mail, ProviderImpl } from '../Provider';
 
-const domainCache = new StringDomainCache();
-
-export default class driftz$net extends Provider {
+export default class driftz$net implements ProviderImpl {
     bodies: Record<string, string> = {};
 
-    async getAddress(): Promise<string> {
-        if (!domainCache.hasItems()) {
-            const req = await this.fetch('https://api.driftz.net/domains');
-            const res = await req.json() as { result: { public: string[] } };
-            domainCache.set(res.result.public);
-        }
-
-        this.address = `${getRandomName()}@${domainCache.pull()}`;
-        return this.address;
+    async getDomains(): Promise<string[]> {
+        const req = await fish('https://api.driftz.net/domains');
+        const res = await req.json() as { result: { public: string[] } };
+        return res.result.public;
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch(`https://api.driftz.net/emails/${this.address}?limit=100`);
+    async createInbox(_address: string): Promise<void> {
+        void 0;
+    }
+
+    async getMail(address: string): Promise<Mail[]> {
+        const req = await fish(`https://api.driftz.net/emails/${address}?limit=100`);
         const res = await req.json() as {
             result: {
                 items: {
@@ -43,7 +39,7 @@ export default class driftz$net extends Provider {
         }));
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
-            if (!e.body && e.id) await this.fetch(`https://api.driftz.net/inbox/${e.id}`).then(async (bodyReq) => {
+            if (!e.body && e.id) await fish(`https://api.driftz.net/inbox/${e.id}`).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.json() as { result: { textContent: string, htmlContent: string } };
                 e.body = bodyRes.result.textContent || bodyRes.result.htmlContent;
                 this.bodies[e.id!] = e.body;

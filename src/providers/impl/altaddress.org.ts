@@ -1,27 +1,29 @@
 import parse from 'node-html-parser';
 
-import getRandomName from '@/util/names';
+import { fish } from '@/util/util';
 
-import Provider, { type Mail } from '../Provider';
+import type { Mail, ProviderImpl } from '../Provider';
 
-export default class altaddress$org extends Provider {
-    $cookie = '';
-
+export default class altaddress$org implements ProviderImpl {
     dates: Record<string, number> = {};
     bodies: Record<string, string> = {};
 
-    async getAddress(): Promise<string> {
-        const req = await this.fetch('https://altaddress.org');
+    $cookie = '';
+
+    async getDomains(): Promise<string[]> {
+        const req = await fetch('https://altaddress.org');
         const res = await req.text();
 
         const domainMatches = res.match(/<option value="(.*?)"/g) || [];
         const uniqueMatches = [...new Set(domainMatches)].filter(e => e.includes('.'));
-        const randomDomain = uniqueMatches[Math.floor(Math.random() * uniqueMatches.length)];
-        const domain = randomDomain.match(/<option value="(.*?)"/)![1];
 
-        const user = getRandomName();
+        return uniqueMatches.map((e) => e.match(/<option value="(.*?)"/)![1]);
+    }
 
-        const loginReq = await this.fetch('https://altaddress.org/login', {
+    async createInbox(address: string): Promise<void> {
+        const [user, domain] = address.split('@');
+
+        const loginReq = await fish('https://altaddress.org/login', {
             method: 'POST',
             body: `email=${user}&domain=${domain}`,
             headers: { 'content-type': 'application/x-www-form-urlencoded' },
@@ -29,13 +31,10 @@ export default class altaddress$org extends Provider {
         });
 
         this.$cookie = loginReq.headers.get('set-cookie')?.split(';')[0]!;
-
-        this.address = `${user}@${domain}`;
-        return this.address;
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch(`https://altaddress.org/inbox`, {
+    async getMail(address: string): Promise<Mail[]> {
+        const req = await fish(`https://altaddress.org/inbox`, {
             headers: { cookie: this.$cookie }
         });
 
@@ -51,7 +50,7 @@ export default class altaddress$org extends Provider {
             return {
                 id,
                 from: e.querySelector('.message-from')!.innerText.trim(),
-                to: this.address,
+                to: address,
                 subject: e.querySelector('.message-subject')!.innerText.trim(),
                 date: this.dates[id] || Date.now(),
                 body: this.bodies[id] || ''
@@ -60,7 +59,7 @@ export default class altaddress$org extends Provider {
 
         const finalMessages: Mail[] = await Promise.all(messages.map(async (m) => {
             if (!m.date && m.id) {
-                const bodyReq = await this.fetch(`https://altaddress.org${m.id}`, {
+                const bodyReq = await fish(`https://altaddress.org${m.id}`, {
                     headers: { cookie: this.$cookie }
                 });
 
@@ -74,7 +73,7 @@ export default class altaddress$org extends Provider {
             }
 
             if (!m.body && m.id) {
-                const bodyReq = await this.fetch(`https://altaddress.org${m.id}/getContent/1/remote/1`, {
+                const bodyReq = await fish(`https://altaddress.org${m.id}/getContent/1/remote/1`, {
                     headers: { cookie: this.$cookie }
                 });
 

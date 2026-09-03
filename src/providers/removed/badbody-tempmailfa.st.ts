@@ -1,6 +1,8 @@
 import crypto from 'node:crypto';
 
-import Provider, { type Mail } from '../Provider';
+import { fish } from '@/util/util';
+
+import type { Mail, ProviderImpl } from '../Provider';
 
 const getSign = (input: string) => {
     const rand = Math.random().toString(36).substring(2, 15);
@@ -17,14 +19,18 @@ const getSign = (input: string) => {
     };
 };
 
-export default class tempmailfa$st extends Provider {
+export default class tempmailfa$st implements ProviderImpl {
     $authToken = '';
 
     bodies: Record<string, string> = {};
 
-    async getAddress(): Promise<string> {
+    async getDomains(): Promise<string[]> {
+        return [];
+    }
+
+    async createInbox(address: string): Promise<void> {
         const tokenSig = getSign('emailGeneration');
-        const req = await this.fetch('https://mailapi.tempmailfa.st/api/v1/auth/token', {
+        const req = await fish('https://mailapi.tempmailfa.st/api/v1/auth/token', {
             headers: {
                 'X-Nonce': tokenSig.nonce,
                 'X-Timestamp': tokenSig.timestamp,
@@ -36,7 +42,7 @@ export default class tempmailfa$st extends Provider {
         this.$authToken = res;
 
         const emailSig = getSign('emailGeneration');
-        const req2 = await this.fetch('https://mailapi.tempmailfa.st/api/v1/mailboxes/dynamic', {
+        const req2 = await fish('https://mailapi.tempmailfa.st/api/v1/mailboxes/dynamic', {
             method: 'POST',
             headers: {
                 'Authorization': `Bearer ${this.$authToken}`,
@@ -50,13 +56,12 @@ export default class tempmailfa$st extends Provider {
 
         const res2 = await req2.json() as { address: string };
 
-        this.address = res2.address;
-        return res2.address;
+        void 0;
     }
 
-    async getMail(): Promise<Mail[]> {
+    async getMail(address: string): Promise<Mail[]> {
         const getSig = getSign('emailGeneration');
-        const req = await this.fetch(`https://mailapi.tempmailfa.st/api/v1/emails/inbox/${encodeURIComponent(this.address)}`, {
+        const req = await fish(`https://mailapi.tempmailfa.st/api/v1/emails/inbox/${encodeURIComponent(address)}`, {
             headers: {
                 'Authorization': `Bearer ${this.$authToken}`,
                 'X-Nonce': getSig.nonce,
@@ -86,7 +91,7 @@ export default class tempmailfa$st extends Provider {
             if (!e.body && e.id) {
                 const getBodySig = getSign('emailGeneration');
 
-                await this.fetch(`https://mailapi.tempmailfa.st/api/v1/emails/${e.id}`, {
+                await fish(`https://mailapi.tempmailfa.st/api/v1/emails/${e.id}`, {
                     headers: {
                         'Authorization': `Bearer ${this.$authToken}`,
                         'X-Nonce': getBodySig.nonce,

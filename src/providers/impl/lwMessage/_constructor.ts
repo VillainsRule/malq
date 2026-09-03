@@ -1,30 +1,45 @@
 import LWMessage from '@/util/livewire/LWMessage';
 
-import getRandomName from '@/util/names';
+import { fish, toEST } from '@/util/util';
 
-import Provider, { type Mail } from '../../Provider';
+import type { Mail, ProviderImpl } from '../../Provider';
 
-export default class lwMessageCommons extends Provider {
+export default class lwMessageCommons implements ProviderImpl {
     domain = '';
     bypassWAF = true;
 
     password = '';
 
+    domainsPath = '';
     initialPath = '';
     refetchPath = '';
-    allowsDomainChange = true;
 
     livewire: LWMessage;
 
-    constructor(domain: string, bypassWAF: boolean) {
-        super();
+    ignoredEmails: string[] = [];
 
+    constructor(domain: string, bypassWAF: boolean) {
         this.domain = domain;
         this.bypassWAF = bypassWAF;
         this.livewire = new LWMessage(this.domain, this.bypassWAF);
     }
 
-    async getAddress(): Promise<string> {
+    async getDomains(): Promise<string[]> {
+        const homeReq = await fish(`https://${this.domain}${this.domainsPath}`, {
+            redirect: 'manual',
+            headers: {
+                'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+                'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36'
+            }
+        });
+        const homeRes = await homeReq.text();
+
+        const domainMatches = homeRes.match(/\$wire\.setDomain\('(.*?)'/g)!;
+        const extractedDomains = domainMatches.map(e => e.match(/\$wire.setDomain\('(.*?)'/)![1]);
+        return [...new Set(extractedDomains)];
+    }
+
+    async createInbox(address: string): Promise<void> {
         await this.livewire.pullHTML(this.initialPath);
 
         if (this.password) {
@@ -32,45 +47,31 @@ export default class lwMessageCommons extends Provider {
             await this.livewire.pullHTML(this.initialPath);
         }
 
-        if (this.allowsDomainChange) {
-            const domains = this.livewire.html.match(/setDomain\('(.*?)'\)/g) || [];
-            const randomDomain = domains[domains.length * Math.random() | 0];
-            const domain = randomDomain.match(/setDomain\('(.*?)'\)/)?.[1];
+        const [user, domain] = address.split('@');
 
-            const user = getRandomName();
-            const email = `${user}@${domain}`;
+        this.livewire.queueCallMethod('frontend.actions', 'setDomain', [domain]);
+        this.livewire.queueSyncInput('frontend.actions', 'user', user);
+        this.livewire.queueCallMethod('frontend.actions', 'create');
 
-            this.livewire.queueCallMethod('frontend.actions', 'setDomain', [domain]);
-            this.livewire.queueSyncInput('frontend.actions', 'user', user);
-            this.livewire.queueCallMethod('frontend.actions', 'create');
-
-            await this.livewire.sendQueue('frontend.actions');
-            await this.livewire.pullHTML(this.refetchPath);
-
-            this.address = email;
-        } else {
-            const email = this.livewire.html.match(/const email = '(.*?)'/)?.[1];
-            if (!email) throw new Error('email not found in HTML');
-
-            await this.livewire.fireSingleEvent('frontend.actions', 'syncEmail', [email]);
-            await this.livewire.fireSingleEvent('frontend.app', 'syncEmail', [email]);
-
-            this.address = email;
-        }
-
-        return this.address;
+        await this.livewire.sendQueue('frontend.actions');
+        await this.livewire.pullHTML(this.refetchPath);
     }
 
-    async getMail(): Promise<Mail[]> {
+    async getMail(address: string): Promise<Mail[]> {
         const res2 = await this.livewire.fireSingleEvent('frontend.app', 'fetchMessages');
-        const messages = res2.serverMemo.data?.messages || [];
+        const messages = (res2.serverMemo.data?.messages || []) as {
+            subject: string,
+            content: string,
+            sender_email: string,
+            date: string
+        }[];
 
-        return messages.map((msg: any) => ({
+        return messages.filter((e) => !this.ignoredEmails.includes(e.sender_email)).map((msg) => ({
             from: msg.sender_email,
-            to: this.address,
+            to: address,
             subject: msg.subject,
             body: msg.content,
-            date: this.toEST(new Date(msg.date).getTime(), 0)
+            date: toEST(new Date(msg.date).getTime(), 0)
         }));
     }
 }

@@ -1,7 +1,8 @@
 import lwMessageCommons from './_constructor';
 
 export default class txen$de extends lwMessageCommons {
-    initialPath = '';
+    domainsPath = '/';
+    initialPath = '/';
     refetchPath = '/mailbox';
 
     constructor() {

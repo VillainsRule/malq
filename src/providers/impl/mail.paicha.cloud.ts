@@ -1,19 +1,27 @@
-import Provider, { type Mail } from '../Provider';
+import { fish, toEST } from '@/util/util';
 
-export default class mail$paicha$cloud extends Provider {
+import type { Mail, ProviderImpl } from '../Provider';
+
+export default class mail$paicha$cloud implements ProviderImpl {
     bodies: Record<string, string> = {};
 
-    async getAddress(): Promise<string> {
-        const req = await this.fetch('https://mail.paicha.cloud', { redirect: 'manual' });
+    async getDomains(): Promise<string[]> {
+        const req = await fish('https://mail.paicha.cloud/change_mailbox', {
+            method: 'POST',
+            body: JSON.stringify({ domain: 'temporary-mail.paicha.cloud' }),
+            headers: { 'content-type': 'application/json' }
+        });
 
-        const redirectUrl = req.headers.get('location')!;
-        this.address = redirectUrl.split('/')[2];
-
-        return this.address;
+        const res = await req.json() as { domains: string[] };
+        return res.domains;
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch(`https://mail.paicha.cloud/api/${encodeURIComponent(this.address)}`);
+    async createInbox(_address: string): Promise<void> {
+        void 0;
+    }
+
+    async getMail(address: string): Promise<Mail[]> {
+        const req = await fish(`https://mail.paicha.cloud/api/${encodeURIComponent(address)}`);
 
         const res = await req.json() as {
             id: string,
@@ -26,14 +34,14 @@ export default class mail$paicha$cloud extends Provider {
         const returnableMail: Mail[] = res.map((email) => ({
             id: email.id,
             from: email.from,
-            to: this.address,
+            to: address,
             subject: email.subject,
             body: this.bodies[email.id] || '',
-            date: this.toEST(new Date(email.created_at).getTime(), 0)
+            date: toEST(new Date(email.created_at).getTime(), 0)
         }));
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
-            if (!e.body && e.id) await this.fetch(`https://mail.paicha.cloud/api/mailbox/${encodeURIComponent(this.address)}/mail/${e.id}`).then(async (bodyReq) => {
+            if (!e.body && e.id) await fish(`https://mail.paicha.cloud/api/mailbox/${encodeURIComponent(address)}/mail/${e.id}`).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.json() as { body: string, html_body: string };
                 e.body = bodyRes.body || bodyRes.html_body;
                 this.bodies[e.id!] = e.body;

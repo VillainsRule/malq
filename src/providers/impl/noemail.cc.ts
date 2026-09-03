@@ -1,32 +1,26 @@
 import parse from 'node-html-parser';
 
-import { StringDomainCache } from '@/util/domainCache';
-import getRandomName from '@/util/names';
+import { fish, toEST } from '@/util/util';
 
-import Provider, { type Mail } from '../Provider';
+import type { Mail, ProviderImpl } from '../Provider';
 
-const domainCache = new StringDomainCache();
-
-export default class noemail$cc extends Provider {
+export default class noemail$cc implements ProviderImpl {
     bodies: Record<string, string> = {};
 
-    async getAddress(): Promise<string> {
-        if (!domainCache.hasItems()) {
-            const req = await this.fetch('https://noemail.cc');
-            const res = await req.text();
+    async getDomains(): Promise<string[]> {
+        const req = await fish('https://noemail.cc');
+        const res = await req.text();
 
-            const matchedDomains = res.match(/<option value="(.*?)"/g) || [];
-            const cleanDomains = matchedDomains.map(d => d.match(/<option value="(.*?)"/)![1]);
-
-            domainCache.set(cleanDomains);
-        }
-
-        this.address = `${getRandomName()}@${domainCache.pull()}`;
-        return this.address;
+        const matchedDomains = res.match(/<option value="(.*?)"/g) || [];
+        return matchedDomains.map(d => d.match(/<option value="(.*?)"/)![1]);
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch('https://noemail.cc/' + this.address);
+    async createInbox(_address: string): Promise<void> {
+        void 0;
+    }
+
+    async getMail(address: string): Promise<Mail[]> {
+        const req = await fish('https://noemail.cc/' + address);
         const res = await req.text();
         const dom = parse(res);
 
@@ -41,7 +35,7 @@ export default class noemail$cc extends Provider {
                 to: details[0].trim().slice(4),
                 subject: details[4].trim().slice(9),
                 body: kid.querySelector('.card-text')?.innerHTML.trim() || '',
-                date: this.toEST(new Date(dateStamp).getTime(), 0)
+                date: toEST(new Date(dateStamp).getTime(), 0)
             }
         });
 

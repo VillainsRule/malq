@@ -1,40 +1,22 @@
-import getRandomName from '@/util/names';
+import { fish, toEST } from '@/util/util';
 
-import Provider, { type Mail } from '../Provider';
+import type { Mail, ProviderImpl } from '../Provider';
 
-export default class nguyendoll$com extends Provider {
-    async getAddress(): Promise<string> {
-        let attempts = 0;
-        let domain = '';
-
-        const req = await this.fetch('https://nguyendoll.com');
+export default class nguyendoll$com implements ProviderImpl {
+    async getDomains(): Promise<string[]> {
+        const req = await fish('https://nguyendoll.com');
         const res = await req.text();
 
-        const domains = res.match(/"domain":"(.*?)"/g) || [];
-
-        while (!domain && attempts < 5) {
-            let attemptingDomain = domains[Math.floor(Math.random() * domains.length)];
-            let extractedDomain = attemptingDomain.match(/"domain":"(.*?)"/)?.[1];
-
-            const req = await this.fetch('https://nguyendoll.com/api/check_mx.php?domain=' + extractedDomain);
-            const res = await req.json() as { hasMX: boolean, mxRecords: string[] };
-
-            if (res.hasMX && res.mxRecords.length === 1 && res.mxRecords[0] && res.mxRecords[0].includes('nguyendoll')) {
-                domain = extractedDomain!;
-                break;
-            }
-
-            attempts++;
-        }
-
-        const user = getRandomName();
-
-        this.address = `${user}@${domain}`;
-        return this.address;
+        const rawDomains = res.match(/"domain":"(.*?)"/g) || [];
+        return rawDomains.map(e => e.match(/"domain":"(.*?)"/)![1]);
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch('https://nguyendoll.com/api/get_mail.php?email=' + encodeURIComponent(this.address));
+    async createInbox(_address: string): Promise<void> {
+        void 0;
+    }
+
+    async getMail(address: string): Promise<Mail[]> {
+        const req = await fish('https://nguyendoll.com/api/get_mail.php?email=' + encodeURIComponent(address));
         const res = await req.json() as {
             data: {
                 subject: string,
@@ -46,10 +28,10 @@ export default class nguyendoll$com extends Provider {
 
         const returnableMail: Mail[] = res.data.map((email) => ({
             from: email.from_field,
-            to: this.address,
+            to: address,
             subject: email.subject,
             body: email.html_content,
-            date: this.toEST(new Date(email.date).getTime(), 7)
+            date: toEST(new Date(email.date).getTime(), 7)
         }));
 
         return returnableMail;

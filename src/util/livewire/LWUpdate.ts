@@ -1,6 +1,6 @@
 import wafFetch from '../waf/fetch';
 
-class LWUpdate {
+export default class LWUpdate {
     host: string;
     mustByapssWaf: boolean;
 
@@ -138,5 +138,3 @@ class LWUpdate {
         }
     }
 }
-
-export default LWUpdate;

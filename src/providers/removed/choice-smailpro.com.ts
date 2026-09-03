@@ -1,26 +1,31 @@
-import Provider, { type Mail } from '../Provider';
+import { fish } from '@/util/util';
 
-export default class smailpro$com extends Provider {
+import type { Mail, ProviderImpl } from '../Provider';
+
+export default class smailpro$com implements ProviderImpl {
     bodies: Record<string, string> = {};
 
+    async getDomains(): Promise<string[]> {
+        return [];
+    }
+
     async getPayload(url: string, params: [string, string][] = []) {
-        const req = await this.fetch('https://smailpro.com/app/payload?url=' + encodeURIComponent(url) + params.map(([a, b]) => `&${a}=${b}`).join(''));
+        const req = await fish('https://smailpro.com/app/payload?url=' + encodeURIComponent(url) + params.map(([a, b]) => `&${a}=${b}`).join(''));
         const res = await req.text();
         return res.trim();
     }
 
-    async getAddress(): Promise<string> {
+    async createInbox(address: string): Promise<void> {
         const payload = await this.getPayload('https://api.sonjj.com/v1/temp_email/create');
-        const req = await this.fetch('https://api.sonjj.com/v1/temp_email/create?payload=' + payload);
+        const req = await fish('https://api.sonjj.com/v1/temp_email/create?payload=' + payload);
         const res = await req.json() as { email: string };
 
-        this.address = res.email;
-        return res.email;
+        void 0;
     }
 
-    async getMail(): Promise<Mail[]> {
-        const payload = await this.getPayload('https://api.sonjj.com/v1/temp_email/inbox', [['email', this.address]]);
-        const req = await this.fetch('https://api.sonjj.com/v1/temp_email/inbox?payload=' + payload);
+    async getMail(address: string): Promise<Mail[]> {
+        const payload = await this.getPayload('https://api.sonjj.com/v1/temp_email/inbox', [['email', address]]);
+        const req = await fish('https://api.sonjj.com/v1/temp_email/inbox?payload=' + payload);
         const res = await req.json() as {
             messages: {
                 mid: string,
@@ -42,8 +47,8 @@ export default class smailpro$com extends Provider {
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
             if (!e.body && e.id) {
-                const payload = await this.getPayload('https://api.sonjj.com/v1/temp_email/message', [['email', this.address], ['mid', e.id!]]);
-                await this.fetch('https://api.sonjj.com/v1/temp_email/message?payload=' + payload).then(async (bodyReq) => {
+                const payload = await this.getPayload('https://api.sonjj.com/v1/temp_email/message', [['email', address], ['mid', e.id!]]);
+                await fish('https://api.sonjj.com/v1/temp_email/message?payload=' + payload).then(async (bodyReq) => {
                     const bodyRes = await bodyReq.json() as { body: string };
                     e.body = bodyRes.body;
                     this.bodies[e.id!] = e.body;

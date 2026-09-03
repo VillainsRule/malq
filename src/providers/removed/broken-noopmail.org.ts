@@ -1,34 +1,26 @@
-import { StringDomainCache } from '@/util/domainCache';
-import getRandomName from '@/util/names';
+import { fish } from '@/util/util';
 
-import Provider, { type Mail } from '../Provider';
+import type { Mail, ProviderImpl } from '../Provider';
 
-const domainCache = new StringDomainCache();
+export default class noopmail$org implements ProviderImpl {
+    async getDomains(): Promise<string[]> {
+        const req = await fish('https://noopmail.org/api/d');
+        const res = await req.json() as string[];
 
-export default class noopmail$org extends Provider {
-    $domain = '';
-    $email = '';
-
-    async getAddress(): Promise<string> {
-        if (!domainCache.hasItems()) {
-            const req = await this.fetch('https://noopmail.org/api/d');
-            const res = await req.json() as string[];
-            domainCache.set(res);
-        }
-
-        this.$domain = domainCache.pull();
-        this.$email = getRandomName();
-
-        this.address = `${this.$email}@${this.$domain}`;
-
-        return this.address;
+        return res;
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch('https://noopmail.org/api/c', {
+    async createInbox(_address: string): Promise<void> {
+        void 0;
+    }
+
+    async getMail(address: string): Promise<Mail[]> {
+        const [user, domain] = address.split('@');
+
+        const req = await fish('https://noopmail.org/api/c', {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
-            body: JSON.stringify({ d: this.$domain, e: this.$email })
+            body: JSON.stringify({ d: domain, e: user })
         });
 
         const res = await req.json() as {

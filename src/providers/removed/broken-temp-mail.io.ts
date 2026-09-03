@@ -1,8 +1,14 @@
-import Provider, { type Mail } from '../Provider';
+import { fish } from '@/util/util';
 
-export default class temp_mail$io extends Provider {
-    async getAddress(): Promise<string> {
-        const req = await this.fetch('https://api.internal.temp-mail.io/api/v3/email/new', {
+import type { Mail, ProviderImpl } from '../Provider';
+
+export default class temp_mail$io implements ProviderImpl {
+    async getDomains(): Promise<string[]> {
+        return [];
+    }
+
+    async createInbox(address: string): Promise<void> {
+        const req = await fish('https://api.internal.temp-mail.io/api/v3/email/new', {
             method: 'POST',
             headers: { 'content-type': 'application/json' },
             body: JSON.stringify({ max_name_length: 10, min_name_length: 10 })
@@ -10,12 +16,11 @@ export default class temp_mail$io extends Provider {
 
         const res = await req.json() as { email: string, token: string };
 
-        this.address = res.email;
-        return res.email;
+        void 0;
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch(`https://api.internal.temp-mail.io/api/v3/email/${this.address}/messages`);
+    async getMail(address: string): Promise<Mail[]> {
+        const req = await fish(`https://api.internal.temp-mail.io/api/v3/email/${address}/messages`);
         const res = await req.json() as {
             id: string,
             from: string,

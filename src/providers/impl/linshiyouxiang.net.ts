@@ -1,27 +1,23 @@
-import { StringDomainCache } from '@/util/domainCache';
 import wafFetch from '@/util/waf/fetch';
-import getRandomName from '@/util/names';
 
-import Provider, { type Mail } from '../Provider';
+import type { Mail, ProviderImpl } from '../Provider';
 
-const domainCache = new StringDomainCache();
+export default class linshiyouxiang$net implements ProviderImpl {
+    bodies: Record<string, string> = {};
 
-export default class linshiyouxiang$net extends Provider {
     $cookie: string = '';
     $code: string = '';
 
-    bodies: Record<string, string> = {};
+    async getDomains(): Promise<string[]> {
+        const req = await wafFetch('https://linshiyouxiang.net/get-domains');
+        const res = await req.json() as { items: { domain: string, type: 'domain' | 'gmail_alias', is_vip: boolean }[] }[];
 
-    async getAddress(): Promise<string> {
-        if (!domainCache.hasItems()) {
-            const req = await wafFetch('https://linshiyouxiang.net/get-domains');
-            const res = await req.json() as { items: { domain: string, type: 'domain' | 'gmail_alias', is_vip: boolean }[] }[];
-            const validDomains = res.map(e => e.items).flat(1).filter(e => !e.is_vip && e.type === 'domain');
-            domainCache.set(validDomains.map(d => d.domain));
-        }
+        const validDomains = res.map(e => e.items).flat(1).filter(e => !e.is_vip && e.type === 'domain');
+        return validDomains.map(d => d.domain);
+    }
 
-        const domain = domainCache.pull();
-        const user = getRandomName();
+    async createInbox(address: string): Promise<void> {
+        const [user, domain] = address.split(';');
 
         const cookieReq = await wafFetch('https://linshiyouxiang.net');
         const initialCookies = [...cookieReq.headers['set-cookie']].map((c) => c.split(';')[0].trim()).join('; ');
@@ -42,15 +38,12 @@ export default class linshiyouxiang$net extends Provider {
         const codeRes = codeReq.text();
 
         this.$code = codeRes.match(/activeMailCode = '(.*?)'/)?.[1] || '';
-
-        this.address = `${user}@${domain}`;
-        return this.address;
     }
 
-    async getMail(): Promise<Mail[]> {
+    async getMail(address: string): Promise<Mail[]> {
         const req = await wafFetch('https://linshiyouxiang.net/get-messages', {
             method: 'POST',
-            body: JSON.stringify({ email: this.address, code: this.$code }),
+            body: JSON.stringify({ email: address, code: this.$code }),
             headers: { 'content-type': 'application/json', cookie: this.$cookie }
         });
 
@@ -66,7 +59,7 @@ export default class linshiyouxiang$net extends Provider {
         const returnableMail: Mail[] = (res.emails || []).map((email) => ({
             id: email.Code,
             from: email.FromEmail,
-            to: this.address,
+            to: address,
             subject: email.Subject,
             body: this.bodies[email.Code] || '',
             date: email.SendTime * 1000

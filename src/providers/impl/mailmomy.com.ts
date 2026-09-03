@@ -1,26 +1,23 @@
-import { StringDomainCache } from '@/util/domainCache';
-import getRandomName from '@/util/names';
+import { fish, toEST } from '@/util/util';
 
-import Provider, { type Mail } from '../Provider';
+import type { Mail, ProviderImpl } from '../Provider';
 
-const domainCache = new StringDomainCache();
-
-export default class mailmomy$com extends Provider {
+export default class mailmomy$com implements ProviderImpl {
     bodies: Record<string, string> = {};
 
-    async getAddress(): Promise<string> {
-        if (!domainCache.hasItems()) {
-            const req = await this.fetch('https://mailmomy.com/api/domains/active');
-            const res = await req.json() as string[];
-            domainCache.set(res);
-        }
+    async getDomains(): Promise<string[]> {
+        const req = await fish('https://mailmomy.com/api/domains/active');
+        const res = await req.json() as string[];
 
-        this.address = `${getRandomName()}@${domainCache.pull()}`;
-        return this.address;
+        return res;
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch(`https://mailmomy.com/api/mail/messages?to=${this.address}&page=1&limit=20`);
+    async createInbox(_address: string): Promise<void> {
+        void 0;
+    }
+
+    async getMail(address: string): Promise<Mail[]> {
+        const req = await fish(`https://mailmomy.com/api/mail/messages?to=${address}&page=1&limit=20`);
         const res = await req.json() as {
             emails: {
                 recipient: string,
@@ -37,7 +34,7 @@ export default class mailmomy$com extends Provider {
             to: email.recipient,
             subject: email.subject,
             body: email.bodyText || email.message,
-            date: this.toEST(new Date(email.receivedAt).getTime(), 7)
+            date: toEST(new Date(email.receivedAt).getTime(), 7)
         }));
 
         return returnableMail;

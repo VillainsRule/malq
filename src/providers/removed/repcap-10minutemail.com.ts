@@ -1,23 +1,27 @@
 import wafFetch from '@/util/waf/fetch';
 
-import Provider, { type Mail } from '../Provider';
+import type { Mail, ProviderImpl } from '../Provider';
 
-export default class _10minutemail$com extends Provider {
+export default class _10minutemail$com implements ProviderImpl {
     $cookie = '';
 
-    async getAddress(): Promise<string> {
+    async getDomains(): Promise<string[]> {
+        return [];
+    }
+
+    async createInbox(address: string): Promise<void> {
         const addressReq = await wafFetch('https://10minutemail.com/session/address');
         const addressRes = await addressReq.json() as { address: string };
 
-        this.address = addressRes.address;
+        address = addressRes.address;
 
         const setCookie = typeof addressReq.headers['set-cookie'] === 'string' ? [addressReq.headers['set-cookie']] : addressReq.headers['set-cookie'] || [];
         this.$cookie = setCookie.map((c: string) => c.split(';')[0]).join('; ');
 
-        return addressRes.address;
+        void 0;
     }
 
-    async getMail(): Promise<Mail[]> {
+    async getMail(address: string): Promise<Mail[]> {
         const fetchReq = await wafFetch('https://10minutemail.com/messages/messagesAfter/0', {
             headers: { 'Cookie': this.$cookie }
         });

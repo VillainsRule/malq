@@ -5,15 +5,19 @@
     "main": "src/main.ts",
     "scripts": {
         "dev": "bun --watch src/main.ts",
-        "pull": "git pull && bun i && systemctl restart malq"
+        "pull": "git pull && bun i && systemctl restart malq",
+        "check": "bunx --bun tsc && rm -rf dist"
     },
     "dependencies": {
         "elysia": "^1.4.19",
         "node-html-parser": "^7.0.2",
+        "puppeteer-extra-plugin-stealth": "^2.11.2",
+        "puppeteer-real-browser": "^1.4.4",
         "ws": "^8.19.0"
     },
     "devDependencies": {
         "@types/bun": "^1.3.11",
-        "@types/ws": "^8.18.1"
+        "@types/ws": "^8.18.1",
+        "typescript": "6.0.3"
     }
 }

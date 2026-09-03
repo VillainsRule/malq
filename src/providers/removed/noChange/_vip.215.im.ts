@@ -1,30 +1,36 @@
-import Provider, { type Mail } from '../Provider';
+import { fish } from '@/util/util';
 
-export default class vip$215$im extends Provider {
+import type { Mail, ProviderImpl } from '../../Provider';
+
+export default class vip$215$im implements ProviderImpl {
     bodies: Record<string, string> = {};
 
     cookie = '';
     token = '';
 
-    async getAddress(): Promise<string> {
-        const cookieReq = await this.fetch('https://vip.215.im/');
+    async getDomains(): Promise<string[]> {
+        return [];
+    }
+
+    async createInbox(address: string): Promise<void> {
+        const cookieReq = await fish('https://vip.215.im/');
         this.cookie = cookieReq.headers.getSetCookie().map(e => e.split(';')[0]).join('; ');
 
-        const mailReq = await this.fetch('https://vip.215.im/api/temp-inbox', {
+        const mailReq = await fish('https://vip.215.im/api/temp-inbox', {
             method: 'POST',
             headers: { 'cookie': this.cookie, 'Referer': 'https://vip.215.im/' }
         });
 
         const mailRes = await mailReq.json() as { data: { address: string, token: string } };
 
-        this.address = mailRes.data.address;
+        address = mailRes.data.address;
         this.token = mailRes.data.token;
 
-        return this.address;
+        void 0;
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch('https://vip.215.im/v1/messages', {
+    async getMail(address: string): Promise<Mail[]> {
+        const req = await fish('https://vip.215.im/v1/messages', {
             headers: { 'authorization': `Bearer ${this.token}`, 'cookie': this.cookie, 'Referer': 'https://vip.215.im/' }
         });
 
@@ -42,7 +48,7 @@ export default class vip$215$im extends Provider {
         const returnableMail: Mail[] = res.data.messages.map((email) => ({
             id: email.id,
             from: email.from.address,
-            to: this.address,
+            to: address,
             subject: email.subject,
             body: this.bodies[email.id] || '',
             date: new Date(email.createdAt).getTime()
@@ -50,7 +56,7 @@ export default class vip$215$im extends Provider {
 
         const finalMail = await Promise.all(returnableMail.map(async (e) => {
             if (!e.body && e.id) {
-                const bodyReq = await this.fetch(`https://vip.215.im/v1/messages/${e.id}`, {
+                const bodyReq = await fish(`https://vip.215.im/v1/messages/${e.id}`, {
                     headers: { 'authorization': `Bearer ${this.token}`, 'cookie': this.cookie, 'Referer': 'https://vip.215.im/' }
                 });
                 const bodyRes = await bodyReq.json() as { data: { html: string[] } };

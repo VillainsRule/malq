@@ -1,33 +1,27 @@
-import { StringDomainCache } from '@/util/domainCache';
-import getRandomName from '@/util/names';
+import { fish } from '@/util/util';
 
-import Provider, { type Mail } from '../Provider';
+import type { Mail, ProviderImpl } from '../Provider';
 
-const domainCache = new StringDomainCache();
-
-export default class temporam$com extends Provider {
-    date: string = '';
-
+export default class temporam$com implements ProviderImpl {
     bodies: Record<string, string> = {};
 
-    async getAddress(): Promise<string> {
-        if (!domainCache.hasItems()) {
-            const req = await this.fetch('https://temporam.com/api/domains', {
-                headers: { 'Referer': 'https://temporam.com/' }
-            });
+    $date: string = '';
 
-            const res = await req.json() as { data: { domain: string }[] };
-            domainCache.set(res.data.map(d => d.domain));
-        }
+    async getDomains(): Promise<string[]> {
+        const req = await fish('https://temporam.com/api/domains', {
+            headers: { 'Referer': 'https://temporam.com/' }
+        });
 
-        this.date = new Date().toISOString();
-        this.address = `${getRandomName()}@${domainCache.pull()}`;
-
-        return this.address;
+        const res = await req.json() as { data: { domain: string }[] };
+        return res.data.map(d => d.domain);
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch(`https://temporam.com/api/emails?email=${encodeURIComponent(this.address)}&since=${this.date}&limit=50`, {
+    async createInbox(address: string): Promise<void> {
+        this.$date = new Date().toISOString();
+    }
+
+    async getMail(address: string): Promise<Mail[]> {
+        const req = await fish(`https://temporam.com/api/emails?email=${encodeURIComponent(address)}&since=${this.$date}&limit=50`, {
             headers: { 'Referer': 'https://temporam.com/' }
         });
 
@@ -51,7 +45,7 @@ export default class temporam$com extends Provider {
         }));
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
-            if (!e.body && e.id) await this.fetch(`https://temporam.com/api/emails/${e.id}`, {
+            if (!e.body && e.id) await fish(`https://temporam.com/api/emails/${e.id}`, {
                 headers: { 'Referer': 'https://temporam.com/' }
             }).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.json() as { data: { content: string, summary: string } };

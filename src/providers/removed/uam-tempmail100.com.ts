@@ -1,28 +1,33 @@
-import Provider, { type Mail } from '../Provider';
+import { fish } from '@/util/util';
 
-export default class tempmail100$com extends Provider {
+import type { Mail, ProviderImpl } from '../Provider';
+
+export default class tempmail100$com implements ProviderImpl {
     bodies: Record<string, string> = {};
 
     $token = '';
 
-    async getAddress(): Promise<string> {
-        const req = await this.fetch('https://tempmail100.com/init', { method: 'POST' });
+    async getDomains(): Promise<string[]> {
+        return [];
+    }
+
+    async createInbox(address: string): Promise<void> {
+        const req = await fish('https://tempmail100.com/init', { method: 'POST' });
         const res = await req.json() as { data: { token: string } };
 
         this.$token = res.data.token;
 
-        const addressReq = await this.fetch('https://tempmail100.com/web/generate', {
+        const addressReq = await fish('https://tempmail100.com/web/generate', {
             method: 'POST',
             headers: { 'Authorization': this.$token }
         });
         const addressRes = await addressReq.json() as { data: { address: string } };
 
-        this.address = addressRes.data.address;
-        return addressRes.data.address;
+        void 0;
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch('https://tempmail100.com/web/emails', {
+    async getMail(address: string): Promise<Mail[]> {
+        const req = await fish('https://tempmail100.com/web/emails', {
             headers: { 'Authorization': this.$token }
         });
         const res = await req.json() as {
@@ -39,14 +44,14 @@ export default class tempmail100$com extends Provider {
         const returnableMail: Mail[] = (res.data.list || []).map((email) => ({
             id: email.uuid,
             from: email.fromAddress,
-            to: this.address,
+            to: address,
             subject: email.subject,
             body: this.bodies[email.uuid] || '',
             date: email.timestamp
         }));
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
-            if (!e.body && e.id) await this.fetch(`https://tempmail100.com/emails/content/${e.id}`, {
+            if (!e.body && e.id) await fish(`https://tempmail100.com/emails/content/${e.id}`, {
                 headers: { 'Authorization': this.$token }
             }).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.json() as { data: { content: string } };

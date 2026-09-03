@@ -1,27 +1,31 @@
-import getRandomName from '@/util/names';
+import { fish } from '@/util/util';
 
-import Provider, { type Mail } from '../Provider';
+import type { Mail, ProviderImpl } from '../Provider';
 
-export default class spoofmail$de extends Provider {
+export default class spoofmail$de implements ProviderImpl {
+    bodies: Record<string, string> = {};
+
     $cookie: string = '';
     $xsrfToken: string = '';
 
-    bodies: Record<string, string> = {};
-
-    async getAddress(): Promise<string> {
-        const req = await this.fetch('https://spoofmail.de');
+    async getDomains(): Promise<string[]> {
+        const req = await fish('https://spoofmail.de');
         const res = await req.text();
 
         const matchedDomains = res.match(/<option value="(.*?)"/g) || [];
-        const randomDomain = matchedDomains[Math.floor(Math.random() * matchedDomains.length)];
-        const domain = randomDomain.match(/<option value="(.*?)"/)![1];
+        return matchedDomains.map(d => d.match(/<option value="(.*?)"/)![1]);
+    }
 
-        const user = getRandomName();
+    async createInbox(address: string): Promise<void> {
+        const req = await fish('https://spoofmail.de');
+        const res = await req.text();
+
+        const [user, domain] = address.split('@');
 
         const token = res.match(/name="_token" value="(.*?)"/)?.[1] || '';
         const initialCookies = req.headers.getSetCookie()?.map((c) => c.split(';')[0].trim()).join('; ');
 
-        const saveReq = await this.fetch('https://spoofmail.de/login', {
+        const saveReq = await fish('https://spoofmail.de/login', {
             method: 'POST',
             body: `_token=${token}&username=${user}&domain=${domain}&submit=`,
             headers: {
@@ -31,13 +35,10 @@ export default class spoofmail$de extends Provider {
             redirect: 'manual'
         });
 
-        console.log(await saveReq.text())
-
         const allCookies = saveReq.headers.getSetCookie().map((c) => c.split(';')[0].trim()).join('; ');
         this.$cookie = this.mergeCookie(initialCookies, allCookies);
 
-        this.address = `${user}@${domain}`;
-        return this.address;
+        void 0;
     }
 
     mergeCookie(cookie1: string, cookie2: string): string {
@@ -59,8 +60,8 @@ export default class spoofmail$de extends Provider {
         return Object.entries(cookieMap).map(([k, v]) => `${k}=${v}`).join('; ');
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch('https://spoofmail.de/api/mailbox', {
+    async getMail(address: string): Promise<Mail[]> {
+        const req = await fish('https://spoofmail.de/api/mailbox', {
             headers: {
                 cookie: this.$cookie
             }
@@ -81,14 +82,14 @@ export default class spoofmail$de extends Provider {
         const returnableMail: Mail[] = (res.messages || []).map((email) => ({
             id: email.id,
             from: email.from[0],
-            to: this.address,
+            to: address,
             subject: email.subject,
             body: this.bodies[email.id] || '',
             date: email.created_at[0] * 1000
         }));
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
-            if (!e.body && e.id) await this.fetch(`https://spoofmail.de/api/mailbox/read?id=${e.id}`, {
+            if (!e.body && e.id) await fish(`https://spoofmail.de/api/mailbox/read?id=${e.id}`, {
                 headers: { cookie: this.$cookie }
             }).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.text();

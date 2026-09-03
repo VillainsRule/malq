@@ -1,30 +1,24 @@
-import { StringDomainCache } from '@/util/domainCache';
-import getRandomName from '@/util/names';
+import { fish } from '@/util/util';
 
-import Provider, { type Mail } from '../Provider';
+import type { Mail, ProviderImpl } from '../Provider';
 
-const domainCache = new StringDomainCache();
-
-export default class tempmail$io$vn extends Provider {
+export default class tempmail$io$vn implements ProviderImpl {
     bodies: Record<string, string> = {};
 
-    async getAddress(): Promise<string> {
-        if (!domainCache.hasItems()) {
-            const req = await this.fetch('https://tempmail.io.vn');
-            const res = await req.text();
+    async getDomains(): Promise<string[]> {
+        const req = await fish('https://tempmail.io.vn');
+        const res = await req.text();
 
-            const matchedDomains = res.match(/<option value="(.*?)">/g) || [];
-            const cleanDomains = matchedDomains.map(d => d.match(/<option value="(.*?)">/)![1]);
-
-            domainCache.set(cleanDomains);
-        }
-
-        this.address = `${getRandomName()}@${domainCache.pull()}`;
-        return this.address;
+        const matchedDomains = res.match(/<option value="(.*?)">/g) || [];
+        return matchedDomains.map(d => d.match(/<option value="(.*?)">/)![1]);
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch(`https://temp-mail.louisnguyen198x.workers.dev/emails/${encodeURIComponent(this.address)}`);
+    async createInbox(_address: string): Promise<void> {
+        void 0;
+    }
+
+    async getMail(address: string): Promise<Mail[]> {
+        const req = await fish(`https://temp-mail.louisnguyen198x.workers.dev/emails/${encodeURIComponent(address)}`);
         const res = await req.json() as {
             result: {
                 id: string,
@@ -45,7 +39,7 @@ export default class tempmail$io$vn extends Provider {
         }));
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
-            if (!e.body && e.id) await this.fetch(`https://temp-mail.louisnguyen198x.workers.dev/inbox/${e.id}`).then(async (bodyReq) => {
+            if (!e.body && e.id) await fish(`https://temp-mail.louisnguyen198x.workers.dev/inbox/${e.id}`).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.json() as { result: { text_content: string, html_content: string } };
                 e.body = bodyRes.result.text_content || bodyRes.result.html_content;
                 this.bodies[e.id!] = e.body;

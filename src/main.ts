@@ -1,9 +1,13 @@
+console.log('[malq] init');
+
 import fs from 'node:fs';
 import path from 'node:path';
 
 import Elysia from 'elysia';
 
-import type Provider from './providers/Provider';
+import Domains from './util/Domains';
+
+import type { ProviderImpl } from './providers/Provider';
 
 const providerDir = path.join(import.meta.dirname, 'providers', 'impl');
 const providerFiles = fs.readdirSync(providerDir).filter((file) => file.endsWith('.ts') || file.endsWith('.js'));
@@ -15,7 +19,7 @@ for (const subdir of providerSubdirs) {
     for (const file of subdirFiles) providerFiles.push(path.join(subdir, file));
 }
 
-const providers: Map<string, { new(): Provider }> = new Map();
+const providers: Map<string, { new(): ProviderImpl }> = new Map();
 
 for (const providerFile of providerFiles) {
     if (providerFile.includes('_')) continue;
@@ -25,11 +29,49 @@ for (const providerFile of providerFiles) {
     providers.set(providerFile.replace('.ts', ''), providerModule.default);
 }
 
-console.log(`[malq] operating off ${providers.size} providers!`);
+console.log(`[malq] identified ${providers.size} providers`);
+
+let completedProviders: string[] = [];
+let progressInterval = setInterval(() => {
+    console.log([
+        '[malq] fetching domains...',
+        `(${completedProviders.length}/${providers.size})`,
+        ((providers.size - completedProviders.length) <= 3) && `- pend. ${providers.keys().filter(e => !completedProviders.includes(e)).toArray().join(', ')}`
+    ].filter(e => e).join(' '));
+}, 1067);
+
+await Promise.all(Array.from(providers).map(async ([name, Provider]) => {
+    try {
+        const p = new Provider();
+        const d = await p.getDomains();
+        Domains.set(p.constructor.name, d);
+        completedProviders.push(name);
+    } catch (e) {
+        console.error('[malq] provider encountered an error', name, e);
+    }
+}));
+
+clearInterval(progressInterval);
+
+const lastNameReq = await fetch('https://raw.githubusercontent.com/danielmiessler/SecLists/refs/heads/master/Usernames/Names/familynames-usa-top1000.txt');
+const lastNameRes = await lastNameReq.text();
+const lastNameList = lastNameRes.toLowerCase().split('\n').map(n => n.trim()).filter(n => n.length > 0);
+
+const firstNameReq = await fetch('https://raw.githubusercontent.com/danielmiessler/SecLists/refs/heads/master/Usernames/Names/malenames-usa-top1000.txt');
+const firstNameRes = await firstNameReq.text();
+const firstNameList = firstNameRes.toLowerCase().split('\n').map(n => n.trim()).filter(n => n.length > 0);
+
+const getRandomName = () => {
+    const firstName = firstNameList[Math.floor(Math.random() * firstNameList.length)];
+    const lastName = lastNameList[Math.floor(Math.random() * lastNameList.length)];
+    return firstName + Math.random().toString(36).slice(2, 5) + lastName;
+};
+
+console.log('[malq] name dictionary init');
 
 const app = new Elysia();
 
-const sessions = new Map<string, Provider>();
+const sessions = new Map<string, ProviderImpl>();
 
 const indexPath = path.join(import.meta.dirname, 'app', 'index.html');
 const indexContent = fs.readFileSync(indexPath, 'utf-8');
@@ -48,15 +90,8 @@ fs.readdirSync(iconPath).forEach((iconFile) => {
         app.get(`/icons/${iconFile}`, () => new Response(fs.createReadStream(path.join(iconPath, iconFile)), { headers: { 'Content-Type': 'image/png' } }));
 });
 
-app.get('/api/v1/mail/*', ({ params, query, request }) => {
-    const url = new URL(request.url);
-    const newPath = `/api/v1/${params['*']}`;
-    const searchParams = new URLSearchParams(query as Record<string, string>);
-    return Response.redirect(new URL(`${newPath}?${searchParams.toString()}`, url.origin).toString(), 307);
-});
-
 app.get('/api/v1/session', async ({ query }) => {
-    let provider: Provider;
+    let provider: ProviderImpl;
 
     if (query.provider && process.env.ALLOW_PROVIDER_SPECIFY === '1') {
         const specifiedProvider = providers.get(query.provider);
@@ -70,8 +105,11 @@ app.get('/api/v1/session', async ({ query }) => {
     const providerName = provider.constructor.name.replaceAll('$', '.');
 
     try {
-        const address = await provider.getAddress();
+        const randomDomain = Domains.getRandom(provider.constructor.name);
+        const address = `${getRandomName()}@${randomDomain}`;
         const token = crypto.randomUUID();
+
+        await provider.createInbox(address);
 
         sessions.set(token, provider);
 
@@ -90,9 +128,9 @@ app.get('/api/v1/inbox/:address', async ({ params }) => {
 
     if (!provider) return { error: 'invalid session token' };
 
-    const mail = await provider.getMail();
+    const mail = await provider.getMail(params.address);
 
-    return { address: provider.address, mail };
+    return { address: params.address, mail };
 });
 
 app.listen(4400, () => {

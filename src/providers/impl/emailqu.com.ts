@@ -1,26 +1,26 @@
-import { StringDomainCache } from '@/util/domainCache';
-import getRandomName from '@/util/names';
+import { fish } from '@/util/util';
 
-import Provider, { type Mail } from '../Provider';
+import type { Mail, ProviderImpl } from '../Provider';
 
-const domainCache = new StringDomainCache();
-
-export default class emailqu$com extends Provider {
+export default class emailqu$com implements ProviderImpl {
     bodies: Record<string, string> = {};
 
-    async getAddress(): Promise<string> {
-        if (!domainCache.hasItems()) {
-            const req = await this.fetch('https://emailqu.com/api/domains');
-            const res = await req.json() as { domains: { domain: string, is_verified: boolean }[] };
-            domainCache.set(res.domains.filter(e => e.is_verified).map(e => e.domain));
-        }
+    async getDomains(): Promise<string[]> {
+        const req = await fetch('https://emailqu.com/api/domains');
+        const res = await req.json() as { domains: { domain: string, is_verified: boolean }[] };
 
-        this.address = `${getRandomName()}@${domainCache.pull()}`;
-        return this.address;
+        const identifiedDomains = res.domains.filter(e => e.is_verified).map(e => e.domain.toLowerCase());
+        const dedupedDomains = [...new Set(identifiedDomains)];
+
+        return dedupedDomains;
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch(`https://emailqu.com/api/public/emails/${encodeURIComponent(this.address)}`);
+    async createInbox(_address: string): Promise<void> {
+        void 0;
+    }
+
+    async getMail(address: string): Promise<Mail[]> {
+        const req = await fish(`https://emailqu.com/api/public/emails/${encodeURIComponent(address)}`);
         const res = await req.json() as {
             emails: {
                 from: string,
@@ -33,7 +33,7 @@ export default class emailqu$com extends Provider {
 
         const returnableMail: Mail[] = res.emails.map((email) => ({
             from: email.from,
-            to: this.address,
+            to: address,
             subject: email.subject,
             body: email.body_text || email.body_html,
             date: new Date(email.received_at).getTime()

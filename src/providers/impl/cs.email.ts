@@ -1,32 +1,35 @@
-import getRandomName from '@/util/names';
+import { fish } from '@/util/util';
 
-import Provider, { type Mail } from '../Provider';
+import type { Mail, ProviderImpl } from '../Provider';
 
-export default class cs$email extends Provider {
+export default class cs$email implements ProviderImpl {
     bodies: Record<string, string> = {};
 
     $user = '';
     $cookie = '';
 
-    async getAddress(): Promise<string> {
-        const req = await this.fetch('https://cs.email');
+    async getDomains(): Promise<string[]> {
+        const req = await fish('https://cs.email');
         const res = await req.text();
 
         const matchedDomains = res.match(/<option value="(.*?)">/g) || [];
-        const randomDomain = matchedDomains[Math.floor(Math.random() * matchedDomains.length)];
-        const domain = randomDomain.match(/<option value="(.*?)">/)![1];
-
-        const name = res.match(/email_addr: '(.*?)@/)![1] || getRandomName();
-
-        this.$user = name;
-        this.address = `${name}@${domain}`;
-        this.$cookie = `PHPSESSID=${req.headers.get('set-cookie')!.split(';')[0].split('=')[1]}`;
-
-        return this.address;
+        return matchedDomains.map(d => d.match(/<option value="(.*?)">/)![1]);
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch(`https://cs.email/ajax.php?f=get_email_list&offset=0&site=cs.email&in=${this.$user}&_=${Date.now}`, {
+    async createInbox(address: string): Promise<void> {
+        const req = await fish('https://cs.email');
+
+        this.$cookie = req.headers.get('set-cookie')!.split(';')[0];
+
+        await fish('https://cs.email/ajax.php?f=set_email_user', {
+            method: 'POST',
+            body: `email_user=${address.split('@')[0]}&lang=en&site=cs.email&in=+Set+cancel`,
+            headers: { 'content-type': 'application/x-www-form-urlencoded', cookie: this.$cookie }
+        });
+    }
+
+    async getMail(address: string): Promise<Mail[]> {
+        const req = await fish(`https://cs.email/ajax.php?f=get_email_list&offset=0&site=cs.email&in=${this.$user}&_=${Date.now}`, {
             headers: { cookie: this.$cookie }
         });
 
@@ -45,14 +48,14 @@ export default class cs$email extends Provider {
         const returnableMail: Mail[] = res.list.map((mail) => ({
             id: mail.mail_id,
             from: mail.mail_from,
-            to: this.address,
+            to: address,
             subject: mail.mail_subject,
             body: this.bodies[mail.mail_id] || '',
             date: parseInt(mail.mail_timestamp) * 1000
         })).filter(e => e.from !== 'no-reply@guerrillamail.com');
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
-            if (!e.body && e.id) await this.fetch(`https://cs.email/ajax.php?f=fetch_email&email_id=mr_${e.id}&site=cs.email&in=${this.$user}&_=${Date.now()}`, {
+            if (!e.body && e.id) await fish(`https://cs.email/ajax.php?f=fetch_email&email_id=mr_${e.id}&site=cs.email&in=${this.$user}&_=${Date.now()}`, {
                 headers: { cookie: this.$cookie }
             }).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.json() as { mail_body: string };

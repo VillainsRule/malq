@@ -9,13 +9,20 @@
         "outDir": "dist",
         "noEmit": true,
         "strict": true,
+        "composite": false,
+        "incremental": false,
+        "skipLibCheck": true,
         "esModuleInterop": true,
         "allowImportingTsExtensions": true,
         "strictPropertyInitialization": false,
         "forceConsistentCasingInFileNames": true,
-        "types": ["bun"],
+        "types": [
+            "bun"
+        ],
         "paths": {
-            "@/*": ["./src/*"]
+            "@/*": [
+                "./src/*"
+            ]
         }
     },
     "include": [

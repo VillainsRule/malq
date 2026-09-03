@@ -1,27 +1,22 @@
-import { StringDomainCache } from '@/util/domainCache.ts';
+import { fish, toEST } from '@/util/util';
 
-import getRandomName from '@/util/names.ts';
+import type { Mail, ProviderImpl } from '../Provider';
 
-import Provider, { type Mail } from '../Provider';
-
-const domainCache = new StringDomainCache();
-
-export default class onetempmail$com extends Provider {
+export default class onetempmail$com implements ProviderImpl {
     bodies: Record<string, string> = {};
 
-    async getAddress(): Promise<string> {
-        if (!domainCache.hasItems()) {
-            const req = await this.fetch('https://onetempmail.com/api/domains');
-            const res = await req.json() as string[];
-            domainCache.set(res);
-        }
-
-        this.address = `${getRandomName().slice(0, 10)}@${domainCache.pull()}`;
-        return this.address;
+    async getDomains(): Promise<string[]> {
+        const req = await fish('https://onetempmail.com/api/domains');
+        const res = await req.json() as string[];
+        return res;
     }
 
-    async getMail(): Promise<Mail[]> {
-        const req = await this.fetch(`https://onetempmail.com/api/inbox/${encodeURIComponent(this.address)}`);
+    async createInbox(_address: string): Promise<void> {
+        void 0;
+    }
+
+    async getMail(address: string): Promise<Mail[]> {
+        const req = await fish(`https://onetempmail.com/api/inbox/${encodeURIComponent(address)}`);
         const res = await req.json() as {
             id: string,
             sender: string,
@@ -32,14 +27,14 @@ export default class onetempmail$com extends Provider {
         const returnableMail: Mail[] = res.map((email) => ({
             id: email.id,
             from: email.sender,
-            to: this.address,
+            to: address,
             subject: email.subject,
             body: this.bodies[email.id] || '',
-            date: this.toEST(new Date(email.created_at).getTime(), 0)
+            date: toEST(new Date(email.created_at).getTime(), 0)
         }));
 
         const finalMail: Mail[] = await Promise.all(returnableMail.map(async (e) => {
-            if (!e.body && e.id) await this.fetch(`https://onetempmail.com/api/email/${e.id}?email=${encodeURIComponent(this.address)}`).then(async (bodyReq) => {
+            if (!e.body && e.id) await fish(`https://onetempmail.com/api/email/${e.id}?email=${encodeURIComponent(address)}`).then(async (bodyReq) => {
                 const bodyRes = await bodyReq.json() as { body_text: string | null, body_html: string };
                 e.body = bodyRes.body_text || bodyRes.body_html;
                 this.bodies[e.id!] = e.body;
