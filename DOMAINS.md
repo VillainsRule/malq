@@ -1,5 +1,3 @@
-domains.txt -- com" selected=".ptruyen
-
 CHECKER: sendtestmail.com
 
 write reference:

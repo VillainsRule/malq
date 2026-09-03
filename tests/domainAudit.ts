@@ -48,6 +48,13 @@ await Promise.all(values.map(async (ProviderClass) => {
             if (seenDomains.includes(`${psl.prefix}|${psl.suffix.suffix}`) || blacklist.includes(psl.suffix.suffix)) return;
             seenDomains.push(`${psl.prefix}|${psl.suffix.suffix}`);
 
+            try {
+                new URL(`https://${d}`);
+            } catch (e) {
+                console.error(`"${d}" is not a valid domain`);
+                return;
+            }
+
             if (domains[d]) console.warn(`"${d}" in both ${provider.constructor.name}, ${domains[d]}`);
             domains[d] = provider.constructor.name;
         });

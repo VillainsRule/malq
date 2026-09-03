@@ -1,3 +1,5 @@
+import { parse } from 'node-html-parser';
+
 import { fish } from '@/util/util';
 
 import type { Mail, ProviderImpl } from '../Provider';
@@ -10,9 +12,9 @@ export default class getnada$net implements ProviderImpl {
     async getDomains(): Promise<string[]> {
         const req = await fish('https://getnada.net');
         const res = await req.text();
+        const dom = parse(res);
 
-        const matchedDomains = res.match(/<option value="(.*?)">/g) || [];
-        return matchedDomains.map(d => d.match(/<option value="(.*?)">/)![1]);
+        return dom.querySelectorAll('option').map(e => e.getAttribute('value')).filter((e) => !!e && e.includes('.')) as string[];
     }
 
     async createInbox(address: string): Promise<void> {
