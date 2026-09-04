@@ -1,7 +1,7 @@
 const IGNORE_LIST: string[] = [];
 
 const THRESHOLD = 10;
-const DELAY = 700;
+const DELAY = 750;
 
 import fs from 'fs';
 import path from 'path';

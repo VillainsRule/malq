@@ -1,6 +1,6 @@
 import wafFetch from '@/util/waf/fetch';
 
-import type { Mail, ProviderImpl } from '../Provider';
+import type { Mail, ProviderImpl } from '../../Provider';
 
 export default class _10minutemail$com implements ProviderImpl {
     $cookie = '';

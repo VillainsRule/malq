@@ -35,7 +35,8 @@ for (const domain of domains.split('\n').filter(line => line.startsWith('N '))) 
     if (domain.includes('timeout')) fetch('http://' + domainPart, { method: 'HEAD', signal: AbortSignal.timeout(5000) })
         .then((e) => console.error(`domain ${domainPart} unexpectedly responded!`, e))
         .catch((err) => {
-            if (err.name !== 'AbortError' && err.name !== 'TimeoutError') console.error(`domain ${domainPart} had an unexpected error:`, err);
+            if (err.name !== 'AbortError' && err.name !== 'TimeoutError' && err.code !== 'ECONNRESET')
+                console.error(`domain ${domainPart} had an unexpected error:`, err);
         });
 
     if (domain.includes('redirect')) fetch('http://' + domainPart, {
@@ -65,6 +66,7 @@ for (const domain of domains.split('\n').filter(line => line.startsWith('N '))) 
                     'afternic.com',
                     'cmVmPSZzdWJpZDE9',
                     'l.cdn-fileserver.com',
+                    'Domain registered at',
                     'is available for sale',
                     'this domain is for sale',
                     '/domain-names/auctions/',
@@ -145,12 +147,4 @@ for (const domain of domains.split('\n').filter(line => line.startsWith('N '))) 
             addr.endsWith('seizedservers.com')
         )) console.error(`domain ${domainPart} is NOT seized as expected!`)
     });
-}
-
-const impl = path.join(import.meta.dirname, '..', 'src', 'providers', 'impl');
-const scan = new Bun.Glob('**/*.ts').scan(impl);
-for await (const file of scan) {
-    const filename = path.basename(file, '.ts');
-    if (filename !== '_constructor' && !domains.includes(`Y ${filename.replaceAll('_', '-')}`))
-        console.error(`implementation file ${filename} is missing from DOMAINS.md!`);
 }

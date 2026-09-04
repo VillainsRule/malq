@@ -1,6 +1,6 @@
 import { fish } from '@/util/util';
 
-import type { Mail, ProviderImpl } from '../Provider';
+import type { Mail, ProviderImpl } from '../../Provider';
 
 export default class tempmail100$com implements ProviderImpl {
     bodies: Record<string, string> = {};
