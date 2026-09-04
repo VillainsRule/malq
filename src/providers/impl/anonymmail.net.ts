@@ -55,7 +55,7 @@ export default class anonymmail$net implements ProviderImpl {
             to: address,
             subject: email.subject,
             body: email.body,
-            date: toEST(new Date(email.date).getTime(), -4269)
+            date: toEST(new Date(email.date).getTime(), -3549)
         }));
 
         this.inboxHistory.push(...inboxAdditions);

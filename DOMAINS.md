@@ -14,7 +14,6 @@ to do:
 - emailkilat.com (custom)
 - postinbox.org (lwUpdate)
 - ezmail.pro (custom)
-- inboxburn.com (custom)
 - xarg.xyz (custom) (USE HTTPS PREFIX)
 - spammail.org (custom)
 - mail.premiumindigital.site (custom)
@@ -90,7 +89,6 @@ Y 10minemail.com
 Y mail.paicha.cloud
 Y tempmail.io.vn
 Y txen.de
-Y 24.email
 Y z4mails.com
 Y 10-minutemail.com
 Y driftz.net
@@ -119,6 +117,7 @@ Y anonymmail.net
 Y aaa53nhanmaizzzz.com
 Y gomax2025.com
 Y grabmail.io
+Y inboxburn.com
 
 N 0mail.pro [NXDOMAIN]
 N 0mail.app [app]
@@ -172,6 +171,7 @@ N 189.email [1 domain]
 N 24hour.email [1 domain]
 N 22.do [gmail]
 N 2minutesmail.com [NXDOMAIN]
+N 24.email [websocket]
 N 24mail.json.cm [1 domain]
 N 2tempmail.com [broken] (API)
 N 33mail.com [signup]
