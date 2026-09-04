@@ -27,7 +27,7 @@ export default class surlCommons implements ProviderImpl {
         const [user, domain] = address.split('@');
 
         const req = await fish(`https://${this.host}`, {
-            headers: { cookie: `embx=%5B%22${encodeURIComponent(address)}%22%5D; surl=${user}/${domain}` }
+            headers: { cookie: `embx=%5B%22${encodeURIComponent(address)}%22%5D; surl=${domain}/${user}` }
         });
 
         const res = await req.text();

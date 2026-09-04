@@ -19,7 +19,8 @@ export default class cheapluxurymail$xyz implements ProviderImpl {
 
         await fish('https://cheapluxurymail.xyz/register', {
             method: 'POST',
-            body: JSON.stringify({ email: address, password: this.$password })
+            body: JSON.stringify({ email: address, password: this.$password }),
+            headers: { 'content-type': 'application/json' }
         });
     }
 

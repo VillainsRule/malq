@@ -1,3 +1,5 @@
+import { parse } from 'node-html-parser';
+
 import LWUpdate from '@/util/livewire/LWUpdate';
 
 import { fish, toEST } from '@/util/util';
@@ -10,9 +12,9 @@ export default class temp_mail$asia implements ProviderImpl {
     async getDomains(): Promise<string[]> {
         const req = await fish('https://temp-mail.asia');
         const res = await req.text();
+        const dom = parse(res);
 
-        const matchedDomains = res.match(/<option value="(.*?)">/g) || [];
-        return matchedDomains.map(d => d.match(/<option value="(.*?)">/)![1]);
+        return dom.querySelectorAll('option').filter(e => !e.getAttribute('disabled')).map(e => e.getAttribute('value')!);
     }
 
     async createInbox(address: string): Promise<void> {

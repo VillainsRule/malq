@@ -49,7 +49,8 @@ const wafFetch = (inputUrl: string, options: WafFetchOptions = {}): Promise<WafF
             // 'accept-encoding': 'deflate',
             'accept-language': 'en-US,en;q=0.9',
             'priority': 'u=0, i',
-            ...(options.referrer ? { referer: options.referrer } : {}),
+            ...(options.headers?.referer ? { referer: options.headers.referer } : { referer: url.origin }),
+            ...(options.headers?.origin ? { origin: options.headers.origin } : { origin: url.origin })
         };
 
         const { body = null } = options;

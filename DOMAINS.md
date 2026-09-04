@@ -1,8 +1,8 @@
 CHECKER: sendtestmail.com
 
 write reference:
-- nomailfetch - cheapluxurymail.xyz
-- mailfetch - driftz.net
+- nomailfetch - gomax2025.com
+- mailfetch - tempmail.io.vn
 
 to do:
 - temp-mail.africa (ssr)
@@ -26,17 +26,7 @@ to do:
 - tmailfree.com (laravel)
 - 48hr.email
 - tempmail.bot
-- imail.cool
-- aaa53nhanmaizzzz.com
-- gomax2025.com
-- grabmail.io
 - neighbours.sh
-- vanishinbox.com
-- tempmailu.com
-- tempmails.co.in
-- temptom.com
-- otpmail.online
-- sellallmail.com
 - mailforspams.com
 - mailregcl.com
 - usmail.my.id
@@ -91,7 +81,6 @@ Y tempm.com
 Y mail-fake.com
 Y mail-temp.com
 Y tinyhost.shop
-Y mail.chatgpt.org.uk
 Y tmail.thangdeptrai.net
 Y moakt.com
 Y rootsh.com
@@ -101,13 +90,11 @@ Y 10minemail.com
 Y mail.paicha.cloud
 Y tempmail.io.vn
 Y txen.de
-Y linshiyouxiang.net
 Y 24.email
 Y z4mails.com
 Y 10-minutemail.com
 Y driftz.net
 Y cs.email
-Y noemail.cc
 Y nguyendoll.com
 Y altaddress.org
 Y mailporary.com
@@ -118,7 +105,6 @@ Y cleantempmail.com
 Y mailmomy.com
 Y tempmailc.com
 Y run2mail.com
-Y mailtemp.tech
 Y getnada.net
 Y qaz.im
 Y vip.215.im
@@ -130,6 +116,9 @@ Y tmail.ma
 Y beeinbox.com
 Y disposemail.xyz
 Y anonymmail.net
+Y aaa53nhanmaizzzz.com
+Y gomax2025.com
+Y grabmail.io
 
 N 0mail.pro [NXDOMAIN]
 N 0mail.app [app]
@@ -464,6 +453,7 @@ N instantemailaddress.com [parked]
 N insttempmailer.com [1 domain]
 N ironvest.com [changed]
 N itempmails.com [2 domains]
+N imail.cool [timeout]
 
 N jonasleo.top [broken] (inrmail.info) (same temp-mailo.org)
 N jjk.app [WAF]
@@ -489,6 +479,7 @@ N lsyx.me [1 domain]
 N lsyx24.com [1 domain]
 N lsyx.xyz [1 domain]
 N lilzyy.com [5 domains]
+N linshiyouxiang.net [weird] (10s refresh ratelimit)
 
 N mintemail.com [1 domain]
 N mails.org [hcaptcha]
@@ -639,6 +630,8 @@ N mailtemp.vn [badsel]
 N mockemail.com [badsel]
 N mnx-family.com [unstable]
 N moemail.app [signup]
+N mailtemp.tech [serverr]
+N mail.chatgpt.org.uk [captcha]
 
 N notletters.com [signup]
 N noopmail.org [nosel]
@@ -653,6 +646,7 @@ N ntmtemp.xyz [NXDOMAIN]
 N notrashmail.net [NXDOMAIN]
 N norton.com [signup]
 N ntmtmp.xyz [NXDOMAIN]
+N noemail.cc [broken]
 
 N onesecmail.xyz [parked]
 N onetimeinbox.com [4 domains]
@@ -665,6 +659,7 @@ N onetimeemail.net [1 domain]
 N onetimemali.com [1 domain]
 N on4t.com [1 domain]
 N onetimeemail.com [nosel]
+N otpmail.online [bad] (one mail stored at once?)
 
 N premiumisme.info [2 domains]
 N proxiedmail.com [alias]
@@ -746,6 +741,7 @@ N smailpro.cc [redirect]
 N smsbower.org [signup]
 N spamok.fr [websocket]
 N savegmail.com [4 domains]
+N sellallmail.com [broken]
 
 N temp2mail.top [NXDOMAIN]
 N tmail.delivery [signup]
@@ -1174,6 +1170,9 @@ N tempbo.com [serverr]
 N tempmail123.com [2 domains]
 N temporaryemail.in [nosel]
 N tmp-mail.pro [nosel]
+N tempmailu.com [broken]
+N tempmails.co.in [nosel]
+N temptom.com [turnstile]
 
 N unlimitmail.com [signup]
 N unstablemail.com [NXDOMAIN]
@@ -1191,6 +1190,7 @@ N vanishpost.com [parked]
 N verify32.com [1 domain]
 N verum.email [app]
 N venez.fr [serverr]
+N vanishinbox.com [captcha]
 
 N wp-temp-mail.com [changed]
 N wabblywabble.com [NXDOMAIN]

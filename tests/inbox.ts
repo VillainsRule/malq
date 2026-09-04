@@ -1,4 +1,4 @@
-import Provider from '../src/providers/impl/anonymmail.net'
+const { default: Provider } = await import(`../src/providers/impl/${process.argv[2]}.ts`);
 
 const provider = new Provider();
 
@@ -45,3 +45,5 @@ setInterval(async () => {
         console.log('mail date must be shifted by', hours);
     }
 }, 3000);
+
+export {};

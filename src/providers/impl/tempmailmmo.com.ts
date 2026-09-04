@@ -9,7 +9,11 @@ export default class tempmailmmo$com implements ProviderImpl {
 
     async getDomains(): Promise<string[]> {
         const req = await fish('https://tempmailmmo.com/ajax.php?f=get_domains', {
-            headers: { 'x-requested-with': 'XMLHttpRequest', 'x-tempmail-client': 'web' }
+            headers: {
+                'referer': 'https://tempmailmmo.com/',
+                'x-requested-with': 'XMLHttpRequest',
+                'x-tempmail-client': 'web'
+            }
         });
 
         const res = await req.json() as { domains: string[] };
@@ -20,7 +24,12 @@ export default class tempmailmmo$com implements ProviderImpl {
         const mailReq = await fish('https://tempmailmmo.com/ajax.php?f=get_email_address', {
             method: 'POST',
             body: 'f=get_email_address&lang=vi',
-            headers: { 'content-type': 'application/x-www-form-urlencoded', 'x-requested-with': 'XMLHttpRequest', 'x-tempmail-client': 'web' }
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+                'referer': 'https://tempmailmmo.com/',
+                'x-requested-with': 'XMLHttpRequest',
+                'x-tempmail-client': 'web'
+            }
         });
 
         const mailRes = await mailReq.json() as { email_addr: string, sid_token: string };
@@ -30,7 +39,12 @@ export default class tempmailmmo$com implements ProviderImpl {
         await fish('https://tempmailmmo.com/ajax.php?f=set_email_user', {
             method: 'POST',
             body: `sid_token=${mailRes.sid_token}&email_user=${user}&lang=vi&email_domain=${domain}`,
-            headers: { 'content-type': 'application/x-www-form-urlencoded', 'x-requested-with': 'XMLHttpRequest', 'x-tempmail-client': 'web' }
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+                'referer': 'https://tempmailmmo.com/',
+                'x-requested-with': 'XMLHttpRequest',
+                'x-tempmail-client': 'web'
+            }
         });
 
         this.$sid = mailRes.sid_token;
@@ -39,7 +53,12 @@ export default class tempmailmmo$com implements ProviderImpl {
     async getMail(address: string): Promise<Mail[]> {
         const req = await fish('https://tempmailmmo.com/ajax.php?f=get_email_list', {
             method: 'POST',
-            headers: { 'content-type': 'application/x-www-form-urlencoded', 'x-requested-with': 'XMLHttpRequest', 'x-tempmail-client': 'web' },
+            headers: {
+                'content-type': 'application/x-www-form-urlencoded',
+                'referer': 'https://tempmailmmo.com/',
+                'x-requested-with': 'XMLHttpRequest',
+                'x-tempmail-client': 'web'
+            },
             body: `f=get_email_list&offset=0&sid_token=${this.$sid}`
         });
 
@@ -65,8 +84,13 @@ export default class tempmailmmo$com implements ProviderImpl {
             if (!e.body && e.id) {
                 const bodyReq = await fish('https://tempmailmmo.com/ajax.php?f=fetch_email', {
                     method: 'POST',
-                    headers: { 'content-type': 'application/x-www-form-urlencoded', 'x-requested-with': 'XMLHttpRequest', 'x-tempmail-client': 'web' },
-                    body: `f = fetch_email & email_id=${e.id} & sid_token=${this.$sid}`
+                    headers: {
+                        'content-type': 'application/x-www-form-urlencoded',
+                        'referer': 'https://tempmailmmo.com/',
+                        'x-requested-with': 'XMLHttpRequest',
+                        'x-tempmail-client': 'web'
+                    },
+                    body: `f=fetch_email&email_id=${e.id}&sid_token=${this.$sid}`
                 });
                 const bodyRes = await bodyReq.json() as { mail_body: string };
                 e.body = bodyRes.mail_body;

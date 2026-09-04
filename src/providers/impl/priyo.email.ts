@@ -11,8 +11,8 @@ export default class priyo$email implements ProviderImpl {
         const req = await fish(`https://${this.livewire.host}`);
         const res = await req.text();
 
-        const matchedDomains = res.match(/<option value="(.*?)"/g) || [];
-        return matchedDomains.map(d => d.match(/<option value="(.*?)"/)![1]);
+        const matchedDomains = res.match(/<option\s*value="(.*?)"/g) || [];
+        return matchedDomains.map(d => d.match(/<option\s*value="(.*?)"/)![1]);
     }
 
     async createInbox(address: string): Promise<void> {

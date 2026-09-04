@@ -40,16 +40,15 @@ for (let i = 0; i < values.length; i++) {
         await provider.createInbox(address);
         console.log('created inbox...');
 
-        const res = await fetch('https://api.brevo.com/v3/smtp/email', {
+        const res = await fetch('https://api.resend.com/emails', {
             method: 'POST',
             headers: {
-                'Accept': 'application/json',
-                'Api-Key': Bun.env.BREVO_API_KEY!,
+                'Authorization': `Bearer ${process.env.RESEND_API_KEY}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify({
                 from: Bun.env.RESEND_SENDER_EMAIL,
-                to: address,
+                to: [address],
                 subject: 'good morning!!',
                 html: '<p>how r u doing this morning?</p>'
             })
@@ -68,7 +67,7 @@ for (let i = 0; i < values.length; i++) {
                 console.log('it got the mail', mail);
 
                 if (mail.length > 1) console.error('>1 in inbox');
-                if (!mail[0].from.includes('newsletter')) console.error('mail sender mismatch');
+                if (!mail[0].from.includes(Bun.env.RESEND_SENDER_EMAIL!.split('@')[1])) console.error('mail sender mismatch');
                 if (mail[0].to !== address) console.error('mail recipient mismatch');
                 if (mail[0].subject !== 'good morning!!') console.error('mail subject mismatch');
                 if (mail[0].date > (Date.now() + 1000) || mail[0].date < (Date.now() - 1000 * 60 * 5)) console.error('mail date mismatch');

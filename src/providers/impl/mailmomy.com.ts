@@ -1,4 +1,6 @@
-import { fish, toEST } from '@/util/util';
+// inconsistent dates - remove sometime?
+
+import { fish } from '@/util/util';
 
 import type { Mail, ProviderImpl } from '../Provider';
 
@@ -34,7 +36,7 @@ export default class mailmomy$com implements ProviderImpl {
             to: email.recipient,
             subject: email.subject,
             body: email.bodyText || email.message,
-            date: toEST(new Date(email.receivedAt).getTime(), 7)
+            date: new Date(email.receivedAt).getTime()
         }));
 
         return returnableMail;

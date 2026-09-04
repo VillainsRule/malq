@@ -6,7 +6,10 @@
     "scripts": {
         "dev": "bun --watch src/main.ts",
         "pull": "git pull && bun i && systemctl restart malq",
-        "check": "bunx --bun tsc && rm -rf dist"
+        "check": "bunx --bun tsc && rm -rf dist",
+        "inbox": "bun tests/inbox.ts",
+        "resend": "bun tests/resend.ts",
+        "send": "bun tests/send.ts"
     },
     "dependencies": {
         "elysia": "^1.4.19",

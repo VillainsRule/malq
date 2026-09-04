@@ -5,15 +5,10 @@ import { fish, toEST } from '@/util/util';
 import type { Mail, ProviderImpl } from '../../Provider';
 
 export default class lwUpdateDomainCommons implements ProviderImpl {
-    domain = '';
-    bypassWAF = false;
-
     livewire: LWUpdate;
 
     constructor(domain: string, bypassWAF: boolean) {
-        this.domain = domain;
-        this.bypassWAF = bypassWAF;
-        this.livewire = new LWUpdate(this.domain, this.bypassWAF);
+        this.livewire = new LWUpdate(domain, bypassWAF);
     }
 
     async getDomains(): Promise<string[]> {
