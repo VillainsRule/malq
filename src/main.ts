@@ -31,12 +31,12 @@ for (const providerFile of providerFiles) {
 
 console.log(`[malq] identified ${providers.size} providers`);
 
-let completedProviders: string[] = [];
+let checkedProviders: string[] = [];
 let progressInterval = setInterval(() => {
     console.log([
         '[malq] fetching domains...',
-        `(${completedProviders.length}/${providers.size})`,
-        ((providers.size - completedProviders.length) <= 3) && `- pend. ${providers.keys().filter(e => !completedProviders.includes(e)).toArray().join(', ')}`
+        `(${checkedProviders.length}/${providers.size})`,
+        ((providers.size - checkedProviders.length) <= 3) && `- pend. ${providers.keys().filter(e => !checkedProviders.includes(e)).toArray().join(', ')}`
     ].filter(e => e).join(' '));
 }, 1067);
 
@@ -45,9 +45,11 @@ await Promise.all(Array.from(providers).map(async ([name, Provider]) => {
         const p = new Provider();
         const d = await p.getDomains();
         Domains.set(p.constructor.name, d);
-        completedProviders.push(name);
     } catch (e) {
-        console.error('[malq] provider encountered an error', name, e);
+        console.error(`[malq] domain fetching for "${name}" encountered an error`, e);
+        console.error(`[malq] the provider will not be used this launch`);
+    } finally {
+        checkedProviders.push(name);
     }
 }));
 

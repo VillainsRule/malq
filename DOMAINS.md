@@ -30,6 +30,14 @@ to do:
 - mailregcl.com
 - usmail.my.id
 - edumailfree.com
+- 123213214.xyz
+- nenzmail.com
+- nullz.in
+- trytempmail.top
+- zrvvv.com
+
+uBO report:
+- nullz.in
 
 **ERROR CODES:**
 - [C] NXDOMAIN: domain doesn't exist
@@ -173,6 +181,7 @@ N 24mail.json.cm [1 domain]
 N 2tempmail.com [broken] (API)
 N 33mail.com [signup]
 N 30minemail.com [1 domain]
+N 365hmail.com [5 domains]
 N 48h.email [NXDOMAIN]
 N 5smail.email [4 domains]
 N 5minmail.com [1 domain]
@@ -236,6 +245,7 @@ N burnermailhub.com [changed]
 N blinkboxapp.com [4 domains]
 N bagahmail.com [1 domain]
 N boreacore.com [signup]
+N banhetboveo.asia [mirror] (aaa53nhanmaizzzz.com)
 
 N chat-tempmail.com [signup]
 N crazymailing.com [4 domains]
@@ -298,6 +308,7 @@ N dustmail.net [nosel]
 N deepseek.dad [nosel]
 N dispose.lol [signup]
 N duckzmail.com [5 domains]
+N deptraihaiphong.com [nosel]
 
 N emltmp.com [serverr]
 N easytrashmail.eu [serverr]
@@ -451,6 +462,7 @@ N insttempmailer.com [1 domain]
 N ironvest.com [changed]
 N itempmails.com [2 domains]
 N imail.cool [unstable]
+N imail.io.vn [4 domains]
 
 N jonasleo.top [broken] (inrmail.info) (same temp-mailo.org)
 N jjk.app [WAF]
@@ -629,6 +641,8 @@ N mnx-family.com [unstable]
 N moemail.app [signup]
 N mailtemp.tech [serverr]
 N mail.chatgpt.org.uk [turnstile]
+N meowmail.in [4 domains]
+N mail-api.nycmail.nyc.mn [mirror] (zrvvv.com)
 
 N notletters.com [signup]
 N noopmail.org [nosel]
@@ -675,6 +689,8 @@ N purplemailapp.neweymail.com [serverr]
 N passbymail.com [1 domain]
 N phantom-mail.io [parked]
 N protectmyemail.net [redirect]
+N plusaple.com [4 domains]
+N puladimail.my.id [3 domains]
 
 N quickemail.xyz [2 domains]
 N quick-inbox.com [NXDOMAIN]
@@ -740,6 +756,7 @@ N smsbower.org [signup]
 N spamok.fr [websocket]
 N savegmail.com [4 domains]
 N sellallmail.com [broken]
+N saga.my.id [timeout]
 
 N temp2mail.top [NXDOMAIN]
 N tmail.delivery [signup]
@@ -1172,6 +1189,7 @@ N tempmailu.com [broken]
 N tempmails.co.in [nosel]
 N temptom.com [turnstile]
 N tempmailo.com [nosel]
+N tempmailhub.net [5 domains]
 
 N unlimitmail.com [signup]
 N unstablemail.com [NXDOMAIN]
