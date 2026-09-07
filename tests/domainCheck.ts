@@ -32,8 +32,8 @@ for (const domain of domains.split('\n').filter(line => line.startsWith('N '))) 
         })
         .catch(() => { });
 
-    if (domain.includes('timeout')) fetch('http://' + domainPart, { method: 'HEAD', signal: AbortSignal.timeout(5000) })
-        .then((e) => console.error(`domain ${domainPart} unexpectedly responded!`, e))
+    if (domain.includes('timeout')) fetch('http://' + domainPart, { method: 'GET', signal: AbortSignal.timeout(5000) })
+        .then((e) => e && console.error(`domain ${domainPart} unexpectedly responded!`, e))
         .catch((err) => {
             if (err.name !== 'AbortError' && err.name !== 'TimeoutError' && err.code !== 'ECONNRESET')
                 console.error(`domain ${domainPart} had an unexpected error:`, err);
@@ -50,7 +50,7 @@ for (const domain of domains.split('\n').filter(line => line.startsWith('N '))) 
         })
         .catch((err) => console.error(`domain ${domainPart} had an unexpected error:`, err));
 
-    if (domain.includes('parked')) fetch('https://www.' + domainPart + '/', { redirect: 'manual', signal: AbortSignal.timeout(5000), headers: { 'user-agent': 'Mozilla/5.0 Chrome/144.0.0.0' } })
+    if (domain.includes('parked')) fetch('https://www.' + domainPart + '/', { redirect: 'manual', signal: AbortSignal.timeout(5000), headers: { 'user-agent': 'Mozilla/5.0 Chrome/152.0.0.0' }, tls: { rejectUnauthorized: false } })
         .then(async (res) => ({ text: await res.text(), status: res.status, headers: res.headers }))
         .then(({ text, status, headers }) => {
             if (
@@ -66,13 +66,13 @@ for (const domain of domains.split('\n').filter(line => line.startsWith('N '))) 
                     'afternic.com',
                     'cmVmPSZzdWJpZDE9',
                     'l.cdn-fileserver.com',
-                    'Domain registered at',
+                    'domain registered at',
                     'is available for sale',
                     'this domain is for sale',
                     '/domain-names/auctions/',
                     '<title>redirecting...</title>',
                     'aHR0cHM6Ly9kZXByZXNzaXZlbHkuY29tL2dvLz'
-                ].some(e => text.toLowerCase().includes(e)) &&
+                ].some(e => text.toLowerCase().includes(e.toLowerCase())) &&
                 !(status.toString().startsWith('3') && [
                     'domains.atom.com',
                     'DropCatch.com',
@@ -88,10 +88,7 @@ for (const domain of domains.split('\n').filter(line => line.startsWith('N '))) 
             if (
                 err.name !== 'TimeoutError' &&
                 err.code !== 'ECONNRESET' &&
-                err.code !== 'ConnectionRefused' &&
-                err.code !== 'UNABLE_TO_GET_ISSUER_CERT_LOCALLY' &&
-                err.code !== 'UNKNOWN_CERTIFICATE_VERIFICATION_ERROR' &&
-                err.code !== 'CERT_HAS_EXPIRED'
+                err.code !== 'ConnectionRefused'
             ) console.error(`domain ${domainPart} had an unexpected error:`, err)
         });
 

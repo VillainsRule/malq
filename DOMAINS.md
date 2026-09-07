@@ -22,7 +22,6 @@ to do:
 - onehour.email (custom)
 - orifymail.com (custom)
 - tempmail.ai (custom)
-- tmailfree.com (laravel)
 - 48hr.email
 - tempmail.bot
 - neighbours.sh
@@ -161,7 +160,7 @@ N 10mintempmail.com [parked]
 N 10-minute-mail.net [changed]
 N 10minutemail.info [serverr]
 N 10minut.com.pl [timeout]
-N 10minmail.org [2 domains] (laravel)
+N 10minmail.org [UAM]
 N 10minut.xyz [1 domain]
 N 10minute-mail.com [serverr]
 N 10minutemail.co [1 domain]
@@ -251,7 +250,7 @@ N chat-tempmail.com [signup]
 N crazymailing.com [4 domains]
 N candymailbox.com [changed]
 N cybertemp.xyz [POW]
-N correotemporal.org [NXDOMAIN]
+N correotemporal.org [redirect]
 N cryptogmail.com [mirror] (mail.tm)
 N cloudtempmail.com [redirect]
 N clauduck.com [signup]
@@ -395,7 +394,7 @@ N foremailonly.xyz [2 domains]
 N forwardemail.net [alias]
 N forwardmx.net [alias]
 N freemailzone.com [1 domain]
-N freetemporaryemail.com [jschallenge]
+N freetemporaryemail.com [serverr]
 N fviainboxes.com [2 domains]
 N fyii.de [serverr]
 N freetempmail.org [nosel]
@@ -940,7 +939,7 @@ N tempomailusa.com [1 domain]
 N tempmy.com [nosel]
 N tempmail.zip [recaptcha]
 N teminbox.com [NXDOMAIN]
-N temp-email.me [NXDOMAIN]
+N temp-email.me [1 domain]
 N temp-mail.cam [NXDOMAIN]
 N temp-mail.solutions [NXDOMAIN]
 N temp-mail.top [redirect]
@@ -1190,6 +1189,8 @@ N tempmails.co.in [nosel]
 N temptom.com [turnstile]
 N tempmailo.com [nosel]
 N tempmailhub.net [5 domains]
+N tmailfree.com [5 domains] (laravel)
+N tempmail.hk [3 domains]
 
 N unlimitmail.com [signup]
 N unstablemail.com [NXDOMAIN]
@@ -1242,3 +1243,4 @@ N zyntra.app [signup]
 N zenvex.dev [5 domains]
 N zaptempmail.com [5 domains]
 N zovlyx.fun [nosel]
+N zhimails.work [timeout]

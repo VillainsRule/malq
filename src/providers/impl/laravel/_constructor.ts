@@ -1,3 +1,5 @@
+import CookieJar from '@/util/CookieJar';
+
 import { fish, toEST } from '@/util/util';
 
 import type { Mail, ProviderImpl } from '../../Provider';
@@ -6,17 +8,12 @@ export default class laravelCommons implements ProviderImpl {
     domain = '';
     messageEndpoint = 'get_messages';
     domainPage = '';
-    customLaravelCookie = '';
-    isFormData = false;
     utcOffset = 0;
     ignoredEmails: string[] = [];
 
+    $jar = new CookieJar();
     $csrfToken = '';
-
-    $xsrfCookie = '';
-    $sessionCookie = '';
-    $localeCookie = '';
-    $emailCookie = '';
+    $isFormData = false;
 
     async getDomains(): Promise<string[]> {
         const req = await fish(`https://${this.domain}${this.domainPage}`);
@@ -36,61 +33,50 @@ export default class laravelCommons implements ProviderImpl {
 
         const res = await req.text();
 
+        this.$isFormData = res.includes('url = "');
         this.$csrfToken = res.match(/name="csrf-token" content="(.*?)"/)?.[1]!;
-        this.updateCookies(req);
+        this.$jar.addSetCookie(req.headers.getSetCookie());
 
         const req2 = await fish(`https://${this.domain}/${this.messageEndpoint}`, {
             method: 'POST',
             headers: {
-                'content-type': this.isFormData ? 'application/x-www-form-urlencoded; charset=UTF-8' : 'application/json',
+                'content-type': this.$isFormData ? 'application/x-www-form-urlencoded; charset=UTF-8' : 'application/json',
                 'x-xsrf-token': this.$csrfToken || '',
-                cookie: `XSRF-TOKEN=${this.$xsrfCookie}; ${this.customLaravelCookie}=${this.$sessionCookie}; locale=${this.$localeCookie}`,
+                cookie: this.$jar.getCookie(),
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36',
             },
-            body: this.isFormData ? `_token=${this.$csrfToken}&captcha=` : JSON.stringify({ _token: this.$csrfToken })
+            body: this.$isFormData ? `_token=${this.$csrfToken}&captcha=` : JSON.stringify({ _token: this.$csrfToken })
         });
 
-        this.updateCookies(req2);
+        this.$jar.addSetCookie(req2.headers.getSetCookie());
 
         const [name, domain] = address.split('@');
 
-        const req3 = await fish(`https://${this.domain}/${this.isFormData ? 'create' : 'en/change'}`, {
+        const req3 = await fish(`https://${this.domain}/${this.$isFormData ? 'create' : 'en/change'}`, {
             redirect: 'manual',
             method: 'POST',
             headers: {
-                'content-type': this.isFormData ? 'application/x-www-form-urlencoded' : 'application/json',
+                'content-type': this.$isFormData ? 'application/x-www-form-urlencoded' : 'application/json',
                 'x-xsrf-token': this.$csrfToken || '',
-                cookie: `XSRF-TOKEN=${this.$xsrfCookie}; ${this.customLaravelCookie}=${this.$sessionCookie}; locale=${this.$localeCookie}; email=${this.$emailCookie}`,
+                cookie: this.$jar.getCookie(),
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36',
             },
-            body: this.isFormData ? `_token=${this.$csrfToken}&name=${name}&domain=${domain}` : JSON.stringify({ _token: this.$csrfToken, name, domain })
+            body: this.$isFormData ? `_token=${this.$csrfToken}&name=${name}&domain=${domain}` : JSON.stringify({ _token: this.$csrfToken, name, domain })
         });
 
-        this.updateCookies(req3);
-    }
-
-    private updateCookies(res: Response) {
-        res.headers.getSetCookie().forEach((cookie) => {
-            const [name, value] = cookie.split(';')[0].trim().split('=');
-            if (name === 'XSRF-TOKEN') this.$xsrfCookie = decodeURIComponent(value);
-            if (name === this.customLaravelCookie) this.$sessionCookie = value;
-            if (name === 'locale') this.$localeCookie = value;
-            if (name === 'email') this.$emailCookie = decodeURIComponent(value);
-        });
+        this.$jar.addSetCookie(req3.headers.getSetCookie());
     }
 
     async getMail(address: string): Promise<Mail[]> {
-        const mailCookie = `locale=${this.$localeCookie}; email=${this.$emailCookie}; ${this.customLaravelCookie}=${this.$sessionCookie}; XSRF-TOKEN=${this.$xsrfCookie}`;
-
         const req = await fish(`https://${this.domain}/${this.messageEndpoint}`, {
             method: 'POST',
             headers: {
-                'content-type': this.isFormData ? 'application/x-www-form-urlencoded; charset=UTF-8' : 'application/json',
+                'content-type': this.$isFormData ? 'application/x-www-form-urlencoded; charset=UTF-8' : 'application/json',
                 'x-xsrf-token': this.$csrfToken || '',
-                cookie: mailCookie,
+                cookie: this.$jar.getCookie(),
                 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36',
             },
-            body: this.isFormData ? `_token=${this.$csrfToken}&captcha=` : JSON.stringify({ _token: this.$csrfToken })
+            body: this.$isFormData ? `_token=${this.$csrfToken}&captcha=` : JSON.stringify({ _token: this.$csrfToken })
         });
 
         const res = await req.json() as {
@@ -103,7 +89,7 @@ export default class laravelCommons implements ProviderImpl {
             }[];
         };
 
-        this.updateCookies(req);
+        this.$jar.addSetCookie(req.headers.getSetCookie());
 
         const returnableMail: Mail[] = res.messages.filter(e => !this.ignoredEmails.includes(e.from_email)).map((email) => ({
             from: email.from_email,
