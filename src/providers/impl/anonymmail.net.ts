@@ -1,30 +1,52 @@
 import { fish, toEST } from '@/util/util';
 
+import CookieJar from '@/util/CookieJar';
+
 import type { Mail, ProviderImpl } from '../Provider';
 
 export default class anonymmail$net implements ProviderImpl {
     inboxHistory: Mail[] = [];
 
-    $cookie: string;
+    $jar = new CookieJar();
+    $csrfToken = '';
 
     async getDomains(): Promise<string[]> {
-        const req = await fish('https://anonymmail.net/api/getDomains');
-        const res = await req.json() as { domain: string }[];
+        const csrfReq = await fish('https://anonymmail.net/');
+        const csrfRes = await csrfReq.text();
 
+        const req = await fish('https://anonymmail.net/api/getDomains', {
+            method: 'POST',
+            headers: {
+                cookie: csrfReq.headers.getSetCookie().map(e => e.split(';')[0]).join('; '),
+                'x-requested-with': 'XMLHttpRequest',
+                'x-csrf-token': csrfRes.match(/name="csrf_test_name" value="(.*?)"/)![1],
+            }
+        });
+
+        const res = await req.json() as { domain: string }[];
         return res.map(e => e.domain);
     }
 
     async createInbox(address: string): Promise<void> {
+        const csrfReq = await fish('https://anonymmail.net/');
+        const csrfRes = await csrfReq.text();
+
+        this.$jar.addSetCookie(csrfReq.headers.getSetCookie());
+        this.$csrfToken = csrfRes.match(/name="csrf_test_name" value="(.*?)"/)![1];
+
         const req = await fish('https://anonymmail.net/api/create', {
             method: 'POST',
             body: `email=${encodeURIComponent(address)}`,
             headers: {
+                'cookie': this.$jar.getCookie(),
                 'content-type': 'application/x-www-form-urlencoded',
-                'origin': 'https://anonymmail.net'
+                'origin': 'https://anonymmail.net',
+                'x-requested-with': 'XMLHttpRequest',
+                'x-csrf-token': this.$csrfToken
             }
         });
 
-        this.$cookie = req.headers.getSetCookie().map(e => e.split(';')[0]).join('; ');
+        this.$jar.addSetCookie(req.headers.getSetCookie());
     }
 
     async getMail(address: string): Promise<Mail[]> {
@@ -32,9 +54,11 @@ export default class anonymmail$net implements ProviderImpl {
             method: 'POST',
             body: `email=${encodeURIComponent(address)}`,
             headers: {
-                'cookie': this.$cookie,
+                'cookie': this.$jar.getCookie(),
                 'content-type': 'application/x-www-form-urlencoded',
-                'origin': 'https://anonymmail.net'
+                'origin': 'https://anonymmail.net',
+                'x-requested-with': 'XMLHttpRequest',
+                'x-csrf-token': this.$csrfToken
             }
         });
 
@@ -55,7 +79,7 @@ export default class anonymmail$net implements ProviderImpl {
             to: address,
             subject: email.subject,
             body: email.body,
-            date: toEST(new Date(email.date).getTime(), -3549)
+            date: toEST(new Date(email.date).getTime(), 1419)
         }));
 
         this.inboxHistory.push(...inboxAdditions);

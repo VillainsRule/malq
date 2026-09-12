@@ -104,6 +104,18 @@
                 text-decoration: none;
             }
 
+            p {
+                text-align: center;
+                margin-top: 20px;
+                font-weight: bold;
+                color: red;
+            }
+
+            p>a {
+                color: red;
+                text-decoration: underline;
+            }
+
             @media (max-width: 600px) {
                 main {
                     padding: 5vh;
@@ -122,6 +134,13 @@
             <h1>malq</h1>
             <h2>a temporary email service. no credentials, just mail.</h2>
             <h3>there's only 2 endpoints that source from {NUM_PROVIDERS} temporary mail services!</h3>
+
+            <demo>
+                <p>
+                    this is a demo instance of malq. to use the API, you will need to follow the additional
+                    instructions <a href='/demo'>here</a>.
+                </p>
+            </demo>
 
             <div class='a'>
                 <span><b>GET</b> <code>/api/v1/session</code> - creates a new mail session<br></span>

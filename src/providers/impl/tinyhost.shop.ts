@@ -4,10 +4,16 @@ import type { Mail, ProviderImpl } from '../Provider';
 
 export default class tinyhost$shop implements ProviderImpl {
     async getDomains(): Promise<string[]> {
-        const req = await fish('https://tinyhost.shop/api/all-domains/');
-        const res = await req.json() as { domains: string[] };
+        const collectedDomains: string[] = [];
 
-        return res.domains;
+        await Promise.all(new Array(10).fill(0).map(async (_, i) => {
+            const req = await fish(`https://tinyhost.shop/api/random-domains/?page=${i + 1}&limit=50`);
+            const res = await req.json() as { domains: string[] };
+
+            collectedDomains.push(...res.domains);
+        }));
+
+        return collectedDomains;
     }
 
     async createInbox(_address: string): Promise<void> {

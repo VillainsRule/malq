@@ -1,4 +1,6 @@
-export const fish = (url: string, options: RequestInit = {}) => {
+type FishInit = RequestInit & { tls?: { rejectUnauthorized?: boolean } };
+
+export const fish = (url: string, options: FishInit = {}) => {
     if (process.env.PROXY) (options as any).proxy = process.env.PROXY;
     return fetch(url, options);
 }

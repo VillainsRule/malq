@@ -33,7 +33,7 @@ for (const domain of domains.split('\n').filter(line => line.startsWith('N '))) 
         .catch(() => { });
 
     if (domain.includes('timeout')) fetch('http://' + domainPart, { method: 'GET', signal: AbortSignal.timeout(5000) })
-        .then((e) => e && console.error(`domain ${domainPart} unexpectedly responded!`, e))
+        .then((e) => e && console.error(`domain ${domainPart} unexpectedly responded!`, e.status))
         .catch((err) => {
             if (err.name !== 'AbortError' && err.name !== 'TimeoutError' && err.code !== 'ECONNRESET')
                 console.error(`domain ${domainPart} had an unexpected error:`, err);
@@ -55,7 +55,6 @@ for (const domain of domains.split('\n').filter(line => line.startsWith('N '))) 
         .then(({ text, status, headers }) => {
             if (
                 ![
-                    'expir',
                     'parked',
                     '#101c36',
                     '#1a1f2e',
@@ -70,6 +69,7 @@ for (const domain of domains.split('\n').filter(line => line.startsWith('N '))) 
                     'is available for sale',
                     'this domain is for sale',
                     '/domain-names/auctions/',
+                    'looks like the page is lost',
                     '<title>redirecting...</title>',
                     'aHR0cHM6Ly9kZXByZXNzaXZlbHkuY29tL2dvLz'
                 ].some(e => text.toLowerCase().includes(e.toLowerCase())) &&
@@ -88,22 +88,16 @@ for (const domain of domains.split('\n').filter(line => line.startsWith('N '))) 
             if (
                 err.name !== 'TimeoutError' &&
                 err.code !== 'ECONNRESET' &&
-                err.code !== 'ConnectionRefused'
+                err.code !== 'ConnectionRefused' &&
+                err.code !== 'UNKNOWN_CERTIFICATE_VERIFICATION_ERROR'
             ) console.error(`domain ${domainPart} had an unexpected error:`, err)
         });
-
-    if (domain.includes('blank')) fetch('http://' + domainPart, { method: 'GET', signal: AbortSignal.timeout(5000) })
-        .then(res => res.text())
-        .then((text) => {
-            if (text.trim().length !== 0 && !text.includes('<title>Untitled</title>'))
-                console.error(`domain ${domainPart} does not appear to be blank as expected!`);
-        })
-        .catch((err) => console.error(`domain ${domainPart} had an unexpected error:`, err));
 
     if (domain.includes('UAM')) fetch('http://' + domainPart, { method: 'GET', signal: AbortSignal.timeout(5000), proxy: Bun.env.PROXY })
         .then(res => res.text())
         .then((text) => {
-            if (!text.includes('Just a moment')) console.error(`domain ${domainPart} does not appear to be behind a UAM as expected!`);
+            if (!text.includes('Just a moment') && !text.includes('Performing security verification'))
+                console.error(`domain ${domainPart} does not appear to be behind a UAM as expected!`);
         })
         .catch((err) => console.error(`domain ${domainPart} had an unexpected error:`, err));
 

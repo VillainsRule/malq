@@ -7,6 +7,8 @@ import Elysia from 'elysia';
 
 import Domains from './util/Domains';
 
+import { demoApp, demoTokens } from './demo.ts';
+
 import type { ProviderImpl } from './providers/Provider';
 
 const providerDir = path.join(import.meta.dirname, 'providers', 'impl');
@@ -77,7 +79,8 @@ const sessions = new Map<string, ProviderImpl>();
 
 const indexPath = path.join(import.meta.dirname, 'app', 'index.html');
 const indexContent = fs.readFileSync(indexPath, 'utf-8');
-const servedIndex = indexContent.replace('{NUM_PROVIDERS}', providers.size.toString());
+const templatedIndex = indexContent.replace('{NUM_PROVIDERS}', providers.size.toString());
+const servedIndex = Bun.env.DEMO_ENABLED ? templatedIndex : templatedIndex.replace(/<demo>[\s\S]*?<\/demo>/g, '');
 
 app.get('/', () => new Response(servedIndex.replace('{DATE}', Date.now().toString()), { headers: { 'Content-Type': 'text/html' } }));
 app.get('/robots.txt', () => new Response(fs.createReadStream(path.join(import.meta.dirname, 'app', 'robots.txt')), { headers: { 'Content-Type': 'text/plain' } }));
@@ -92,12 +95,31 @@ fs.readdirSync(iconPath).forEach((iconFile) => {
         app.get(`/icons/${iconFile}`, () => new Response(fs.createReadStream(path.join(iconPath, iconFile)), { headers: { 'Content-Type': 'image/png' } }));
 });
 
-app.get('/api/v1/session', async ({ query }) => {
+app.get('/api/v1/session', async ({ query, server, request }) => {
+    if (Bun.env.DEMO_ENABLED) {
+        const token = query.token;
+        if (!token) return new Response(JSON.stringify({ error: 'missing demo token; see /demo' }), { status: 401 });
+
+        const entry = demoTokens.get(token);
+        const clientIP = Bun.hash.xxHash3(server!.requestIP(request)?.address || '');
+
+        if (!entry) return new Response(JSON.stringify({ error: 'invalid or expired demo challenge' }), { status: 401 });
+        if (entry.ip !== clientIP) return new Response(JSON.stringify({ error: 'demo IP mismatch' }), { status: 403 });
+        if (entry.expires < Date.now()) {
+            demoTokens.delete(token);
+            return new Response('Token expired', { status: 401 });
+        }
+        if (entry.remaining <= 0) return new Response(JSON.stringify({ error: 'demo token exhausted; generate a new one' }), { status: 403 });
+
+        entry.remaining--;
+        if (entry.remaining === 0) demoTokens.delete(token);
+    }
+
     let provider: ProviderImpl;
 
     if (query.provider && process.env.ALLOW_PROVIDER_SPECIFY === '1') {
         const specifiedProvider = providers.get(query.provider);
-        if (!specifiedProvider) return { error: 'invalid provider specified' };
+        if (!specifiedProvider) return new Response(JSON.stringify({ error: 'invalid provider specified' }), { status: 400 });
         provider = new specifiedProvider();
     } else {
         const randomProvider = Array.from(providers.values())[Math.floor(Math.random() * providers.size)];
@@ -120,20 +142,21 @@ app.get('/api/v1/session', async ({ query }) => {
         return { address, token, provider: providerName };
     } catch (e) {
         console.error(e);
-        return { error: 'failed to get address from provider', provider: providerName };
+        return new Response(JSON.stringify({ error: 'failed to get address from provider', provider: providerName }), { status: 500 });
     }
 });
 
 app.get('/api/v1/inbox/:address', async ({ params }) => {
     const token = params.address;
     const provider = sessions.get(token);
-
-    if (!provider) return { error: 'invalid session token' };
+    if (!provider) return new Response(JSON.stringify({ error: 'invalid or expired session token' }), { status: 401 });
 
     const mail = await provider.getMail(params.address);
 
     return { address: params.address, mail };
 });
+
+if (Bun.env.DEMO_ENABLED) app.use(demoApp);
 
 app.listen(4400, () => {
     console.log('[malq] on http://localhost:4400');

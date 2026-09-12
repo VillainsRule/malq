@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>malq - demo</title>
+        <meta name="canonical" href="https://malq.villainsrule.xyz/demo" />
+        <link rel="manifest" href="/manifest.json" />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/icons/16.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/icons/32.png" />
+        <link rel="icon" type="image/png" sizes="96x96" href="/icons/96.png" />
+        <link rel="icon" type="image/png" sizes="192x192" href="/icons/192.png" />
+        <link rel="icon" type="image/png" sizes="512x512" href="/icons/512.png" />
+        <style>
+            * {
+                font-family: ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+                margin: 0;
+            }
+
+            main {
+                background: lab(98.2596 -0.247031 -0.706708);
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                padding: 10vh;
+                width: calc(100% - 20vh);
+            }
+
+            h2 {
+                margin-top: 8px;
+                text-align: center;
+            }
+
+            h3 {
+                margin-top: 12px;
+                text-align: center;
+            }
+
+            code {
+                font-family: monospace;
+            }
+
+            .b {
+                display: flex;
+                flex-direction: column;
+                width: 80%;
+                font-size: 16px !important;
+            }
+
+            pre {
+                background: lab(96.1596 -0.0823438 -1.13575);
+                margin-top: 10px;
+                padding: 25px;
+                font-family: monospace;
+                border-radius: 8px;
+                max-width: fit-content;
+                text-wrap: auto;
+            }
+
+            pre * {
+                font-family: monospace;
+            }
+
+            i {
+                margin-left: 32px;
+            }
+
+            a,
+            .a {
+                color: lab(54.1736 13.3369 -74.6839);
+                text-decoration: none;
+                cursor: pointer;
+            }
+
+            p {
+                margin-top: 10px;
+                font-size: 18px;
+            }
+
+            @media (max-width: 600px) {
+                main {
+                    padding: 5vh;
+                    width: calc(100% - 10vh);
+                }
+
+                .b {
+                    width: 100%;
+                }
+            }
+        </style>
+    </head>
+
+    <body>
+        <main>
+            <h1>malq - demo</h1>
+
+            <div class='b'>
+                <p>
+                    this instance of malq is intended to be a demonstration and is not supposed to be used in permanent
+                    projects. using the tools below, you will be able to programically generate Proof of Work (PoW)
+                    solutions that will allow you to use this malq instance. for every PoW solution, you will be able to
+                    generate {DEMO_SESSION_USES} sessions. the PoW is a sha256 challenge with {DEMO_POW_DIFFICULTY}
+                    leading zeros.
+                </p><br>
+
+                <span><b>GET</b> <code>/api/v1/demo/challenge</code> - gets challenge information<br></span>
+                <pre>{<br><i></i>"challenge": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",<br><i></i>"target": "000000"<br>}</pre>
+                <br><br>
+                <span><b>POST</b> <code>/api/v1/demo/verify</code> - exchanges a challenge solution for a
+                    token<br></span>
+                <pre>// body <br>{<br><i></i>"challenge": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX",<br><i></i>"nonce": "12345",<br>},<br><br>// response<br>{<br><i></i>"token": "XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX"<br>}</pre>
+                <br>
+
+                <p>
+                    this token MUST be passed as a parameter to the <code>/api/v1/session</code> endpoint on this
+                    instance, like so:
+                </p>
+                <pre><span class="hn"></span>/api/v1/session?token=XXXXXXXX-XXXX-XXXX-XXXX-XXXXXXXXXXXX</pre><br><br>
+
+                <p>
+                    if you need more than 4 leading zeroes, you will likely need to use a desktop program. if you need
+                    more than 6 leading zeroes, you will likely need to use a program native to your GPU. this challenge
+                    is not intended to block automation, but rather to hinder it on a large scale.
+                </p>
+            </div>
+        </main>
+
+        <script>
+            document.querySelector('.hn').innerText = window.location.origin;
+        </script>
+    </body>
+
+</html>

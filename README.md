@@ -1,18 +1,18 @@
 <div align='center'>
     <h1>malq</h1>
-    <h3>uniting 50+ temporary mail providers under 1 API.</h3>
+    <h3>the simplest temporary mail API. 2000 domains, 40 providers, 2 endpoints, and 0 credentials!</h3>
 </div>
 
 <br>
 
 malq is a temporary email API. it:
-- is designed to be very basic
-- pulls from 50+ temporary email providers
-- supports 100s of domains 
-- has 1 unified API for all providers
+- is basic, by design
+- unites over 40 temporary mail providers
+- uses over 2,000 domains
+- has 1 unified API with only 2 endpoints
 - requires no credentials to use
 
-malq has a demo setup at https://malq.villainsrule.xyz. please don't spam it too hard :>
+malq has a demo instance at https://malq.villainsrule.xyz. the instance has additional usage restrictions powered by a PoW, which you can learn about [here](https://malq.villainsrule.xyz/demo). if you want to use malq without restrictions, you can self-host it by following the instructions below.
 
 <br><br>
 
@@ -31,7 +31,7 @@ malq has a demo setup at https://malq.villainsrule.xyz. please don't spam it too
 
 ## takedowns
 
-if your provider is here and you want it removed, email `legal@villainsrule.xyz` from `admin@{primary domain of provider}` with proof of ownership. i do not directly remove providers, as malq is not the only service out there that uses temp mail domains at this scale. instead, i'll help you implement a captcha (my personal recommendation is a PoW) that makes it inefficient to automate your specific site. malq does not keep providers who add captchas.
+i do not remove providers. if you would like your site to be removed, add a proof of work (PoW) captcha.
 
 <br><br>
 <h5 align='center'>made with :heart:</a></h5>
