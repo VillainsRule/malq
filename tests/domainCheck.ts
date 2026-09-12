@@ -50,7 +50,7 @@ for (const domain of domains.split('\n').filter(line => line.startsWith('N '))) 
         })
         .catch((err) => console.error(`domain ${domainPart} had an unexpected error:`, err));
 
-    if (domain.includes('parked')) fetch('https://www.' + domainPart + '/', { redirect: 'manual', signal: AbortSignal.timeout(5000), headers: { 'user-agent': 'Mozilla/5.0 Chrome/152.0.0.0' }, tls: { rejectUnauthorized: false } })
+    if (domain.includes('parked')) fetch('https://' + domainPart + '/', { redirect: 'manual', signal: AbortSignal.timeout(5000), headers: { 'user-agent': 'Mozilla/5.0 Chrome/152.0.0.0' }, tls: { rejectUnauthorized: false } })
         .then(async (res) => ({ text: await res.text(), status: res.status, headers: res.headers }))
         .then(({ text, status, headers }) => {
             if (
@@ -96,7 +96,7 @@ for (const domain of domains.split('\n').filter(line => line.startsWith('N '))) 
     if (domain.includes('UAM')) fetch('http://' + domainPart, { method: 'GET', signal: AbortSignal.timeout(5000), proxy: Bun.env.PROXY })
         .then(res => res.text())
         .then((text) => {
-            if (!text.includes('Just a moment') && !text.includes('Performing security verification'))
+            if (!text.includes('Just a moment') && !text.includes('Performing security verification') && !text.includes('Checking your browser...'))
                 console.error(`domain ${domainPart} does not appear to be behind a UAM as expected!`);
         })
         .catch((err) => console.error(`domain ${domainPart} had an unexpected error:`, err));
