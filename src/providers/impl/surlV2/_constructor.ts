@@ -3,10 +3,10 @@ import parse from 'node-html-parser';
 import CookieJar from '@/util/CookieJar';
 import { fish, toEST } from '@/util/util';
 
-import type { Mail, ProviderImpl } from '../Provider';
+import type { Mail, ProviderImpl } from '../../Provider';
 
-export default class generator$email implements ProviderImpl {
-    host = 'generator.email';
+export default class surlV2Commons implements ProviderImpl {
+    host = '';
 
     bodies: Record<string, string> = {};
 

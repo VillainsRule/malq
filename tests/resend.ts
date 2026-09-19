@@ -58,7 +58,7 @@ for (let i = 0; i < values.length; i++) {
 
         let didGetTheMail = false;
 
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 7; i++) {
             if (i < 3) await new Promise((r) => setTimeout(r, 1500));
             else await new Promise((r) => setTimeout(r, 3000));
 

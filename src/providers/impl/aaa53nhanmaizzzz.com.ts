@@ -33,7 +33,7 @@ export default class aaa53nhanmaizzzz$com implements ProviderImpl {
             to: email.to,
             subject: email.subject,
             body: email.body_text || email.body_html,
-            date: toEST(new Date(email.time + `/${new Date().getFullYear()}`).getTime(), -3552)
+            date: toEST(new Date(email.time.replace(/(\d+)\/(\d+)/, '$2-$1') + `/${new Date().getFullYear()}`).getTime(), 0)
         }));
 
         return returnableMail;

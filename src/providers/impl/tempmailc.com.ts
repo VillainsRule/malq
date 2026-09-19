@@ -10,7 +10,7 @@ export default class tempmailc$com implements ProviderImpl {
         const res = await req.text();
 
         const matchedDomains = res.match(/<option value="(.*?)">/g) || [];
-        return matchedDomains.map(d => d.match(/<option value="(.*?)">/)![1]).filter(e => e);
+        return matchedDomains.map(d => d.match(/<option value="(.*?)">/)![1]).filter(e => e.includes('.'));
     }
 
     async createInbox(_address: string): Promise<void> {

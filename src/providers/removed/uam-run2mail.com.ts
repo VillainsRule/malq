@@ -1,4 +1,4 @@
-import laravelCommons from './_constructor';
+import laravelCommons from '../impl/laravel/_constructor';
 
 export default class run2mail$com extends laravelCommons {
     domain = 'run2mail.com';

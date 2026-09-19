@@ -79,7 +79,7 @@ export default class anonymmail$net implements ProviderImpl {
             to: address,
             subject: email.subject,
             body: email.body,
-            date: toEST(new Date(email.date).getTime(), 1419)
+            date: toEST(new Date(email.date.replace(/(\d+)\/(\d+)\/(\d+)/, '$2-$1-$3')).getTime(), 3)
         }));
 
         this.inboxHistory.push(...inboxAdditions);
