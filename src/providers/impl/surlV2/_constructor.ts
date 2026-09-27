@@ -23,12 +23,18 @@ export default class surlV2Commons implements ProviderImpl {
     }
 
     async getDomains(): Promise<string[]> {
-        const tokenReq = await fish(`https://${this.host}`);
+        const tokenReq = await fish(`https://${this.host}`, {
+            headers: {
+                'referer': `https://${this.host}/`,
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36'
+            }
+        });
         const tokenRes = await tokenReq.text();
 
         const req = await fish(`https://${this.host}/api/domains.php`, {
             headers: {
                 'referer': `https://${this.host}/`,
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36',
                 'x-api-token': tokenRes.match(/name="api-token" content="(.*?)"/)![1]
             }
         });
@@ -47,7 +53,11 @@ export default class surlV2Commons implements ProviderImpl {
         const [user, domain] = address.split('@');
 
         const req = await fish(`https://${this.host}/${domain}/${user}`, {
-            headers: { cookie: this.jar.getCookie(), 'referer': `https://${this.host}/` }
+            headers: {
+                cookie: this.jar.getCookie(),
+                'referer': `https://${this.host}/`,
+                'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36'
+            }
         });
 
         const res = await req.text();
@@ -85,7 +95,11 @@ export default class surlV2Commons implements ProviderImpl {
                 const jar = await this.$context(`${domain}/${user}/${e.id}`);
 
                 const bodyReq = await fish(`https://${this.host}/${domain}/${user}/${e.id}`, {
-                    headers: { cookie: jar.getCookie(), 'referer': `https://${this.host}/` }
+                    headers: {
+                        cookie: jar.getCookie(),
+                        'referer': `https://${this.host}/`,
+                        'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/152.0.0.0 Safari/537.36'
+                    }
                 });
 
                 const bodyDOM = parse(await bodyReq.text());

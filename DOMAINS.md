@@ -24,6 +24,18 @@ to do:
 - purplemail.neweymail.com (lwMessage)
 - emailgenerator.org
 - jestco.id
+- birdtemp.com
+- getmail.tech
+- mail.draxon.one
+- zeroinbox.biz.id
+- 4memail.com (laravel) (use http)
+- emailqu.net
+- purplemailapp.neweymail.com
+- tempmailg.com
+- aksesemail.my.id
+- m7mail.cc
+- tmail.pk
+- waroengmail.com
 
 **ERROR CODES:**
 - [C] NXDOMAIN: domain doesn't exist
@@ -157,9 +169,9 @@ N 10minutesmail.us [NXDOMAIN]
 N 10minute-email.com [parked]
 N 10mintempmail.com [parked]
 N 10-minute-mail.net [slop]
-N 10minutemail.info [serverr]
+N 10minutemail.info [redirect]
 N 10minut.com.pl [timeout]
-N 10minmail.org [UAM]
+N 10minmail.org [timeout]
 N 10minut.xyz [1 domain]
 N 10minute-mail.com [serverr]
 N 10minutemail.co [1 domain]
@@ -215,6 +227,7 @@ N anonmails.de [1 domain]
 N api.internal.temp-mail.io [serverr]
 N apple.com [signup]
 N atomicmail.io [1 domain]
+N afhamxmailz.com [badsel]
 
 N byom.de [1 domain]
 N burnermailbox.com [1 domain] (lwMessage)
@@ -260,7 +273,7 @@ N correotemporal.com.mx [timeout]
 N cloaked.com [signup]
 N cloudflare.com [signup]
 N correo-temporal.com [parked]
-N correostemporales.com [serverr]
+N correostemporales.com [broken] (API)
 N correotemporal.mx [1 domain] (lwUpdate)
 N currentmail.com [serverr]
 
@@ -361,7 +374,8 @@ N email.hlool.cc [NXDOMAIN]
 N emailct.com [5 domains]
 N edumail.me [4 domains]
 N edu-mails.com [2 domains]
-N emailqu.net [redirect]
+N edumaili.com [4 domains] (laravel)
+N email-temp.org [3 domains]
 
 N fake.legal [4 domains]
 N fakemail.net [1 domain]
@@ -387,7 +401,7 @@ N fakemaile.com [slop]
 N fakemailz.net [2 domains] (laravel)
 N fasttempmail.com [1 domain]
 N fasttempmail.org [1 domain]
-N findmail.io [parked]
+N findmail.io [NXDOMAIN]
 N firemail.com.br [1 domain]
 N firetempmail.com [3 domains]
 N fmptestuje.pl [1 domain]
@@ -430,6 +444,7 @@ N get-tempmail.com [parked]
 N ghostinbox.in [broken] (API)
 N ghostlymail.com [redirect]
 N ghost-mail.cc [3 domains]
+N get-a-temp-email.xyz [5 domains]
 
 N harakirimail.com [1 domain]
 N haribu.net [1 domain]
@@ -650,6 +665,13 @@ N maildrop.online [3 domains]
 N my10mail.com [5 domains]
 N mytempinbox.com [1 domain]
 N maileer.xyz [2 domains]
+N mailanonim.ro [broken] (viewmail.asia)
+N maildax.cc [3 domains]
+N mailhook.co [signup]
+N mailmienphi.com [badsel]
+N mailonce.org [1 domain]
+N mailsdrop.com [nosel]
+N mailisk.com [ntm]
 
 N notletters.com [signup]
 N noopmail.org [nosel]
@@ -665,6 +687,7 @@ N norton.com [signup]
 N ntmtmp.xyz [NXDOMAIN]
 N noemail.cc [broken]
 N nixxmail.com [signup]
+N notracemail.com [app]
 
 N onesecmail.xyz [parked]
 N onetimeinbox.com [4 domains]
@@ -691,8 +714,7 @@ N pank.vin [NXDOMAIN]
 N poo.email [NXDOMAIN]
 N personalmail.fun [serverr]
 N phaantm.de [timeout]
-N placebomail10.com [serverr]
-N purplemailapp.neweymail.com [serverr]
+N placebomail10.com [2 domains] (lwUpdate)
 N passbymail.com [1 domain]
 N phantom-mail.io [parked]
 N protectmyemail.net [redirect]
@@ -709,6 +731,7 @@ N quickinbox.2yu.co [1 domain]
 N quik.email [parked]
 N quickmails.eu [broken] (viewmail.asia)
 N qaz.im [nosel]
+N quick-tmail.com [4 domains]
 
 N rainmail.xyz [2 domains]
 N receivemail.org [4 domains]
@@ -720,6 +743,7 @@ N rovixcloud.com [4 domains]
 N ruu.kr [2 domains]
 N resendbox.com [nosel]
 N run2mail.com [UAM]
+N requestrepo.com [ntm]
 
 N segamail.com [1 domain]
 N spamok.com [1 domain]
@@ -746,7 +770,7 @@ N skiff.com [signup]
 N satelindogsm.com [signup]
 N servicee.es [NXDOMAIN]
 N sipemail.com [ntm]
-N spitemail.com [NXDOMAIN]
+N spitemail.com [ntm]
 N stopspam.app [NXDOMAIN]
 N securetempmail.com [3 domains]
 N shitmail.me [parked]
@@ -769,6 +793,8 @@ N savegmail.com [4 domains]
 N sellallmail.com [broken]
 N snapinbox.net [2 domains]
 N spammail.org [PoW]
+N secondinbox.com [2 domains]
+N snapmail.cn [2 domains]
 
 N temp2mail.top [NXDOMAIN]
 N tmail.delivery [signup]
@@ -788,9 +814,9 @@ N temp-inbox.com [parked]
 N temp-inbox.me [3 domains]
 N temp-mail.gg [5 domains] (lwUpdate)
 N temp-mailbox.net [NXDOMAIN]
-N tempemail.co [timeout]
+N tempemail.co [2 domains]
 N tempemailfree.com [USECAP]
-N tempemailgen.com [1 domain]
+N tempemailgen.com [WAF]
 N tempinbox.xyz [4 domains]
 N tempmail.cc [1 domain]
 N tempmail.email [mirror] (mail.tm)
@@ -851,7 +877,7 @@ N tempmaillab.com [1 domain]
 N tempusmail.com [3 domains]
 N tempmailpro.in [NXDOMAIN]
 N tempmail.world [1 domain]
-N tempemails.net [1 domain]
+N tempemails.net [serverr]
 N tempmailonline.co [mirror] (fmail.men)
 N tempo-mail.xyz [parked]
 N temprmail.com [serverr]
@@ -871,7 +897,6 @@ N temp-mail.now [1 domain]
 N tempr.email [4 domains]
 N temporarymail.com [badmail] (needs extra req for subject im crine)
 N trash-mail.de [3 domains]
-N tempmailg.com [UAM] (laravel)
 N tmail.dark2web.com [seized]
 N tempmailfa.st [badmail] (body is sometimes missing)
 N tmp.al [app]
@@ -884,12 +909,12 @@ N treemail.pro [redirect]
 N temporam.com [signup]
 N temp-mail.club [nosel]
 N trashmailr.com [mirror] (tempr.email)
-N tmail.xuanlich.com [timeout]
+N tmail.xuanlich.com [serverr]
 N tempmail.edu.kg [1 domain]
 N tempora.email [2 domains]
 N t4.2xinxian.top [signup]
 N temp-mail-free.com [5 domains]
-N tempmail200.com [parked]
+N tempmail200.com [NXDOMAIN]
 N tempmail.jamcry.app [app]
 N tempmailpro.asia [app]
 N tempmail.ing [4 domains]
@@ -1030,7 +1055,7 @@ N tempmailbox.co [serverr]
 N tempmailfree.net [NXDOMAIN]
 N tempomailzone.com [1 domain]
 N temporarly.com [1 domain]
-N throwawayemail.app [serverr]
+N throwawayemail.app [1 domain]
 N throwawaymail.app [1 domain]
 N transfrly.com [signup]
 N tacomail.de [1 domain]
@@ -1211,6 +1236,10 @@ N temp-mail.africa [UAM]
 N tempmailfree.org [nosel]
 N tempbox.techvince.com [ntm]
 N tempcontacts.com [NXDOMAIN]
+N temp-mail.ai [broken] (API)
+N tempmailpad.com [turnstile]
+N tempmaly.com [3 domains]
+N tmail.etokom.com [serverr]
 
 N unlimitmail.com [signup]
 N unstablemail.com [NXDOMAIN]
@@ -1233,6 +1262,7 @@ N venez.fr [serverr]
 N vanishinbox.com [turnstile]
 N vip.215.im [nosel]
 N voidmail.live [1 domain]
+N voidmail.in [serverr]
 
 N wp-temp-mail.com [slop]
 N wabblywabble.com [NXDOMAIN]
@@ -1246,7 +1276,7 @@ N webmail.icu [recaptcha]
 
 N xeramail.com [2 domains]
 N xm.cd [signup]
-N xtemp-mail.com [parked]
+N xtemp-mail.com [NXDOMAIN]
 N xkx.me [1 domain]
 N xarg.xyz [weird] (tons of spam mail)
 

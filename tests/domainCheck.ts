@@ -67,8 +67,10 @@ for (const domain of domains.split('\n').filter(line => line.startsWith('N '))) 
                     'l.cdn-fileserver.com',
                     'domain registered at',
                     'is available for sale',
+                    'Your domain is expired',
                     'this domain is for sale',
                     '/domain-names/auctions/',
+                    'No advertisers available',
                     'looks like the page is lost',
                     '<title>redirecting...</title>',
                     'aHR0cHM6Ly9kZXByZXNzaXZlbHkuY29tL2dvLz'
@@ -76,8 +78,10 @@ for (const domain of domains.split('\n').filter(line => line.startsWith('N '))) 
                 !(status.toString().startsWith('3') && [
                     'domains.atom.com',
                     'DropCatch.com',
-                    'expireddomains.com'
+                    'expireddomains.com',
+                    'whc.ca/domain-names'
                 ].some(e => headers.get('location')?.includes(e))) &&
+                !(status.toString().startsWith('3') && headers.get('location')?.match(/(ww[0-9]{2}\.)/)?.[1]) &&
                 text.toLowerCase() !== 'redirecting'
             ) {
                 console.error(`domain ${domainPart} does not appear to be parked as expected!`);
