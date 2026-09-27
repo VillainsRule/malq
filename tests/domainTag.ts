@@ -18,10 +18,10 @@ await Promise.all(tooFew.map(async (d) => {
         });
         if (req.status >= 200 && req.status < 300) {
             const body = (await req.text()).toLowerCase();
-            if (body.includes('function cookieExists(name) {')) domains[i] = replaceParenthesis(d, 'laravel');
+            if (body.includes('function cookieExists(name) {')) domains[i] = replaceParenthesis(d, 'laravel2');
             else if (body.includes('limit_error = ')) domains[i] = replaceParenthesis(d, 'laravel');
             else if (body.includes('wire:initial-data="')) domains[i] = replaceParenthesis(d, 'lwMessage');
-            else if (body.includes('wire:snapshot="')) domains[i] = replaceParenthesis(d, 'lwUpdate');
+            else if (body.includes('$wire.setDomain')) domains[i] = replaceParenthesis(d, 'lwUpdate');
             else if (body.includes('var gasmurl = ')) domains[i] = replaceParenthesis(d, 'surl');
             else if (body.includes('Just a moment...')) domains[i] = replaceBrackets(d, 'UAM');
             else if ([

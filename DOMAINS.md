@@ -209,7 +209,7 @@ N 48hr.email [weird] (slow, 60s mail recheck cd)
 N 5smail.email [4 domains]
 N 5minmail.com [1 domain]
 N 5min.email [broken] (videosave.me)
-N 5secmail.com [2 domains] (lwUpdate)
+N 5secmail.com [2 domains]
 N 6d6f.com [broken] (mbejci.com)
 N 99mail.us [1 domain] [hcaptcha]
 
@@ -265,7 +265,7 @@ N bulc.club [1 domain]
 N bune.pw [parked]
 N burneremailid.com [app]
 N burnermailhub.com [slop]
-N blinkboxapp.com [4 domains] (lwUpdate)
+N blinkboxapp.com [4 domains]
 N bagahmail.com [1 domain]
 N boreacore.com [signup]
 N banhetboveo.asia [mirror] (aaa53nhanmaizzzz.com)
@@ -415,7 +415,7 @@ N fake-mail.net [1 domain]
 N fakemail.email [1 domain]
 N fakemail.my.id [3 domains]
 N fakemaile.com [slop]
-N fakemailz.net [2 domains] (laravel)
+N fakemailz.net [1 domain] (laravel)
 N fasttempmail.com [1 domain]
 N fasttempmail.org [1 domain]
 N findmail.io [NXDOMAIN]
@@ -601,7 +601,7 @@ N minutemail.io [timeout]
 N moakt.email [parked]
 N moaktmail.com [3 domains] (laravel)
 N momentaryemail.com [1 domain]
-N mtempmail.com [2 domains] (laravel)
+N mtempmail.com [3 domains] (laravel)
 N my-tempmail.com [1 domain] (laravel)
 N mytempemail.com [serverr]
 N mail-temporaire.fr [alias]
@@ -787,7 +787,7 @@ N spambox.xyz [4 domains]
 N sandvpn.com [signup]
 N shitmail.org [2 domains]
 N smvmail.com [1 domain]
-N spamdecoy.net [5 domains] (weird)
+N spamdecoy.net [weird] (weird domains)
 N sendbun.com [signup]
 N skiff.com [signup]
 N satelindogsm.com [signup]
@@ -838,7 +838,7 @@ N tempail.com [1 domain]
 N temp-email.info [1 domain] (lwMessage)
 N temp-inbox.com [parked]
 N temp-inbox.me [3 domains]
-N temp-mail.gg [5 domains] (lwUpdate)
+N temp-mail.gg [5 domains]
 N temp-mailbox.net [NXDOMAIN]
 N tempemail.co [2 domains]
 N tempemailfree.com [USECAP]
