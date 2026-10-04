@@ -35,8 +35,6 @@ to do:
 - aksesemail.my.id
 - m7mail.cc
 - tmail.pk
-- waroengmail.com
-- tempemail.space
 
 **ERROR CODES:**
 - [C] NXDOMAIN: domain doesn't exist
@@ -134,6 +132,7 @@ Y mail.premiumindigital.site
 Y ezmail.pro
 Y neighbours.sh
 Y emailkilat.com
+Y waroengmail.com
 
 N 0mail.pro [NXDOMAIN]
 N 0mail.app [1 domain]
@@ -1276,6 +1275,7 @@ N temp-mail.pw [NXDOMAIN]
 N tempmailguru.com [1 domain]
 N tempmailnow.io [1 domain]
 N tempmailsbox.xyz [nxdomain]
+N tempemail.space [slow]
 
 N unlimitmail.com [signup]
 N unstablemail.com [NXDOMAIN]

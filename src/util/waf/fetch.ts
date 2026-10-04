@@ -22,7 +22,7 @@ interface WafFetchResponse {
     }
 }
 
-export const chromeVersion = await (await fetch('https://files.villainsrule.xyz/chromeVersion.txt')).json();
+export const chromeVersion = await (await fetch('https://files.villainsrule.xyz/chromeVersion.txt')).text();
 
 const wafFetch = (inputUrl: string, options: WafFetchOptions = {}): Promise<WafFetchResponse> =>
     new Promise(async (resolve, reject) => {
