@@ -8,17 +8,11 @@ to do:
 - tempmail.id.vn (custom lwUpdate + SSR)
 - tempmailed.com (weird)
 - nukemail.app (next parsing hell)
-- 123213214.xyz
 - nenzmail.com (spams devtools)
-- nullz.in (weird API)
-- saga.my.id (use http prefix)
 - nospam.today
 - temp-mail.id
-- tempy.email
 - tmail.wibucrypto.pro (remove all name.ng)
 - 1secemail.com (laravel)
-- boomlify.com
-- tempmail.cloud
 - mail.123nhh.de
 - purplemail.neweymail.com (lwMessage)
 - emailgenerator.org
@@ -131,6 +125,10 @@ Y getmail.tech
 Y zeroinbox.biz.id
 Y jestco.id
 Y mailnow.site
+Y tempy.email
+Y boomlify.com
+Y tempmail.cloud
+Y saga.my.id
 
 N 0mail.pro [NXDOMAIN]
 N 0mail.app [1 domain]
@@ -151,6 +149,7 @@ N 1tempmail.com [recaptcha]
 N 1sec.email [UAM]
 N 1mail.lt [3 domains] (laravel)
 N 1sec.email [1 domain]
+N 123213214.xyz [broken] (gmail.cusor.icu)
 N 10minuteemails.com [slop]
 N 10minutemail.one [nosel]
 N 10minutemail.com [nosel]
@@ -819,6 +818,7 @@ N snapmail.cn [2 domains]
 N safetemp.email [NXDOMAIN]
 N seek.li [signup]
 N stealthinboxes.com [1 domain]
+N shortmail.bond [weird] (ratelimits)
 
 N temp2mail.top [NXDOMAIN]
 N tmail.delivery [signup]
