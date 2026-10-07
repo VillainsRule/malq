@@ -1,5 +1,7 @@
 import wafFetch from '../waf/fetch';
 
+import { fish } from '../util';
+
 export default class LWUpdate {
     host: string;
     mustByapssWaf: boolean;
@@ -98,7 +100,7 @@ export default class LWUpdate {
         this.cache = {};
         this.updates = {};
 
-        const req = await (this.mustByapssWaf ? wafFetch : fetch)(`https://${this.host}/livewire/update`, {
+        const req = await (this.mustByapssWaf ? wafFetch : fish)(`https://${this.host}/livewire/update`, {
             body: JSON.stringify(body),
             method: 'POST',
             headers: {

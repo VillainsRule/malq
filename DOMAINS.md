@@ -9,9 +9,7 @@ to do:
 - tempmailed.com (weird)
 - nukemail.app (next parsing hell)
 - nenzmail.com (spams devtools)
-- nospam.today
 - temp-mail.id
-- tmail.wibucrypto.pro (remove all name.ng)
 - 1secemail.com (laravel)
 - mail.123nhh.de
 - purplemail.neweymail.com (lwMessage)
@@ -129,6 +127,8 @@ Y tempy.email
 Y boomlify.com
 Y tempmail.cloud
 Y saga.my.id
+Y nospam.today
+Y tmail.wibucrypto.pro
 
 N 0mail.pro [NXDOMAIN]
 N 0mail.app [1 domain]

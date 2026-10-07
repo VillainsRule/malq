@@ -1,5 +1,7 @@
 import wafFetch from '../waf/fetch';
 
+import { fish } from '../util';
+
 export default class LWMessage {
     host: string;
     mustByapssWaf: boolean;
@@ -35,7 +37,7 @@ export default class LWMessage {
     }
 
     async pullHTML(customPath: string = '/') {
-        const req = await (this.mustByapssWaf ? wafFetch : fetch)(`https://${this.host}${customPath}`, {
+        const req = await (this.mustByapssWaf ? wafFetch : fish)(`https://${this.host}${customPath}`, {
             headers: this.$cookie ? { 'Cookie': this.$cookie } : { 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36' }
         });
 
@@ -92,7 +94,7 @@ export default class LWMessage {
             updates,
         };
 
-        const req = await (this.mustByapssWaf ? wafFetch : fetch)(`https://${this.host}/livewire/message/${componentName}`, {
+        const req = await (this.mustByapssWaf ? wafFetch : fish)(`https://${this.host}/livewire/message/${componentName}`, {
             method: 'POST',
             body: JSON.stringify(body),
             headers: {
@@ -186,7 +188,7 @@ export default class LWMessage {
     }
 
     async handlePassword(password: string): Promise<void> {
-        const req = await (this.mustByapssWaf ? wafFetch : fetch)(`https://${this.host}/unlock`, {
+        const req = await (this.mustByapssWaf ? wafFetch : fish)(`https://${this.host}/unlock`, {
             method: 'POST',
             body: `_token=${this.$csrfToken}&password=${encodeURIComponent(password)}`,
             headers: {

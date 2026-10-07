@@ -1,3 +1,5 @@
+import wafFetch from '@/util/waf/fetch';
+
 import LWUpdate from '@/util/livewire/LWUpdate';
 
 import { fish, toEST } from '@/util/util';
@@ -6,13 +8,15 @@ import type { Mail, ProviderImpl } from '../../Provider';
 
 export default class lwUpdateDomainCommons implements ProviderImpl {
     livewire: LWUpdate;
+    mustBypassWAF: boolean;
 
     constructor(domain: string, bypassWAF: boolean) {
+        this.mustBypassWAF = bypassWAF;
         this.livewire = new LWUpdate(domain, bypassWAF);
     }
 
     async getDomains(): Promise<string[]> {
-        const req = await fish(`https://${this.livewire.host}`);
+        const req = await (this.mustBypassWAF ? wafFetch : fish)(`https://${this.livewire.host}`);
         const res = await req.text();
 
         const domainMatches = res.match(/\$wire\.setDomain\('(.*?)'/g)!;

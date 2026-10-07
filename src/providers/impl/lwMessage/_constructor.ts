@@ -1,5 +1,7 @@
 import LWMessage from '@/util/livewire/LWMessage';
 
+import wafFetch from '@/util/waf/fetch';
+
 import { fish, toEST } from '@/util/util';
 
 import type { Mail, ProviderImpl } from '../../Provider';
@@ -17,6 +19,7 @@ export default class lwMessageCommons implements ProviderImpl {
     livewire: LWMessage;
 
     ignoredEmails: string[] = [];
+    ignoredDomains: string[] = [];
 
     constructor(domain: string, bypassWAF: boolean) {
         this.domain = domain;
@@ -25,7 +28,7 @@ export default class lwMessageCommons implements ProviderImpl {
     }
 
     async getDomains(): Promise<string[]> {
-        const homeReq = await fish(`https://${this.domain}${this.domainsPath}`, {
+        const homeReq = await (this.bypassWAF ? wafFetch : fish)(`https://${this.domain}${this.domainsPath}`, {
             redirect: 'manual',
             headers: {
                 'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
@@ -36,7 +39,7 @@ export default class lwMessageCommons implements ProviderImpl {
 
         const domainMatches = homeRes.match(/\$wire\.setDomain\('(.*?)'/g)!;
         const extractedDomains = domainMatches.map(e => e.match(/\$wire.setDomain\('(.*?)'/)![1]);
-        return [...new Set(extractedDomains)];
+        return [...new Set(extractedDomains)].filter((e) => !this.ignoredDomains.some((ignored) => e.includes(ignored)));
     }
 
     async createInbox(address: string): Promise<void> {
