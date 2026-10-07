@@ -1,4 +1,8 @@
-CHECKER: sendtestmail.com
+
+    =====================
+      malq / DOMAINS.md
+    =====================
+
 
 write reference:
 - nomailfetch - gomax2025.com
@@ -8,15 +12,13 @@ to do:
 - tempmail.id.vn (custom lwUpdate + SSR)
 - tempmailed.com (weird)
 - nukemail.app (next parsing hell)
-- nenzmail.com (spams devtools)
 - temp-mail.id
 - 1secemail.com (laravel)
 - mail.123nhh.de
 - purplemail.neweymail.com (lwMessage)
-- emailgenerator.org
+- emailgenerator.org (old laravel)
 - 4memail.com (laravel) (use http)
 - emailqu.net
-- tempmailg.com
 
 **ERROR CODES:**
 - [C] NXDOMAIN: domain doesn't exist
@@ -708,6 +710,7 @@ N noemail.cc [broken]
 N nixxmail.com [signup]
 N notracemail.com [app]
 N nomomail.com [timeout]
+N nenzmail.com [weird] (messed up UI)
 
 N onesecmail.xyz [parked]
 N onetimeinbox.com [4 domains]
@@ -1275,6 +1278,7 @@ N tempmailguru.com [1 domain]
 N tempmailnow.io [1 domain]
 N tempmailsbox.xyz [nxdomain]
 N tempemail.space [slow]
+N tempmailg.com [UAM]
 
 N unlimitmail.com [signup]
 N unstablemail.com [NXDOMAIN]

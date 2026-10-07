@@ -39,7 +39,7 @@ export default class ezmail$pro implements ProviderImpl {
         const req = await fish('https://ezmail.pro');
         const res = await req.text();
 
-        const domains = res.match(/"domain":"(.*?)"/g)!;
+        const domains = res.match(/"domain":"(.*?)"/g) || [];
         return domains.map(e => e.match(/"domain":"(.*?)"/)![1]);
     }
 
