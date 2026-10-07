@@ -6,7 +6,7 @@ Temp-mail aggregator. Each provider scrapes one disposable-mail site behind a co
 
 ALWAYS READ EXAMPLE PROVIDERS FIRST:
 - src/providers/impl/anonymmail.net.ts
-- src/providers/impl/cheapluxurymail.xyz
+- src/providers/impl/cheapluxurymail.xyz.ts
 - src/providers/impl/gomax2025.com.ts
 - src/providers/impl/tempmail.io.vn.ts
 

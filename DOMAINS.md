@@ -32,9 +32,6 @@ to do:
 - emailqu.net
 - purplemailapp.neweymail.com
 - tempmailg.com
-- aksesemail.my.id
-- m7mail.cc
-- tmail.pk
 
 **ERROR CODES:**
 - [C] NXDOMAIN: domain doesn't exist
@@ -133,6 +130,9 @@ Y ezmail.pro
 Y neighbours.sh
 Y emailkilat.com
 Y waroengmail.com
+Y aksesemail.my.id
+Y m7mail.cc
+Y tmail.pk
 
 N 0mail.pro [NXDOMAIN]
 N 0mail.app [1 domain]
