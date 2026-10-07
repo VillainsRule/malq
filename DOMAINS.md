@@ -19,14 +19,11 @@ to do:
 - 1secemail.com (laravel)
 - boomlify.com
 - tempmail.cloud
-- mailnow.site
 - mail.123nhh.de
 - purplemail.neweymail.com (lwMessage)
 - emailgenerator.org
-- jestco.id
 - 4memail.com (laravel) (use http)
 - emailqu.net
-- purplemailapp.neweymail.com
 - tempmailg.com
 
 **ERROR CODES:**
@@ -132,6 +129,8 @@ Y tmail.pk
 Y birdtemp.com
 Y getmail.tech
 Y zeroinbox.biz.id
+Y jestco.id
+Y mailnow.site
 
 N 0mail.pro [NXDOMAIN]
 N 0mail.app [1 domain]
