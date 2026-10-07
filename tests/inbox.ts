@@ -7,7 +7,7 @@ console.log('using provider', provider.constructor.name);
 const d = await provider.getDomains();
 console.log(d);
 
-const address = `xo${Math.random().toString(36).slice(2)}@${d[2]}`;
+const address = `xo${Math.random().toString(36).slice(2)}@${d[d.length * Math.random() | 0]}`;
 
 await provider.createInbox(address);
 

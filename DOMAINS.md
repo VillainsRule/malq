@@ -24,10 +24,6 @@ to do:
 - purplemail.neweymail.com (lwMessage)
 - emailgenerator.org
 - jestco.id
-- birdtemp.com
-- getmail.tech
-- mail.draxon.one
-- zeroinbox.biz.id
 - 4memail.com (laravel) (use http)
 - emailqu.net
 - purplemailapp.neweymail.com
@@ -133,6 +129,9 @@ Y waroengmail.com
 Y aksesemail.my.id
 Y m7mail.cc
 Y tmail.pk
+Y birdtemp.com
+Y getmail.tech
+Y zeroinbox.biz.id
 
 N 0mail.pro [NXDOMAIN]
 N 0mail.app [1 domain]
@@ -693,6 +692,7 @@ N mailonce.org [1 domain]
 N mailsdrop.com [nosel]
 N mailisk.com [ntm]
 N mandaladark.com [timeout]
+N mail.draxon.one [serverr]
 
 N notletters.com [signup]
 N noopmail.org [nosel]
