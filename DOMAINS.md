@@ -11,11 +11,8 @@ write reference:
 to do:
 - tempmail.id.vn (custom lwUpdate + SSR)
 - temp-mail.id (lwUpdate + weird CF protection)
-- 1secemail.com (laravel)
-- mail.123nhh.de
 - emailgenerator.org (old laravel)
 - 4memail.com (laravel) (use http)
-- vfotp.com
 
 **ERROR CODES:**
 - [C] NXDOMAIN: domain doesn't exist
@@ -134,6 +131,9 @@ Y correotemporal.net
 Y kvlarapps.cloud
 Y mail.heavenprem.com
 Y mailmedi.com
+Y mail.123nhh.de
+Y vfotp.com
+Y 1secemail.com
 
 N 0mail.pro [NXDOMAIN]
 N 0mail.app [1 domain]

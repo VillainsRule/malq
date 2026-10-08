@@ -4,6 +4,8 @@ import { fish, toEST } from '@/util/util';
 
 import type { Mail, ProviderImpl } from '../../Provider';
 
+const userAgent = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36';
+
 export default class laravelCommons implements ProviderImpl {
     domain = '';
     messageEndpoint = 'get_messages';
@@ -24,18 +26,29 @@ export default class laravelCommons implements ProviderImpl {
     }
 
     async createInbox(address: string): Promise<void> {
-        const req = await fish(`https://${this.domain}/en`, {
-            headers: {
-                'Referer': `https://${this.domain}/en`,
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36'
-            }
-        });
+        let url = `https://${this.domain}/`;
+        let res = '';
 
-        const res = await req.text();
+        for (let hop = 0; hop < 5; hop++) {
+            const req = await fish(url, {
+                redirect: 'manual',
+                headers: { 'Referer': url, 'user-agent': userAgent, cookie: this.$jar.getCookie() }
+            });
+
+            this.$jar.addSetCookie(req.headers.getSetCookie());
+
+            const location = req.headers.get('location');
+            if (req.status >= 300 && req.status < 400 && location) {
+                url = new URL(location, url).href;
+                continue;
+            }
+
+            res = await req.text();
+            break;
+        }
 
         this.$isFormData = res.includes('url = "');
         this.$csrfToken = res.match(/name="csrf-token" content="(.*?)"/)?.[1]!;
-        this.$jar.addSetCookie(req.headers.getSetCookie());
 
         const req2 = await fish(`https://${this.domain}/${this.messageEndpoint}`, {
             method: 'POST',
@@ -43,7 +56,7 @@ export default class laravelCommons implements ProviderImpl {
                 'content-type': this.$isFormData ? 'application/x-www-form-urlencoded; charset=UTF-8' : 'application/json',
                 'x-xsrf-token': this.$csrfToken || '',
                 cookie: this.$jar.getCookie(),
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36',
+                'user-agent': userAgent,
             },
             body: this.$isFormData ? `_token=${this.$csrfToken}&captcha=` : JSON.stringify({ _token: this.$csrfToken })
         });
@@ -52,14 +65,14 @@ export default class laravelCommons implements ProviderImpl {
 
         const [name, domain] = address.split('@');
 
-        const req3 = await fish(`https://${this.domain}/${this.$isFormData ? 'create' : 'en/change'}`, {
+        const req3 = await fish(`https://${this.domain}/${this.$isFormData ? 'create' : 'change'}`, {
             redirect: 'manual',
             method: 'POST',
             headers: {
                 'content-type': this.$isFormData ? 'application/x-www-form-urlencoded' : 'application/json',
                 'x-xsrf-token': this.$csrfToken || '',
                 cookie: this.$jar.getCookie(),
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36',
+                'user-agent': userAgent,
             },
             body: this.$isFormData ? `_token=${this.$csrfToken}&name=${name}&domain=${domain}` : JSON.stringify({ _token: this.$csrfToken, name, domain })
         });
@@ -74,7 +87,7 @@ export default class laravelCommons implements ProviderImpl {
                 'content-type': this.$isFormData ? 'application/x-www-form-urlencoded; charset=UTF-8' : 'application/json',
                 'x-xsrf-token': this.$csrfToken || '',
                 cookie: this.$jar.getCookie(),
-                'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/141.0.0.0 Safari/537.36',
+                'user-agent': userAgent,
             },
             body: this.$isFormData ? `_token=${this.$csrfToken}&captcha=` : JSON.stringify({ _token: this.$csrfToken })
         });
