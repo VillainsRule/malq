@@ -1,12 +1,11 @@
 {
-    "name": "api",
+    "name": "malq",
     "private": true,
     "type": "module",
     "main": "src/main.ts",
     "scripts": {
         "dev": "bun --watch src/main.ts",
         "pull": "git pull && bun i && systemctl restart malq",
-        "check": "bunx --bun tsc && rm -rf dist",
         "inbox": "bun tests/inbox.ts",
         "resend": "bun tests/resend.ts",
         "send": "bun tests/send.ts"

@@ -745,6 +745,7 @@ N plusaple.com [4 domains]
 N puladimail.my.id [3 domains]
 N postinbox.org [unstable]
 N pusat.email [5 domains]
+N purplemailapp.neweymail.com [mirror] (purplemail.neweymail.com)
 
 N quickemail.xyz [nosel]
 N quick-inbox.com [NXDOMAIN]
