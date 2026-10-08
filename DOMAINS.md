@@ -129,6 +129,10 @@ Y nospam.today
 Y tmail.wibucrypto.pro
 Y tempmailed.com
 Y purplemail.neweymail.com
+Y correotemporal.net
+Y kvlarapps.cloud
+Y mail.heavenprem.com
+Y mailmedi.com
 
 N 0mail.pro [NXDOMAIN]
 N 0mail.app [1 domain]
@@ -186,6 +190,7 @@ N 10minmail.eu [1 domain]
 N 10minmailbox.com [2 domains]
 N 10minutes.email [1 domain]
 N 10secmail.com [2 domains]
+N 10minemail.org [nosel]
 N 15qm.com [IP]
 N 15-minute-email.com [weird] (doesn't even actually work with a backend)
 N 15-minute-mail.com [1 domain]
@@ -206,6 +211,7 @@ N 5smail.email [4 domains]
 N 5minmail.com [1 domain]
 N 5min.email [broken] (videosave.me)
 N 5secmail.com [2 domains]
+N 509.lol [1 domain]
 N 6d6f.com [broken] (mbejci.com)
 N 99mail.us [1 domain] [hcaptcha]
 
@@ -236,6 +242,7 @@ N api.internal.temp-mail.io [serverr]
 N apple.com [signup]
 N atomicmail.io [1 domain]
 N afhamxmailz.com [badsel]
+N aitoolshub.cyou [3 domains]
 
 N byom.de [1 domain]
 N burnermailbox.com [1 domain] (lwMessage)
@@ -267,6 +274,7 @@ N boreacore.com [signup]
 N banhetboveo.asia [mirror] (aaa53nhanmaizzzz.com)
 N boxmail.app [NXDOMAIN]
 N bokmails.com [timeout]
+N box.worm.rip [3 domains]
 
 N chat-tempmail.com [signup]
 N crazymailing.com [4 domains]
@@ -286,6 +294,8 @@ N correo-temporal.com [parked]
 N correostemporales.com [broken] (API)
 N correotemporal.mx [1 domain] (lwUpdate)
 N currentmail.com [serverr]
+N catchtempmail.com [nosel]
+N creep.gg [ntm]
 
 N dropmailer.net [parked]
 N dispoemail.org [2 domains]
@@ -333,6 +343,7 @@ N deptraihaiphong.com [nosel]
 N disposableinbox.xyz [NXDOMAIN]
 N dropmail.space [serverr]
 N dropmail.us [2 domains]
+N ductor.top [signup]
 
 N emltmp.com [serverr]
 N easytrashmail.eu [serverr]
@@ -390,6 +401,7 @@ N edu-mails.com [2 domains]
 N edumaili.com [4 domains] (laravel)
 N email-temp.org [3 domains]
 N emailqu.net [broken] (emailqu.net)
+N emailsee.com [nosel]
 
 N fake.legal [4 domains]
 N fakemail.net [1 domain]
@@ -431,6 +443,8 @@ N fakemailo.com [5 domains]
 N fastmailapp.com [5 domains]
 N fakemail.app [signup]
 N fakemail.cc [timeout]
+N fade.email [app]
+N fastmulti.com [badsel]
 
 N gmailcity.com [slop]
 N guerrillamail.com [badsel]
@@ -692,6 +706,12 @@ N mailsdrop.com [nosel]
 N mailisk.com [ntm]
 N mandaladark.com [timeout]
 N mail.draxon.one [serverr]
+N mail.09062002.xyz [signup]
+N mail2rest.com [ntm]
+N mailxus.com [2 domains]
+N malutka.com.ua [mirror] (box.worm.rip)
+N mamanjaya.my.id [signup]
+N mymbg.my.id [4 domains]
 
 N notletters.com [signup]
 N noopmail.org [nosel]
@@ -711,6 +731,7 @@ N notracemail.com [app]
 N nomomail.com [timeout]
 N nenzmail.com [weird] (messed up UI)
 N nukemail.app [PoW]
+N nullz.in [redirect] (shortmail.bond)
 
 N onesecmail.xyz [parked]
 N onetimeinbox.com [4 domains]
@@ -768,6 +789,7 @@ N ruu.kr [2 domains]
 N resendbox.com [nosel]
 N run2mail.com [UAM]
 N requestrepo.com [ntm]
+N revosim.io [1 domain]
 
 N segamail.com [1 domain]
 N spamok.com [1 domain]
@@ -823,6 +845,8 @@ N safetemp.email [NXDOMAIN]
 N seek.li [signup]
 N stealthinboxes.com [1 domain]
 N shortmail.bond [weird] (ratelimits)
+N sacistudio.xyz [badsel]
+N silent-mail.org [5 domains]
 
 N temp2mail.top [NXDOMAIN]
 N tmail.delivery [signup]
@@ -1252,7 +1276,7 @@ N tempmails.co.in [nosel]
 N temptom.com [turnstile]
 N tempmailo.com [nosel]
 N tempmailhub.net [5 domains]
-N tmailfree.com [5 domains] (laravel)
+N tmailfree.com [3 domains] (laravel)
 N tempmail.hk [3 domains]
 N tempmail.bot [nosel]
 N tempedumail.net [2 domains]
@@ -1277,9 +1301,11 @@ N trashtempmails.com [NXDOMAIN]
 N temp-mail.pw [NXDOMAIN]
 N tempmailguru.com [1 domain]
 N tempmailnow.io [1 domain]
-N tempmailsbox.xyz [nxdomain]
-N tempemail.space [slow]
+N tempmailsbox.xyz [NXDOMAIN]
+N tempemail.space [broken] (adudu.online)
 N tempmailg.com [UAM]
+N tempmail.dn-pp.com [timeout]
+N trashbox.email [nosel]
 
 N unlimitmail.com [signup]
 N unstablemail.com [NXDOMAIN]
@@ -1303,6 +1329,8 @@ N vanishinbox.com [turnstile]
 N vip.215.im [nosel]
 N voidmail.live [1 domain]
 N voidmail.in [serverr]
+N vfotp.com [timeout]
+N voidemail.org [3 domains]
 
 N wp-temp-mail.com [slop]
 N wabblywabble.com [NXDOMAIN]
