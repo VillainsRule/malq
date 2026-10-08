@@ -10,15 +10,11 @@ write reference:
 
 to do:
 - tempmail.id.vn (custom lwUpdate + SSR)
-- tempmailed.com (weird)
-- nukemail.app (next parsing hell)
-- temp-mail.id
+- temp-mail.id (lwUpdate + weird CF protection)
 - 1secemail.com (laravel)
 - mail.123nhh.de
-- purplemail.neweymail.com (lwMessage)
 - emailgenerator.org (old laravel)
 - 4memail.com (laravel) (use http)
-- emailqu.net
 
 **ERROR CODES:**
 - [C] NXDOMAIN: domain doesn't exist
@@ -131,6 +127,8 @@ Y tempmail.cloud
 Y saga.my.id
 Y nospam.today
 Y tmail.wibucrypto.pro
+Y tempmailed.com
+Y purplemail.neweymail.com
 
 N 0mail.pro [NXDOMAIN]
 N 0mail.app [1 domain]
@@ -391,6 +389,7 @@ N edumail.me [4 domains] (laravel)
 N edu-mails.com [2 domains]
 N edumaili.com [4 domains] (laravel)
 N email-temp.org [3 domains]
+N emailqu.net [broken] (emailqu.net)
 
 N fake.legal [4 domains]
 N fakemail.net [1 domain]
@@ -711,6 +710,7 @@ N nixxmail.com [signup]
 N notracemail.com [app]
 N nomomail.com [timeout]
 N nenzmail.com [weird] (messed up UI)
+N nukemail.app [PoW]
 
 N onesecmail.xyz [parked]
 N onetimeinbox.com [4 domains]
