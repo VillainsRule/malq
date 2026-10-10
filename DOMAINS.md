@@ -10,9 +10,6 @@ write reference:
 
 to do:
 - tempmail.id.vn (custom lwUpdate + SSR)
-- temp-mail.id (lwUpdate + weird CF protection)
-- emailgenerator.org (old laravel)
-- 4memail.com (laravel) (use http)
 
 **ERROR CODES:**
 - [C] NXDOMAIN: domain doesn't exist
@@ -52,6 +49,7 @@ to do:
 - [C] jschallenge: cloudflare's js-based challenge
 - [C] recapwaf: the recaptcha WAF is active
 - [C] infinitywaf: the infinity360 waf is active
+- ipcap: a captcha is triggered by non-resi IP address
 - PoW: a proof of work captcha is active
 - USECAP: a captcha triggers after a few uses
 
@@ -134,6 +132,10 @@ Y mailmedi.com
 Y mail.123nhh.de
 Y vfotp.com
 Y 1secemail.com
+Y emailgenerator.org
+Y afhamxmailz.com
+Y fastmulti.com
+Y guerrillamail.com
 
 N 0mail.pro [NXDOMAIN]
 N 0mail.app [1 domain]
@@ -206,6 +208,7 @@ N 2925.com [signup]
 N 33mail.com [signup]
 N 30minemail.com [1 domain]
 N 365hmail.com [5 domains]
+N 4memail.com [broken] (emailshopusa.com)
 N 48h.email [NXDOMAIN]
 N 48hr.email [weird] (slow, 60s mail recheck cd)
 N 5smail.email [4 domains]
@@ -242,7 +245,6 @@ N anonmails.de [1 domain]
 N api.internal.temp-mail.io [serverr]
 N apple.com [signup]
 N atomicmail.io [1 domain]
-N afhamxmailz.com [badsel]
 N aitoolshub.cyou [3 domains]
 
 N byom.de [1 domain]
@@ -445,10 +447,8 @@ N fastmailapp.com [5 domains]
 N fakemail.app [signup]
 N fakemail.cc [timeout]
 N fade.email [app]
-N fastmulti.com [badsel]
 
 N gmailcity.com [slop]
-N guerrillamail.com [badsel]
 N getnada.cc [mirror] (getnada.net)
 N gpa.lu [3 domains]
 N ghostmail.one [app]
@@ -1307,6 +1307,7 @@ N tempemail.space [broken] (adudu.online)
 N tempmailg.com [UAM]
 N tempmail.dn-pp.com [timeout]
 N trashbox.email [nosel]
+N temp-mail.id [ipcap]
 
 N unlimitmail.com [signup]
 N unstablemail.com [NXDOMAIN]
