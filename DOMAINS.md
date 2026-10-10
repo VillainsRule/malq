@@ -136,6 +136,9 @@ Y emailgenerator.org
 Y afhamxmailz.com
 Y fastmulti.com
 Y guerrillamail.com
+Y mohmal.com
+Y mailvn.xyz
+Y mockemail.com
 
 N 0mail.pro [NXDOMAIN]
 N 0mail.app [1 domain]
@@ -588,7 +591,6 @@ N mailgen.biz [timeout]
 N mailforspam.net [4 domains]
 N mailyra.com [broken] (beauturn.com) (at en)
 N mail1s.net [signup]
-N mohmal.com [badsel]
 N mail4qa.com [1 domain]
 N mail7.io [ntm]
 N maildim.com [serverr]
@@ -618,7 +620,7 @@ N my-tempmail.com [1 domain] (laravel)
 N mytempemail.com [serverr]
 N mail-temporaire.fr [alias]
 N mail1a.de [2 domains]
-N mail123.fr [badsel]
+N mail123.fr [NXDOMAIN]
 N mail.drafterplus.nl [1 domain]
 N m2u.io [3 domains]
 N mail-tester.com [tester]
@@ -671,7 +673,6 @@ N mailtemp.my.id [broken] (API)
 N mailtemp.xyz [mirror] (tempy.email)
 N mailtmp.com [timeout]
 N mailum.com [2 domains]
-N mailvn.xyz [badsel]
 N malil.xyz [parked]
 N mboxx.app [ntm]
 N minimail.eu.org [blank]
@@ -687,7 +688,6 @@ N mail7.fun [NXDOMAIN]
 N mailtula.com [NXDOMAIN]
 N mail.destiny-mmo.com [mirror] (tinyhost.shop)
 N mailtemp.vn [2 domains]
-N mockemail.com [badsel]
 N mnx-family.com [unstable]
 N moemail.app [signup]
 N mailtemp.tech [serverr]
