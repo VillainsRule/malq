@@ -31,10 +31,10 @@ to do:
 - IP: mail is tied to IP addresses
 - tester: mail is used to test email addresses
 - badmail: there are issues with the site's mail parsers
+- slow: the site is incredibly slow or has ratelimits on fetching mail
 
 **CHOICE CODES:**
 - gmail: offers gmails only, which are too often out of storage or not working
-- badsel: the provider has a bad domain selection
 - nosel: the provider does not allow you to choose which domain you want to use
 - websocket: this uses a websocket, which is too resource-intensive to maintain in malq prod
 - weird: it's so weird, i have no words to say
@@ -139,6 +139,8 @@ Y guerrillamail.com
 Y mohmal.com
 Y mailvn.xyz
 Y mockemail.com
+Y sacistudio.xyz
+Y mailkuh.my.id
 
 N 0mail.pro [NXDOMAIN]
 N 0mail.app [1 domain]
@@ -213,7 +215,7 @@ N 30minemail.com [1 domain]
 N 365hmail.com [5 domains]
 N 4memail.com [broken] (emailshopusa.com)
 N 48h.email [NXDOMAIN]
-N 48hr.email [weird] (slow, 60s mail recheck cd)
+N 48hr.email [slow] (60s mail recheck cd)
 N 5smail.email [4 domains]
 N 5minmail.com [1 domain]
 N 5min.email [broken] (videosave.me)
@@ -249,6 +251,7 @@ N api.internal.temp-mail.io [serverr]
 N apple.com [signup]
 N atomicmail.io [1 domain]
 N aitoolshub.cyou [3 domains]
+N aksesemailku.com [4 domains]
 
 N byom.de [1 domain]
 N burnermailbox.com [1 domain] (lwMessage)
@@ -302,6 +305,7 @@ N correotemporal.mx [1 domain] (lwUpdate)
 N currentmail.com [serverr]
 N catchtempmail.com [nosel]
 N creep.gg [ntm]
+N cybermail.us [4 domains]
 
 N dropmailer.net [parked]
 N dispoemail.org [2 domains]
@@ -541,7 +545,7 @@ N lsyx.me [serverr]
 N lsyx24.com [1 domain]
 N lsyx.xyz [serverr]
 N lilzyy.com [5 domains]
-N linshiyouxiang.net [weird] (10s refresh ratelimit)
+N linshiyouxiang.net [slow] (10s refresh ratelimit)
 N lisensify.com [NXDOMAIN]
 
 N mintemail.com [1 domain]
@@ -701,7 +705,7 @@ N maileer.xyz [2 domains]
 N mailanonim.ro [broken] (viewmail.asia)
 N maildax.cc [3 domains]
 N mailhook.co [signup]
-N mailmienphi.com [badsel]
+N mailmienphi.com [nosel]
 N mailonce.org [1 domain]
 N mailsdrop.com [nosel]
 N mailisk.com [ntm]
@@ -713,6 +717,7 @@ N mailxus.com [2 domains]
 N malutka.com.ua [mirror] (box.worm.rip)
 N mamanjaya.my.id [signup]
 N mymbg.my.id [4 domains]
+N mail.fishimei.cn [signup]
 
 N notletters.com [signup]
 N noopmail.org [nosel]
@@ -733,6 +738,7 @@ N nomomail.com [timeout]
 N nenzmail.com [weird] (messed up UI)
 N nukemail.app [PoW]
 N nullz.in [redirect] (shortmail.bond)
+N nowtempmail.com [1 domain]
 
 N onesecmail.xyz [parked]
 N onetimeinbox.com [4 domains]
@@ -745,7 +751,7 @@ N onetimeemail.net [1 domain]
 N onetimemali.com [parked]
 N on4t.com [1 domain]
 N onetimeemail.com [nosel]
-N otpmail.online [weird] (one mail stored at once?)
+N otpmail.online [weird] (one message stored at once?)
 N onehour.email [timeout]
 
 N premiumisme.info [2 domains] (lwUpdate)
@@ -781,7 +787,7 @@ N quick-tmail.com [4 domains]
 
 N rainmail.xyz [2 domains]
 N receivemail.org [4 domains]
-N reusable.email [badsel]
+N reusable.email [timeout]
 N react-mail.com [NXDOMAIN]
 N relay.firefox.com [signup]
 N robelmail.com [ntm]
@@ -845,9 +851,9 @@ N snapmail.cn [2 domains]
 N safetemp.email [NXDOMAIN]
 N seek.li [signup]
 N stealthinboxes.com [1 domain]
-N shortmail.bond [weird] (ratelimits)
-N sacistudio.xyz [badsel]
+N shortmail.bond [slow] (ratelimits)
 N silent-mail.org [5 domains]
+N ssaint.org [3 domains]
 
 N temp2mail.top [timeout]
 N tmail.delivery [signup]
@@ -1004,7 +1010,7 @@ N temp-mail-365.com [2 domains]
 N tempsmail.org [3 domains] (laravel)
 N tempmailv5.site [5 domains]
 N temp-mail.io [broken] (gmeenramy.com)
-N tempdukviet.click [badsel] (lwMessage)
+N tempdukviet.click [NXDOMAIN]
 N temp-mailo.org [broken] (nutioan.online)
 N throwaway.io [broken] (pembrookgroup.net)
 N tmailor.com [4 domains]
@@ -1308,6 +1314,7 @@ N tempmailg.com [UAM]
 N tempmail.dn-pp.com [timeout]
 N trashbox.email [nosel]
 N temp-mail.id [ipcap]
+N tempoemails.com [mirror] (getnada.net)
 
 N unlimitmail.com [signup]
 N unstablemail.com [NXDOMAIN]
