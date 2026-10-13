@@ -12,6 +12,14 @@ export default class Domains {
         return all[all.length * Math.random() | 0];
     }
 
+    static findProvider(domain: string): string | undefined {
+        for (const [provider, domains] of Object.entries(Domains.data)) {
+            if (domains.includes(domain)) return provider;
+        }
+
+        return undefined;
+    }
+
     static set(provider: string, domains: string[]) {
         this.data[provider] = domains;
     }

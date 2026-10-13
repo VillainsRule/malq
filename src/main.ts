@@ -11,6 +11,8 @@ import { demoApp, demoTokens } from './demo.ts';
 
 import type { ProviderImpl } from './providers/Provider';
 
+const envIsTrue = (v?: string) => v === '1' || v?.trim().toLowerCase() === 'true';
+
 const providerDir = path.join(import.meta.dirname, 'providers', 'impl');
 const providerFiles = fs.readdirSync(providerDir).filter((file) => file.endsWith('.ts') || file.endsWith('.js'));
 const providerSubdirs = fs.readdirSync(providerDir).filter((file) => fs.statSync(path.join(providerDir, file)).isDirectory());
@@ -117,10 +119,19 @@ app.get('/api/v1/session', async ({ query, server, request }) => {
 
     let provider: ProviderImpl;
 
-    if (query.provider && process.env.ALLOW_PROVIDER_SPECIFY === '1') {
+    if (query.provider && envIsTrue(process.env.ENABLE_PROVIDER_PARAM)) {
         const specifiedProvider = providers.get(query.provider);
         if (!specifiedProvider) return new Response(JSON.stringify({ error: 'invalid provider specified' }), { status: 400 });
+
         provider = new specifiedProvider();
+    } else if (query.domain && envIsTrue(process.env.ENABLE_DOMAIN_PARAM)) {
+        const providerOfDomain = Domains.findProvider(query.domain);
+        if (!providerOfDomain) return new Response(JSON.stringify({ error: 'malq does not stock this domain' }), { status: 400 });
+
+        const providerClass = providers.get(providerOfDomain);
+        if (!providerClass) return new Response(JSON.stringify({ error: 'provider for specified domain not found' }), { status: 500 });
+
+        provider = new providerClass();
     } else {
         const randomProvider = Array.from(providers.values())[Math.floor(Math.random() * providers.size)];
         provider = new randomProvider();
