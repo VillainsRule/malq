@@ -1,4 +1,6 @@
-const IGNORE_LIST: string[] = [];
+const IGNORE_LIST: string[] = [
+    'premiumindigital.site'
+];
 
 import fs from 'fs';
 import path from 'path';
@@ -14,7 +16,6 @@ const dom = parse(res);
 const rows = dom.querySelectorAll('tr[data-search]');
 
 const providers = rows
-    .filter(e => Number(e.getAttribute('data-domains')) > 5)
     .map(e => e.getAttribute('data-search')?.split(' ')[0] || '')
     .filter(e => e && e.includes('.'));
 
