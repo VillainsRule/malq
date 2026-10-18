@@ -1,0 +1,22 @@
+{
+    "manifest_version": 3,
+    "name": "malq",
+    "version": "1.0.0",
+    "permissions": [
+        "sidePanel",
+        "tabs",
+        "storage"
+    ],
+    "host_permissions": [
+        "http://127.0.0.1:4401/*"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "side_panel": {
+        "default_path": "sidepanel.html"
+    },
+    "action": {
+        "default_title": "malq"
+    }
+}

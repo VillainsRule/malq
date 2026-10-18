@@ -1,0 +1,140 @@
+:root {
+    color-scheme: light dark;
+    font-family: system-ui, sans-serif;
+}
+
+body {
+    margin: 0;
+    padding: 12px;
+}
+
+section {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+[hidden] {
+    display: none !important;
+}
+
+textarea,
+input,
+button {
+    font: inherit;
+    box-sizing: border-box;
+    width: 100%;
+    padding: 8px;
+}
+
+textarea {
+    height: 40vh;
+    resize: vertical;
+}
+
+h1 {
+    margin: 0;
+    font-size: 22px;
+    word-break: break-all;
+}
+
+hr {
+    width: 100%;
+    border: 0;
+    border-top: 1px solid #8884;
+    margin: 0;
+}
+
+#progress,
+#buffer,
+h4 {
+    font-size: 12px;
+    opacity: .65;
+    margin: 0;
+}
+
+#buffer {
+    min-height: 1em;
+}
+
+.error {
+    color: #dc2626;
+    min-height: 1em;
+    font-size: 13px;
+}
+
+.yn {
+    display: flex;
+    gap: 12px;
+}
+
+.big {
+    flex: 1;
+    height: 25vh;
+    font-size: 64px;
+    font-weight: 700;
+    cursor: pointer;
+    border-radius: 12px;
+    border: 3px solid #8886;
+    background: #8881;
+}
+
+#yes.on {
+    background: #16a34a;
+    color: #fff;
+    border-color: #16a34a;
+}
+
+#no.on {
+    background: #dc2626;
+    color: #fff;
+    border-color: #dc2626;
+}
+
+#why {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.chips button {
+    width: auto;
+    padding: 4px 8px;
+    font-size: 13px;
+    border-radius: 6px;
+    border: 1px solid #8886;
+    background: #8881;
+    cursor: pointer;
+}
+
+.chips button.on {
+    background: #2563eb;
+    border-color: #2563eb;
+    color: #fff;
+}
+
+.chips button.match {
+    outline: 2px solid #f59e0b;
+}
+
+#next {
+    cursor: pointer;
+    font-weight: 600;
+    background: #2563eb;
+    color: #fff;
+    border: 0;
+    border-radius: 8px;
+}
+
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+    outline: 2px solid #f59e0b;
+    outline-offset: 1px;
+}

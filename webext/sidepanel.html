@@ -1,0 +1,43 @@
+<!doctype html>
+<html>
+
+    <head>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="sidepanel.css">
+    </head>
+
+    <body>
+        <section id="setup">
+            <textarea id="list" placeholder="a.com, b.com, c.com" autofocus></textarea>
+            <button id="start">Start</button>
+            <div class="error" id="setup-error"></div>
+        </section>
+
+        <section id="review" hidden>
+            <div id="progress"></div>
+            <h1 id="site"></h1>
+            <hr>
+            <div class="yn">
+                <button id="yes" class="big">Y</button>
+                <button id="no" class="big">N</button>
+            </div>
+            <div id="why" hidden>
+                <div id="reasons"></div>
+                <input id="count" type="number" min="0" placeholder="domain count" hidden>
+                <div id="tags" class="chips"></div>
+                <input id="note" placeholder="note, e.g. redirect target">
+                <div id="buffer"></div>
+            </div>
+            <button id="next">Next</button>
+            <div class="error" id="error"></div>
+        </section>
+
+        <section id="done" hidden>
+            <h1>done</h1>
+            <button id="again">New list</button>
+        </section>
+
+        <script src="sidepanel.js"></script>
+    </body>
+
+</html>

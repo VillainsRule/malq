@@ -8,7 +8,8 @@
         "pull": "git pull && bun i && systemctl restart malq",
         "inbox": "bun tests/inbox.ts",
         "resend": "bun tests/resend.ts",
-        "send": "bun tests/send.ts"
+        "send": "bun tests/send.ts",
+        "webext": "bun webext/server.ts"
     },
     "dependencies": {
         "elysia": "^1.4.19",
