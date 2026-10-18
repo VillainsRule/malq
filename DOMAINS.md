@@ -16,6 +16,7 @@ to do:
 - rzmail.my.id
 - inbox.kakashi.my.id
 - zuckmails.com
+- dropmail.me
 
 **ERROR CODES:**
 - [C] NXDOMAIN: domain doesn't exist
@@ -221,6 +222,8 @@ N 15qm.com [IP]
 N 15-minute-email.com [weird] (doesn't even actually work with a backend)
 N 15-minute-mail.com [1 domain]
 N 189.email [1 domain]
+N 10mail.org [redirect] (dropmail.info)
+N 10mail.xyz [serverr]
 
 N 24hour.email [1 domain]
 N 22.do [gmail]
@@ -243,6 +246,7 @@ N 5minmail.com [1 domain]
 N 5min.email [broken] (videosave.me)
 N 5secmail.com [2 domains]
 N 509.lol [1 domain]
+N 55mail.jp [NXDOMAIN]
 
 N 6d6f.com [broken] (mbejci.com)
 
@@ -278,6 +282,15 @@ N aitoolshub.cyou [3 domains]
 N aksesemailku.com [4 domains]
 N agentmail.to [signup]
 N aliasify.leandre.io [1 domain]
+N aerospaceemail.com [NXDOMAIN]
+N aftermarket.pl [blank]
+N alltheemails.com [signup]
+N anonaddy.me [blank]
+N apexmailfilter.com [NXDOMAIN]
+N arsmtp.com [NXDOMAIN]
+N atmailcloud.com [NXDOMAIN]
+N av-mx.com [NXDOMAIN]
+N avc5.icu [NXDOMAIN]
 
 N byom.de [1 domain]
 N burnermailbox.com [1 domain] (lwMessage)
@@ -316,6 +329,15 @@ N burnermail.me [blank]
 N bitcuan.biz.id [signup]
 N bugmenot.com [ntm]
 N blackhole.mx [ntm]
+N b-io.co [NXDOMAIN]
+N beavis99.com [NXDOMAIN]
+N beeservices.shop [NXDOMAIN]
+N bestinv.org [NXDOMAIN]
+N biz.id [NXDOMAIN]
+N biz.st [ntm]
+N bofhland.org [NXDOMAIN]
+N breakthur.com [parked]
+N burnserver.com [NXDOMAIN]
 
 N chat-tempmail.com [signup]
 N crazymailing.com [4 domains]
@@ -339,6 +361,10 @@ N catchtempmail.com [nosel]
 N creep.gg [ntm]
 N cybermail.us [4 domains]
 N codedcapcut.email [serverr]
+N catchallmx.com [NXDOMAIN]
+N catchservers.com [NXDOMAIN]
+N catchservers.net [NXDOMAIN]
+N centerzeta.com [timeout]
 
 N dropmailer.net [parked]
 N dispoemail.org [2 domains]
@@ -355,7 +381,6 @@ N default.tmail.thehp.in [1 domain]
 N dispomail.xyz [recaptcha]
 N dropmailx.com [1 domain] (lwMessage)
 N dustbin.one [UAM]
-N dropmail.me
 N dashfree.net [NXDOMAIN]
 N dispelinbox.com [parked]
 N disposableemail.us [NXDOMAIN]

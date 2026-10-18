@@ -132,6 +132,13 @@ const typeahead = (key) => {
     render();
 };
 
+const advance = async () => {
+    s.i++;
+    if (!await skipKnown()) return finish();
+    await openSite();
+    loadSite();
+};
+
 const next = async () => {
     const domain = s.domains[s.i];
     if (!s.verdict) return $('error').textContent = 'press Y or N';
@@ -145,10 +152,7 @@ const next = async () => {
         return;
     }
     $('next').disabled = false;
-    s.i++;
-    if (!await skipKnown()) return finish();
-    await openSite();
-    loadSite();
+    advance();
 };
 
 const start = async (domains, i = 0, tabId = null) => {
@@ -215,6 +219,7 @@ $('again').addEventListener('click', () => {
 $('yes').addEventListener('click', () => setVerdict('Y'));
 $('no').addEventListener('click', () => setVerdict('N'));
 $('next').addEventListener('click', next);
+$('skip').addEventListener('click', (e) => e.detail > 0 && advance());
 
 addEventListener('keydown', (e) => {
     if ($('review').hidden) return;

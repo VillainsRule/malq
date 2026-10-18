@@ -132,6 +132,14 @@ h4 {
     border-radius: 8px;
 }
 
+#skip {
+    cursor: pointer;
+    background: none;
+    border: 1px solid #8886;
+    border-radius: 8px;
+    opacity: .7;
+}
+
 button:focus-visible,
 input:focus-visible,
 textarea:focus-visible {
