@@ -159,6 +159,7 @@ Y throwinbox.com
 
 N 0mail.pro [NXDOMAIN]
 N 0mail.app [1 domain]
+
 N 1secmail.cc [3 domains]
 N 1sec-mail.net [NXDOMAIN]
 N 1secmail.io [parked]
@@ -218,6 +219,7 @@ N 15qm.com [IP]
 N 15-minute-email.com [weird] (doesn't even actually work with a backend)
 N 15-minute-mail.com [1 domain]
 N 189.email [1 domain]
+
 N 24hour.email [1 domain]
 N 22.do [gmail]
 N 2minutesmail.com [NXDOMAIN]
@@ -225,17 +227,23 @@ N 24.email [websocket]
 N 24mail.json.cm [1 domain]
 N 2tempmail.com [broken] (API)
 N 2925.com [signup]
+N 20minutemail.com [1 domain]
+
 N 33mail.com [signup]
 N 30minemail.com [1 domain]
+
 N 4memail.com [broken] (emailshopusa.com)
 N 48h.email [NXDOMAIN]
 N 48hr.email [slow] (60s mail recheck cd)
+
 N 5smail.email [4 domains]
 N 5minmail.com [1 domain]
 N 5min.email [broken] (videosave.me)
 N 5secmail.com [2 domains]
 N 509.lol [1 domain]
+
 N 6d6f.com [broken] (mbejci.com)
+
 N 99mail.us [1 domain] [hcaptcha]
 
 N anonbox.net [1 domain]
@@ -304,6 +312,7 @@ N bumba.me [serverr]
 N burnerinbox.cc [1 domain]
 N burnermail.me [blank]
 N bitcuan.biz.id [signup]
+N bugmenot.com [ntm]
 
 N chat-tempmail.com [signup]
 N crazymailing.com [4 domains]
@@ -383,6 +392,15 @@ N dispose-email.org [1 domain] (laravel)
 N dropmail.click [1 domain]
 N dummyinbox.com [2 domains]
 N dumymail.com [1 domain] (laravel)
+N deadaddress.com [NXDOMAIN]
+N despammed.com [slop]
+N devnullmail.com [timeout]
+N discard.email [redirect] (tempr.email)
+N discardmail.com [redirect] (tempr.email)
+N dodgeit.com [timeout]
+N dontreg.com [slop]
+N dump-email.info [timeout]
+N dumpyemail.com [NXDOMAIN]
 
 N emltmp.com [serverr]
 N easytrashmail.eu [serverr]
@@ -445,6 +463,10 @@ N egmail.co [2 domains]
 N emailgenerator.online [1 domain]
 N emailtemporanee.com [redirect] (tempmail.co)
 N etempmail.org [parked]
+N emailresort.com [timeout]
+N emailtemporario.com.br [1 domain]
+N ephemail.net [slop]
+N explodemail.com [parked]
 
 N fake.legal [4 domains]
 N fakemail.net [1 domain]
@@ -491,6 +513,8 @@ N fake-email.site [broken] (API)
 N fakemail.work [1 domain]
 N fasttoolshq.com [mirror] (mail.tm)
 N freetemporarymail.com [4 domains]
+N fakeinbox.com [slop]
+N filzmail.com [parked]
 
 N gmailcity.com [slop]
 N getnada.cc [mirror] (getnada.net)
@@ -522,6 +546,14 @@ N get-a-temp-email.xyz [nosel] (random address only)
 N gotempmail.com.br [serverr]
 N getburneremail.com [1 domain]
 N ghostmail.live [app]
+N getairmail.com [NXDOMAIN]
+N getonemail.com [timeout]
+N gishpuppy.com [slop]
+N grr.la [redirect] (guerrillamail.com)
+N guerrillamail.de [redirect] (guerrillamail.com)
+N guerrillamail.net [redirect] (grr.la)
+N guerrillamail.org [redirect] (grr.la)
+N guerrillamailblock.com [redirect] (grr.la)
 
 N harakirimail.com [1 domain]
 N haribu.net [1 domain]
@@ -538,6 +570,8 @@ N hottempmail.com [redirect]
 N hide-mail.org [PoW]
 N haromail.com [3 domains]
 N heyflatimo.com [2 domains]
+N haltospam.com [ntm]
+N hotpop.com [parked]
 
 N improvmx.com [alias]
 N inboxkitten.com [1 domain]
@@ -562,6 +596,7 @@ N itemp-mail.com [NXDOMAIN]
 N itempmail.com [serverr]
 N inboxoro.com [nosel]
 N instanttempemail.com [nosel]
+N incognitomail.com [1 domain]
 
 N jonasleo.top [broken] (inrmail.info) (same temp-mailo.org)
 N jjk.app [WAF]
@@ -570,12 +605,17 @@ N jtempmail.com [1 domain] (laravel)
 N justatemp.com [serverr]
 N jana-mail.com [1 domain]
 N junkmail.site [redirect] (aliasify.leandre.io)
+N jetable.org [NXDOMAIN]
 
 N kingmadrid.space [NXDOMAIN]
 N keygmail.com [slop]
 N kindamail.com [parked]
 N khayden.com [1 domain]
 N kingtmp.email [parked]
+N kasmail.com [parked]
+N killmail.com [NXDOMAIN]
+N killmail.net [timeout]
+N klzlk.com [serverr]
 
 N lroid.com [1 domain]
 N linshi-email.com [UAM]
@@ -590,6 +630,7 @@ N lsyx24.com [1 domain]
 N lsyx.xyz [serverr]
 N linshiyouxiang.net [slow] (10s refresh ratelimit)
 N lisensify.com [NXDOMAIN]
+N letthemeatspam.com [timeout]
 
 N mintemail.com [1 domain]
 N mails.org [turnstile]
@@ -789,6 +830,7 @@ N nukemail.app [PoW]
 N nullz.in [redirect] (shortmail.bond)
 N nowtempmail.com [1 domain]
 N nimail.cn [1 domain]
+N natarmail.com [signup]
 
 N onesecmail.xyz [parked]
 N onetimeinbox.com [4 domains]
