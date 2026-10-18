@@ -1,6 +1,6 @@
-const IGNORE_LIST: string[] = [
-    'ms.emailfake.com',
-    'premiumindigital.site'
+const IGNORE_LIST = [
+    'ms.emailfake.com', // emailfake.com
+    'premiumindigital.site' // mail.premiumindigital.site
 ];
 
 import fs from 'fs';

@@ -1,6 +1,4 @@
-const IGNORE_LIST = [
-    'dayrep.com'
-]
+const IGNORE_LIST: string[] = []
 
 import fs from 'node:fs';
 import path from 'node:path';

@@ -41,8 +41,6 @@ const record = async (body: { domain: string, verdict: 'Y' | 'N', reason?: strin
     if (body.verdict === 'Y') {
         const todo = lines.indexOf('to do:');
         if (todo < 0) throw new Error('"to do:" header missing');
-        const lastY = lines.findLastIndex((l, i) => i > tracker && l.startsWith('Y '));
-        lines.splice(lastY < 0 ? tracker + 1 : lastY + 1, 0, `Y ${domain}`);
         lines.splice(todo + 1, 0, `- ${domain}`);
     } else {
         if (!body.reason) throw new Error('reason required');

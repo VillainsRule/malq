@@ -14,6 +14,8 @@ to do:
 - freemail.club
 - ilovevietnam.cyou
 - rzmail.my.id
+- inbox.kakashi.my.id
+- zuckmails.com
 
 **ERROR CODES:**
 - [C] NXDOMAIN: domain doesn't exist
@@ -313,6 +315,7 @@ N burnerinbox.cc [1 domain]
 N burnermail.me [blank]
 N bitcuan.biz.id [signup]
 N bugmenot.com [ntm]
+N blackhole.mx [ntm]
 
 N chat-tempmail.com [signup]
 N crazymailing.com [4 domains]
@@ -335,6 +338,7 @@ N currentmail.com [serverr]
 N catchtempmail.com [nosel]
 N creep.gg [ntm]
 N cybermail.us [4 domains]
+N codedcapcut.email [serverr]
 
 N dropmailer.net [parked]
 N dispoemail.org [2 domains]
@@ -401,6 +405,7 @@ N dodgeit.com [timeout]
 N dontreg.com [slop]
 N dump-email.info [timeout]
 N dumpyemail.com [NXDOMAIN]
+N dayrep.com [redirect] (fakemailgenerator.com)
 
 N emltmp.com [serverr]
 N easytrashmail.eu [serverr]
@@ -468,6 +473,7 @@ N emailtemporario.com.br [1 domain]
 N ephemail.net [slop]
 N explodemail.com [parked]
 N emailtemporalgratis.com [mirror] (fakemailgenerator.com)
+N emailbali.com [NXDOMAIN]
 
 N fake.legal [4 domains]
 N fakemail.net [1 domain]
@@ -617,6 +623,7 @@ N kasmail.com [parked]
 N killmail.com [NXDOMAIN]
 N killmail.net [timeout]
 N klzlk.com [serverr]
+N kuku.lu [ntm]
 
 N lroid.com [1 domain]
 N linshi-email.com [UAM]
@@ -906,6 +913,7 @@ N pomailbox.com [redirect] (fasttoolshq.com)
 N puretempmail.com [1 domain]
 N pookmail.com [parked]
 N proxymail.eu [blank]
+N pinmx.com [2 domains]
 
 N quickemail.xyz [nosel]
 N quick-inbox.com [NXDOMAIN]
@@ -1575,6 +1583,7 @@ N viditag.com [parked]
 N vomoto.com [NXDOMAIN]
 N vpn.st [parked]
 N vsimcard.com [ntm]
+N vietxf.com [serverr]
 
 N wp-temp-mail.com [slop]
 N wabblywabble.com [NXDOMAIN]
@@ -1595,6 +1604,7 @@ N wilemail.com [parked]
 N willhackforfood.biz [NXDOMAIN]
 N willselfdestruct.com [parked]
 N wronghead.com [redirect] (spamgourmet.com)
+N wds.my [parked]
 
 N xeramail.com [turnstile]
 N xm.cd [signup]
