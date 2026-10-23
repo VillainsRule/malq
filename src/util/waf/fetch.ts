@@ -37,7 +37,7 @@ const decode = (buf: Buffer, encoding: string) => {
     return buf;
 };
 
-export const chromeVersion =await (await fetch('https://files.villainsrule.xyz/chromeVersion.txt')).text();
+export const chromeVersion = await (await fetch('https://files.villainsrule.xyz/chromeVersion.txt')).text();
 
 const wafFetch = (inputUrl: string, options: WafFetchOptions = {}): Promise<WafFetchResponse> =>
     new Promise(async (resolve, reject) => {
