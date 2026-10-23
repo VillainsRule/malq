@@ -3,39 +3,29 @@ const IGNORE_LIST: string[] = [];
 import fs from 'fs';
 import path from 'path';
 
-import { connect } from 'puppeteer-real-browser';
+import { launch } from './cdp/browser';
 
-import wafFetch, { chromeVersion } from '../src/util/waf/fetch';
+import wafFetch from '../src/util/waf/fetch';
 
 console.log('need to solve the captcha. this may be a second.');
 
-const { page, browser } = await connect({
-    headless: false,
-    turnstile: true,
-});
+const { page, close } = await launch();
 
-await page.setUserAgent(`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion}.0.0.0 Safari/537.36`);
 await page.goto('https://addrly.io/disposable-email-providers');
+await page.waitFor((h) => !h.includes('Just a moment') && h.includes('Disposable Email Providers'));
 
-let x = await new Promise<string>((resolve) => {
-    let i = setInterval(async () => {
-        const cookies = await browser.cookies();
-        const cfClearance = cookies.find(c => c.name === 'cf_clearance');
-        if (cfClearance) {
-            clearInterval(i);
-            resolve(`${cfClearance.name}=${cfClearance.value}`);
-        }
-    }, 100);
-});
+const cookies = await page.cookies().then(c => c.map(c => `${c.name}=${c.value}`).join('; '));
+const userAgent = await page.evaluate(`navigator.userAgent`);
 
-browser.close();
+await close();
 
 console.log('captcha solved');
 
 const req = await wafFetch('https://addrly.io/disposable-email-providers', {
     headers: {
         accept: 'application/json',
-        cookie: x
+        cookie: cookies,
+        'user-agent': userAgent
     },
     noProxy: true
 });

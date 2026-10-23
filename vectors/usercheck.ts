@@ -1,43 +1,24 @@
 const IGNORE_LIST: string[] = [];
 
 const THRESHOLD = 10;
-const DELAY = 750;
+const DELAY = 800;
 
 import fs from 'fs';
 import path from 'path';
 
-import { connect } from 'puppeteer-real-browser';
-
-import extraStealth from 'puppeteer-extra-plugin-stealth';
-
-import wafFetch, { chromeVersion } from '../src/util/waf/fetch';
+import { launch } from './cdp/browser';
 
 console.log('need to solve the captcha. this may be a second.');
 
-const { page, browser } = await connect({
-    headless: false,
-    turnstile: true,
-    plugins: [extraStealth()]
-});
+const { page, close } = await launch();
 
-await page.setUserAgent(`Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion}.0.0.0 Safari/537.36`);
-await page.goto('https://usercheck.com/providers');
+await page.goto('https://www.usercheck.com/providers');
+await page.waitFor((h) => !h.includes('Just a moment') && h.includes(' domains'));
 
-let x = await new Promise<string>((resolve) => {
-    let i = setInterval(async () => {
-        const cookies = await browser.cookies();
-        const cfClearance = cookies.find(c => c.name === 'cf_clearance');
-        const cfOB = cookies.find(c => c.name === '__cf_ob');
-        if (cfClearance) {
-            clearInterval(i);
+const cookies = await page.cookies().then(c => c.map(c => `${c.name}=${c.value}`).join('; '));
+const userAgent = await page.evaluate(`navigator.userAgent`);
 
-            if (cfOB) resolve(`${cfClearance.name}=${cfClearance.value}; ${cfOB.name}=${cfOB.value}`);
-            else resolve(`${cfClearance.name}=${cfClearance.value}`);
-        }
-    }, 100);
-});
-
-browser.close();
+await close();
 
 console.log('captcha solved');
 
@@ -46,17 +27,15 @@ const providers: { name: string, domainCount: number, page: number }[] = [];
 let i = 0;
 
 while (!providers.length || providers[providers.length - 1].domainCount >= 5) {
-    const req = await wafFetch('https://www.usercheck.com/providers?page=' + (i + 1), {
-        headers: {
-            'Accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-            'Cookie': x
-        },
-        noProxy: true
-    });
+    const html = await Bun.$`curl -s --url 'https://www.usercheck.com/providers?page=${i + 1}' -b '${cookies}' -H 'user-agent: ${userAgent}'`.text();
 
-    const res = req.text().replaceAll('\n', '');
+    const res = (html ?? '').replaceAll('\n', '');
+
+    if (!res || res.includes('Just a moment')) throw new Error('cf WAF failing...GG');
 
     const matches = Array.from(res.matchAll(/<div class="font-mono text-2xl font-medium text-primary-900">\s*([^<]+?)\s*<\/div>\s*<div class="text-gray-700">\s*([\d,]+) domains\s*<\/div>/g), m => ({ name: m[1].trim(), domainCount: parseInt(m[2].replace(/,/g, '')), page: i + 1 }));
+
+    if (matches.length < 1) console.log(res);
 
     providers.push(...matches);
     console.log(`scraped page ${i + 1} with ${matches.length} matches (lowest: ${matches[matches.length - 1]?.domainCount || 'N/A'})`);

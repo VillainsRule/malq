@@ -2,7 +2,51 @@ import http2, { ClientHttp2Session } from 'node:http2';
 import net from 'node:net';
 import tls, { TLSSocket } from 'node:tls';
 
-const createProxyTunnel = (origin: string): Promise<TLSSocket> => {
+const chromeTlsOptions = (servername: string): tls.ConnectionOptions => ({
+    servername,
+    rejectUnauthorized: false,
+    checkServerIdentity: () => undefined,
+    ALPNProtocols: ['h2', 'http/1.1'],
+    ciphers: [
+        'TLS_AES_128_GCM_SHA256',
+        'TLS_AES_256_GCM_SHA384',
+        'TLS_CHACHA20_POLY1305_SHA256',
+        'ECDHE-ECDSA-AES128-GCM-SHA256',
+        'ECDHE-RSA-AES128-GCM-SHA256',
+        'ECDHE-ECDSA-AES256-GCM-SHA384',
+        'ECDHE-RSA-AES256-GCM-SHA384',
+        'ECDHE-ECDSA-CHACHA20-POLY1305',
+        'ECDHE-RSA-CHACHA20-POLY1305',
+        'ECDHE-RSA-AES128-SHA',
+        'ECDHE-RSA-AES256-SHA',
+        'AES128-GCM-SHA256',
+        'AES256-GCM-SHA384',
+        'AES128-SHA',
+        'AES256-SHA',
+    ].join(':'),
+    sigalgs: 'ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512',
+    minVersion: 'TLSv1.2',
+    ecdhCurve: 'X25519MLKEM768:X25519:P-256:P-384',
+});
+
+const createDirectSocket = (origin: string): Promise<TLSSocket> => new Promise((resolve, reject) => {
+    const url = new URL(origin);
+    const socket = tls.connect({ host: url.hostname, port: parseInt(url.port) || 443, ...chromeTlsOptions(url.hostname) });
+    socket.once('secureConnect', () => resolve(socket));
+    socket.once('error', reject);
+});
+
+const connectH2 = (origin: string, socket: TLSSocket): ClientHttp2Session => {
+    const session = http2.connect(origin, {
+        createConnection: () => socket,
+        settings: { headerTableSize: 65536, enablePush: false, initialWindowSize: 6291456, maxHeaderListSize: 262144 }
+    });
+
+    session.setLocalWindowSize(15728640);
+    return session;
+};
+
+const createProxyTunnel =(origin: string): Promise<TLSSocket> => {
     return new Promise((resolve, reject) => {
         const proxyUrl = new URL(process.env.PROXY!);
         const targetUrl = new URL(origin);
@@ -61,30 +105,7 @@ const createProxyTunnel = (origin: string): Promise<TLSSocket> => {
 
                     const tlsSocket = tls.connect({
                         socket: proxySocket,
-                        servername: targetUrl.hostname,
-                        rejectUnauthorized: false,
-                        checkServerIdentity: () => undefined,
-                        ALPNProtocols: ['h2', 'http/1.1'],
-                        ciphers: [
-                            'TLS_AES_128_GCM_SHA256',
-                            'TLS_AES_256_GCM_SHA384',
-                            'TLS_CHACHA20_POLY1305_SHA256',
-                            'ECDHE-ECDSA-AES128-GCM-SHA256',
-                            'ECDHE-RSA-AES128-GCM-SHA256',
-                            'ECDHE-ECDSA-AES256-GCM-SHA384',
-                            'ECDHE-RSA-AES256-GCM-SHA384',
-                            'ECDHE-ECDSA-CHACHA20-POLY1305',
-                            'ECDHE-RSA-CHACHA20-POLY1305',
-                            'ECDHE-RSA-AES128-SHA',
-                            'ECDHE-RSA-AES256-SHA',
-                            'AES128-GCM-SHA256',
-                            'AES256-GCM-SHA384',
-                            'AES128-SHA',
-                            'AES256-SHA',
-                        ].join(':'),
-                        sigalgs: 'ecdsa_secp256r1_sha256:rsa_pss_rsae_sha256:rsa_pkcs1_sha256:ecdsa_secp384r1_sha384:rsa_pss_rsae_sha384:rsa_pkcs1_sha384:rsa_pss_rsae_sha512:rsa_pkcs1_sha512',
-                        minVersion: 'TLSv1.2',
-                        ecdhCurve: 'X25519:P-256:P-384',
+                        ...chromeTlsOptions(targetUrl.hostname)
                     });
 
                     tlsSocket.on('secureConnect', () => {
@@ -112,12 +133,13 @@ const createProxyTunnel = (origin: string): Promise<TLSSocket> => {
     });
 };
 
-const createClient = async (origin: string): Promise<ClientHttp2Session> => {
-    if (!process.env.PROXY) return http2.connect(origin);
+const createClient = async (origin: string, direct = false): Promise<ClientHttp2Session> => {
+    if (new URL(origin).protocol === 'http:') return http2.connect(origin);
+    if (direct || !process.env.PROXY) return connectH2(origin, await createDirectSocket(origin));
 
     try {
         const socket = await createProxyTunnel(origin);
-        return http2.connect(origin, { createConnection: () => socket });
+        return connectH2(origin, socket);
     } catch (error) {
         console.error('failed to create client with proxy:', error);
         throw error;

@@ -21,9 +21,11 @@ to do:
 - best-tempmail.com
 - tempmail.tw
 - onehour.email
-- mail.draxon.one
 - reusable.email
 - tempmail-plus.com (http)
+- akses.email
+- draxon.one (hidden /api/mail/v1/public/domains endpoint)
+- tempmail.ocilotx.com
 
 **ERROR CODES:**
 - [C] NXDOMAIN: domain doesn't exist
@@ -1035,6 +1037,8 @@ N pointnexus.org [NXDOMAIN]
 N powered.name [serverr]
 N priyohost.net [ntm]
 N psycho.email [UAM]
+N patacrew.com [timeout]
+N pntr.dev [ntm]
 
 N quickemail.xyz [nosel]
 N quick-inbox.com [NXDOMAIN]
@@ -1803,3 +1807,4 @@ N zoemail.org [NXDOMAIN]
 N zomg.info [serverr]
 N zapovedniki.com [timeout]
 N zxcs.nl [blank]
+N zaxgmail.com [signup]

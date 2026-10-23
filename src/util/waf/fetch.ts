@@ -1,9 +1,9 @@
-import http2 from 'node:http2';
+import zlib from 'node:zlib';
 import createClient from './createClient';
 
 interface WafFetchOptions {
     method?: string;
-    headers?: Record<string, string>;
+    headers?: Record<string, string | undefined>;
     body?: string;
     referrer?: string;
     noProxy?: boolean;
@@ -22,12 +22,27 @@ interface WafFetchResponse {
     }
 }
 
-export const chromeVersion = await (await fetch('https://files.villainsrule.xyz/chromeVersion.txt')).text();
+const zstd = (zlib as any).zstdDecompressSync as ((b: Buffer) => Buffer) | undefined;
+
+const acceptEncoding = zstd ? 'gzip, deflate, br, zstd' : 'gzip, deflate, br';
+
+const decode = (buf: Buffer, encoding: string) => {
+    for (const enc of encoding.split(',').map((e) => e.trim().toLowerCase()).filter(Boolean).reverse()) {
+        if (enc === 'gzip' || enc === 'x-gzip') buf = zlib.gunzipSync(buf);
+        else if (enc === 'deflate') buf = zlib.inflateSync(buf);
+        else if (enc === 'br') buf = zlib.brotliDecompressSync(buf);
+        else if (enc === 'zstd' && zstd) buf = zstd(buf);
+    }
+
+    return buf;
+};
+
+export const chromeVersion =await (await fetch('https://files.villainsrule.xyz/chromeVersion.txt')).text();
 
 const wafFetch = (inputUrl: string, options: WafFetchOptions = {}): Promise<WafFetchResponse> =>
     new Promise(async (resolve, reject) => {
         const url = new URL(inputUrl);
-        const client = options.noProxy ? http2.connect(url.origin) : await createClient(url.origin);
+        const client = await createClient(url.origin, options.noProxy);
 
         const method = (options.method ?? 'GET').toUpperCase();
 
@@ -36,21 +51,15 @@ const wafFetch = (inputUrl: string, options: WafFetchOptions = {}): Promise<WafF
             ':authority': url.host,
             ':scheme': url.protocol.replace(':', ''),
             ':path': url.pathname + url.search,
-            'sec-ch-ua': `"Chromium";v="${chromeVersion}", "Not:A-Brand";v="24", "Google Chrome";v="${chromeVersion}"`,
-            'sec-ch-ua-mobile': '?0',
-            'sec-ch-ua-platform': '"macOS"',
+            'cache-control': 'max-age=0',
             'upgrade-insecure-requests': '1',
             'user-agent': `Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/${chromeVersion}.0.0.0 Safari/537.36`,
             'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
-            'sec-fetch-site': 'none',
-            'sec-fetch-mode': 'navigate',
-            'sec-fetch-user': '?1',
-            'sec-fetch-dest': 'document',
-            // 'accept-encoding': 'deflate',
+            'accept-encoding': acceptEncoding,
             'accept-language': 'en-US,en;q=0.9',
             'priority': 'u=0, i',
             ...(options.headers?.referer ? { referer: options.headers.referer } : { referer: url.origin }),
-            ...(options.headers?.origin ? { origin: options.headers.origin } : { origin: url.origin })
+            ...(options.headers?.origin ? { origin: options.headers.origin } : method === 'GET' || method === 'HEAD' ? {} : { origin: url.origin })
         };
 
         const { body = null } = options;
@@ -64,7 +73,11 @@ const wafFetch = (inputUrl: string, options: WafFetchOptions = {}): Promise<WafF
             Object.entries(options.headers ?? {}).map(([k, v]) => [k.toLowerCase(), v])
         );
 
-        const headers: Record<string, string> = { ...defaultHeaders, ...userHeaders };
+        const headers: Record<string, string | undefined> = { ...defaultHeaders, ...userHeaders };
+
+        Object.entries(headers).forEach(([k, v]) => {
+            if (!v) delete headers[k];
+        });
 
         const req = client.request(headers);
 
@@ -75,14 +88,20 @@ const wafFetch = (inputUrl: string, options: WafFetchOptions = {}): Promise<WafF
             responseHeaders = resHeaders;
         });
 
-        req.setEncoding('utf8');
+        const chunks: Buffer[] = [];
 
-        req.on('data', (chunk: string) => {
-            responseBody += chunk;
+        req.on('data', (chunk: Buffer) => {
+            chunks.push(chunk);
         });
 
         req.on('end', () => {
             client.close();
+
+            try {
+                responseBody = decode(Buffer.concat(chunks), String(responseHeaders['content-encoding'] ?? '')).toString('utf8');
+            } catch (e) {
+                return reject(e);
+            }
 
             const status = Number(responseHeaders[':status'] ?? 200);
             const rawCookies = responseHeaders['set-cookie'];
