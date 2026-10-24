@@ -9,23 +9,6 @@ write reference:
 - mailfetch - tempmail.io.vn
 
 to do:
-- tempmail.id.vn (custom lwUpdate + SSR)
-- anarchygmail.com
-- freemail.club
-- ilovevietnam.cyou
-- rzmail.my.id
-- inbox.kakashi.my.id
-- zuckmails.com
-- dropmail.me
-- mail123.click
-- best-tempmail.com
-- tempmail.tw
-- onehour.email
-- reusable.email
-- tempmail-plus.com (http)
-- akses.email
-- draxon.one (hidden /api/mail/v1/public/domains endpoint)
-- tempmail.ocilotx.com
 
 **ERROR CODES:**
 - [C] NXDOMAIN: domain doesn't exist
@@ -168,6 +151,18 @@ Y tempmail.gg
 Y tempmailhub.net
 Y temporaries.email
 Y throwinbox.com
+Y tempmail.id.vn
+Y anarchygmail.com
+Y freemail.club
+Y ilovevietnam.cyou
+Y rzmail.my.id
+Y zuckmails.com
+Y mail123.click
+Y tempmail.tw
+Y reusable.email
+Y akses.email
+Y tempmail.ocilotx.com
+Y draxon.one
 
 N 0mail.pro [NXDOMAIN]
 N 0mail.app [1 domain]
@@ -346,6 +341,7 @@ N biz.st [ntm]
 N bofhland.org [NXDOMAIN]
 N breakthur.com [parked]
 N burnserver.com [NXDOMAIN]
+N best-tempmail.com [broken] (all domains bounce, mx mymailserver.site)
 
 N chat-tempmail.com [signup]
 N crazymailing.com [4 domains]
@@ -456,6 +452,7 @@ N dochomthu.com [signup]
 N domcollect.com [ntm]
 N dpoczta.pl [signup]
 N dynainbox.com [slop]
+N dropmail.me [signup] (api token required, web ui is websocket + signed token)
 
 N emltmp.com [serverr]
 N easytrashmail.eu [serverr]
@@ -682,6 +679,7 @@ N inbound-mx.org [NXDOMAIN]
 N inquirymailer.com [NXDOMAIN]
 N isp-inter.net [NXDOMAIN]
 N iwhisky.cz [slop]
+N inbox.kakashi.my.id [serverr]
 
 N jonasleo.top [broken] (inrmail.info) (same temp-mailo.org)
 N jjk.app [WAF]
@@ -1003,6 +1001,7 @@ N oneb.net [NXDOMAIN]
 N opayq.com [timeout]
 N outsideserver.com [NXDOMAIN]
 N oxcs.net [ntm]
+N onehour.email [timeout]
 
 N premiumisme.info [2 domains] (lwUpdate)
 N proxiedmail.com [alias]
@@ -1689,6 +1688,7 @@ N testitesti.top [slop]
 N ticketsinbound.com [blank]
 N tobu-wedding.com [parked]
 N topmailtop.com [serverr]
+N tempmail-plus.com [recaptcha]
 
 N unlimitmail.com [signup]
 N unstablemail.com [NXDOMAIN]
