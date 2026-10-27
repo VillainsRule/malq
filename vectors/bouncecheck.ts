@@ -1,4 +1,5 @@
 const IGNORE_LIST = [
+    '215.im', // vip.215.im
     'chatgpt.org.uk' // mail.chatgpt.org.uk
 ];
 

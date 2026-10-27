@@ -55,10 +55,10 @@ These sites break constantly. Work from `curl` first:
 
 ## Lessons
 
-- Find endpoints from the site's own JS bundle/API docs (`/docs`, `/developers`); for obfuscated or SPA sites, click through in a browser and read the network requests.
+- Find endpoints from the site's own JS bundle/API docs (`/api/domains`, `/hidden/mailbox`); for obfuscated or SPA sites, click through in a browser and read the network requests.
 - Bun `fetch` over `PROXY` can 407; if every response is an HTML error page, retry with `PROXY=` empty before blaming the provider.
 - Don't `encodeURIComponent` the `@` when a site's path/query rejects it silently
-- Some sites need browser-ish headers (`origin`, `referer`, `sec-fetch-*`, Chrome `user-agent`) or return 403 / `browser_required`.
+- Some sites need browser-ish headers (`origin`, `referer`, Chrome `user-agent`) or return 403 / `browser_required`.
 - Dates: if the site returns a naive string, find its UTC offset empirically (`bun inbox` prints the shift) and pass it to `toEST`; for ISO/epoch just use `new Date(x).getTime()`.
 - Not every domain a site lists delivers mail; test another domain before blaming the provider. Don't run several `bun inbox` in parallel through the proxy.
 - Sites sharing one backend (cloudflare_temp_email, mail.tm-style `/accounts`+`/token`, laravel `_constructor`) can reuse a template.
@@ -68,3 +68,4 @@ These sites break constantly. Work from `curl` first:
 - Sites CAN be scrapped. Reasons for discard include: ratelimit fetching mail, session reliant on IP address, ANY captchas that you cannot avoid (including PoW)
 - This file is a work in progress. If you find additional things to add, go ahead and do so (keep it short!)
 - If you have big questions, ask! (Small questions are something you should be able to figure out by reading other providers.)
+- If you have multiple new providers to add, it's easiest to do them one at a time (one after another).

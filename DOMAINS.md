@@ -163,6 +163,9 @@ Y reusable.email
 Y akses.email
 Y tempmail.ocilotx.com
 Y draxon.one
+Y sengare.art
+Y osakan.tokyo
+Y iwanta.email
 
 N 0mail.pro [NXDOMAIN]
 N 0mail.app [1 domain]
@@ -222,12 +225,12 @@ N 10minmailbox.com [2 domains]
 N 10minutes.email [1 domain]
 N 10secmail.com [2 domains]
 N 10minemail.org [nosel]
+N 10mail.org [redirect] (dropmail.info)
+N 10mail.xyz [serverr]
 N 15qm.com [IP]
 N 15-minute-email.com [weird] (doesn't even actually work with a backend)
 N 15-minute-mail.com [1 domain]
 N 189.email [1 domain]
-N 10mail.org [redirect] (dropmail.info)
-N 10mail.xyz [serverr]
 
 N 24hour.email [1 domain]
 N 22.do [gmail]
@@ -237,6 +240,7 @@ N 24mail.json.cm [1 domain]
 N 2tempmail.com [broken] (API)
 N 2925.com [signup]
 N 20minutemail.com [1 domain]
+N 2fa.vn [redirect] (tmailor.com)
 
 N 33mail.com [signup]
 N 30minemail.com [1 domain]
@@ -295,6 +299,9 @@ N arsmtp.com [NXDOMAIN]
 N atmailcloud.com [NXDOMAIN]
 N av-mx.com [NXDOMAIN]
 N avc5.icu [NXDOMAIN]
+N annnekkk.com [NXDOMAIN]
+N anonymousrecipient.com [1 domain]
+N apmw.net [NXDOMAIN]
 
 N byom.de [1 domain]
 N burnermailbox.com [1 domain] (lwMessage)
@@ -379,6 +386,7 @@ N csof.net [NXDOMAIN]
 N cuiqiu.net [redirect] (cuiqiu.com)
 N cuiqiu.com [signup]
 N czarymary.pl [ntm]
+N clova.email [signup]
 
 N dropmailer.net [parked]
 N dispoemail.org [2 domains]
@@ -453,6 +461,8 @@ N domcollect.com [ntm]
 N dpoczta.pl [signup]
 N dynainbox.com [slop]
 N dropmail.me [signup] (api token required, web ui is websocket + signed token)
+N desigroup.buzz [1 domain]
+N doai.email [3 domains]
 
 N emltmp.com [serverr]
 N easytrashmail.eu [serverr]
@@ -529,6 +539,7 @@ N everettps.com [NXDOMAIN]
 N ewebdevelopment.com [ntm]
 N externalemail.com [NXDOMAIN]
 N ezonemail.com [NXDOMAIN]
+N exolinker.com [redirect] (fmail.men)
 
 N fake.legal [4 domains]
 N fakemail.net [1 domain]
@@ -579,6 +590,7 @@ N fakeinbox.com [slop]
 N filzmail.com [parked]
 N fr.nf [ntm]
 N freeml.net [serverr]
+N faivelo.com [signup]
 
 N gmailcity.com [slop]
 N getnada.cc [mirror] (getnada.net)
@@ -623,6 +635,7 @@ N goserver.host [ntm]
 N gravityengine.cc [serverr]
 N gridhost.com [ntm]
 N guzel.net.tr [ntm]
+N getmx.com [signup]
 
 N harakirimail.com [1 domain]
 N haribu.net [1 domain]
@@ -680,6 +693,7 @@ N inquirymailer.com [NXDOMAIN]
 N isp-inter.net [NXDOMAIN]
 N iwhisky.cz [slop]
 N inbox.kakashi.my.id [serverr]
+N inbox.seyha.studio [signup]
 
 N jonasleo.top [broken] (inrmail.info) (same temp-mailo.org)
 N jjk.app [WAF]
@@ -706,6 +720,7 @@ N klzlk.com [serverr]
 N kuku.lu [ntm]
 N krunsea.com [NXDOMAIN]
 N kuromee.com [NXDOMAIN]
+N kurumsaleposta.com [ntm]
 
 N lroid.com [1 domain]
 N linshi-email.com [UAM]
@@ -946,6 +961,8 @@ N mxnetworks.org [NXDOMAIN]
 N mxof.com [blank]
 N mydevil.net [ntm]
 N mymailserver.site [redirect] (best-tempmail.com)
+N mail.zrf.me [turnstile]
+N mailhook.dev [1 domain]
 
 N notletters.com [signup]
 N noopmail.org [nosel]
@@ -1002,6 +1019,7 @@ N opayq.com [timeout]
 N outsideserver.com [NXDOMAIN]
 N oxcs.net [ntm]
 N onehour.email [timeout]
+N oast.fun [ntm]
 
 N premiumisme.info [2 domains] (lwUpdate)
 N proxiedmail.com [alias]
@@ -1163,6 +1181,7 @@ N sparkblink.org [timeout]
 N spymail.one [serverr]
 N stableserver.net [serverr]
 N stememail.com [NXDOMAIN]
+N syncmail.host [signup]
 
 N temp2mail.top [timeout]
 N tmail.delivery [signup]
@@ -1689,6 +1708,8 @@ N ticketsinbound.com [blank]
 N tobu-wedding.com [parked]
 N topmailtop.com [serverr]
 N tempmail-plus.com [recaptcha]
+N tempmailmate.com [broken] (API)
+N tmailcloud.my.id [2 domains]
 
 N unlimitmail.com [signup]
 N unstablemail.com [NXDOMAIN]
@@ -1729,6 +1750,7 @@ N vsimcard.com [ntm]
 N vietxf.com [serverr]
 N v6.army [NXDOMAIN]
 N volkai.cloud [serverr]
+N voltmail.my.id [1 domain]
 
 N wp-temp-mail.com [slop]
 N wabblywabble.com [NXDOMAIN]
@@ -1753,6 +1775,7 @@ N wds.my [parked]
 N webmailious.top [ntm]
 N wn-power.com [ntm]
 N ws.ws [ntm]
+N wegwerfemail.de [redirect] (muellmail.com)
 
 N xeramail.com [turnstile]
 N xm.cd [signup]
@@ -1808,3 +1831,4 @@ N zomg.info [serverr]
 N zapovedniki.com [timeout]
 N zxcs.nl [blank]
 N zaxgmail.com [signup]
+N zurastore.my.id [1 domain]
