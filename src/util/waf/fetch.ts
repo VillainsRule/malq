@@ -7,6 +7,7 @@ interface WafFetchOptions {
     body?: string;
     referrer?: string;
     noProxy?: boolean;
+    timeout?: number;
 }
 
 interface WafFetchResponse {
@@ -42,7 +43,20 @@ export const chromeVersion = await (await fetch('https://files.villainsrule.xyz/
 const wafFetch = (inputUrl: string, options: WafFetchOptions = {}): Promise<WafFetchResponse> =>
     new Promise(async (resolve, reject) => {
         const url = new URL(inputUrl);
-        const client = await createClient(url.origin, options.noProxy);
+
+        const timeout = options.timeout ?? 5000;
+        let timedOut = false;
+        let client: Awaited<ReturnType<typeof createClient>> | undefined;
+
+        const timer = setTimeout(() => {
+            timedOut = true;
+            client?.close();
+            reject(new Error(`wafFetch timed out after ${timeout}ms: ${inputUrl}`));
+        }, timeout);
+
+        client = await createClient(url.origin, options.noProxy);
+
+        if (timedOut) return client.close();
 
         const method = (options.method ?? 'GET').toUpperCase();
 
@@ -95,6 +109,7 @@ const wafFetch = (inputUrl: string, options: WafFetchOptions = {}): Promise<WafF
         });
 
         req.on('end', () => {
+            clearTimeout(timer);
             client.close();
 
             try {
@@ -125,7 +140,10 @@ const wafFetch = (inputUrl: string, options: WafFetchOptions = {}): Promise<WafF
             });
         });
 
-        req.on('error', reject);
+        req.on('error', (e) => {
+            clearTimeout(timer);
+            reject(e);
+        });
 
         if (body) req.write(body);
         req.end();

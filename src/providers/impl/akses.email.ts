@@ -7,7 +7,7 @@ export default class akses$email implements ProviderImpl {
         const req = await fish('http://akses.email/');
         const res = await req.text();
 
-        return JSON.parse(res.match(/domains: (\[.*?\])/)![1]);
+        return res.match(/data-domains="(.*?)"/)![1].split(',');
     }
 
     async createInbox(address: string): Promise<void> {

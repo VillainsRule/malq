@@ -4,6 +4,8 @@ import { fish } from '@/util/util';
 
 import type { Mail, ProviderImpl } from '../Provider';
 
+const headers = { 'user-agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/149.0.0.0 Safari/537.36' };
+
 export default class altaddress$org implements ProviderImpl {
     dates: Record<string, number> = {};
     bodies: Record<string, string> = {};
@@ -11,11 +13,11 @@ export default class altaddress$org implements ProviderImpl {
     $cookie = '';
 
     async getDomains(): Promise<string[]> {
-        const req = await fetch('https://altaddress.org');
+        const req = await fish('https://altaddress.org', { headers });
         const res = await req.text();
 
         const domainMatches = res.match(/<option value="(.*?)"/g) || [];
-        const uniqueMatches = [...new Set(domainMatches)].filter(e => e.includes('.'));
+        const uniqueMatches = [...new Set(domainMatches)].filter(e => e.includes('.') && !e.includes('xn--'));
 
         return uniqueMatches.map((e) => e.match(/<option value="(.*?)"/)![1]);
     }
@@ -26,7 +28,7 @@ export default class altaddress$org implements ProviderImpl {
         const loginReq = await fish('https://altaddress.org/login', {
             method: 'POST',
             body: `email=${user}&domain=${domain}`,
-            headers: { 'content-type': 'application/x-www-form-urlencoded' },
+            headers: { ...headers, 'content-type': 'application/x-www-form-urlencoded' },
             redirect: 'manual'
         });
 
@@ -35,7 +37,7 @@ export default class altaddress$org implements ProviderImpl {
 
     async getMail(address: string): Promise<Mail[]> {
         const req = await fish(`https://altaddress.org/inbox`, {
-            headers: { cookie: this.$cookie }
+            headers: { ...headers, cookie: this.$cookie }
         });
 
         const res = await req.text();
@@ -60,7 +62,7 @@ export default class altaddress$org implements ProviderImpl {
         const finalMessages: Mail[] = await Promise.all(messages.map(async (m) => {
             if (!m.date && m.id) {
                 const bodyReq = await fish(`https://altaddress.org${m.id}`, {
-                    headers: { cookie: this.$cookie }
+                    headers: { ...headers, cookie: this.$cookie }
                 });
 
                 const bodyRes = await bodyReq.text();
@@ -74,7 +76,7 @@ export default class altaddress$org implements ProviderImpl {
 
             if (!m.body && m.id) {
                 const bodyReq = await fish(`https://altaddress.org${m.id}/getContent/1/remote/1`, {
-                    headers: { cookie: this.$cookie }
+                    headers: { ...headers, cookie: this.$cookie }
                 });
 
                 const bodyRes = await bodyReq.text();

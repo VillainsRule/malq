@@ -1,6 +1,6 @@
 import lwMessageCommons from './_constructor';
 
-export default class tmail$wibucrypto$pro extends lwMessageCommons {
+export default class tmail$fomayan$org extends lwMessageCommons {
     domainsPath = '/mailbox';
     initialPath = '/mailbox';
     refetchPath = '/mailbox';
@@ -8,6 +8,6 @@ export default class tmail$wibucrypto$pro extends lwMessageCommons {
     ignoredDomains = ['.name.ng'];
 
     constructor() {
-        super('tmail.wibucrypto.pro', true);
+        super('tmail.fomayan.org', true);
     }
 }

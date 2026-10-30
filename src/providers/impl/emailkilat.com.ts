@@ -17,7 +17,7 @@ export default class emailkilat$com implements ProviderImpl {
     }
 
     async getMail(address: string): Promise<Mail[]> {
-        const req = await wafFetch(`https://emailkilat.com/api.php?action=inbox&email=${encodeURIComponent(address)}`);
+        const req = await wafFetch(`https://emailkilat.com/api.php?action=inbox&email=${encodeURIComponent(address)}`, { timeout: 30000 });
 
         const res = await req.json() as {
             messages: {

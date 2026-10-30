@@ -1,8 +1,12 @@
 import { fish } from '@/util/util';
 
+import CookieJar from '@/util/CookieJar';
+
 import type { Mail, ProviderImpl } from '../Provider';
 
 export default class jestco$id implements ProviderImpl {
+    $jar = new CookieJar();
+
     async getDomains(): Promise<string[]> {
         const req = await fish('https://jestco.id/api.php?action=get_public_config');
         const res = await req.json() as { domains: string[] };
@@ -11,11 +15,15 @@ export default class jestco$id implements ProviderImpl {
     }
 
     async createInbox(_address: string): Promise<void> {
-        void 0;
+        const req = await fish('https://jestco.id/api.php?action=get_public_config');
+        this.$jar.addSetCookie(req.headers.getSetCookie());
     }
 
     async getMail(address: string): Promise<Mail[]> {
-        const req = await fish(`https://jestco.id/api.php?to=${encodeURIComponent(address)}`);
+        const req = await fish(`https://jestco.id/api.php?to=${encodeURIComponent(address)}`, {
+            headers: { cookie: this.$jar.getCookie() }
+        });
+
         const res = await req.json() as {
             id: string,
             from: string,

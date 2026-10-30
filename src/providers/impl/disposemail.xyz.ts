@@ -12,17 +12,19 @@ export default class disposemail$xyz implements ProviderImpl {
         const res = await req.text();
         const dom = parse(res);
 
-        const mainChunks = dom.querySelectorAll('script')
-            .filter(e => e.getAttribute('async') === '' && e.getAttribute('src') && e.parentNode.tagName === 'HEAD')
-            .map(e => e.getAttribute('src'));
+        const chunks = dom.querySelectorAll('script')
+            .map(e => e.getAttribute('src'))
+            .filter(e => e?.includes('/_next/static/chunks/'));
 
-        const mainChunkReq = await fish(`https://disposemail.xyz${mainChunks[mainChunks.length - 1]}`);
-        const mainChunk = await mainChunkReq.text();
+        for (const chunk of chunks) {
+            const chunkReq = await fish(`https://disposemail.xyz${chunk}`);
+            const chunkRes = await chunkReq.text();
 
-        const matchedDomains = mainChunk.match(/let [a-z]=\["(.*?)"\]/)![1]!;
-        const domains = matchedDomains.split('","') as string[];
+            const matchedDomains = chunkRes.match(/let [a-z]=\["([\w-]+\.[\w.-]+"[^\]]*?)"\]/)?.[1];
+            if (matchedDomains) return matchedDomains.split('","');
+        }
 
-        return domains;
+        throw new Error('domain list not found');
     }
 
     async createInbox(address: string): Promise<void> {
