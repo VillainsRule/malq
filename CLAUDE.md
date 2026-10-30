@@ -69,3 +69,4 @@ These sites break constantly. Work from `curl` first:
 - This file is a work in progress. If you find additional things to add, go ahead and do so (keep it short!)
 - If you have big questions, ask! (Small questions are something you should be able to figure out by reading other providers.)
 - If you have multiple new providers to add, it's easiest to do them one at a time (one after another).
+- Always update DOMAINS.md after adding or removing a provider. New entries are always added at the end of each newline-separated block.

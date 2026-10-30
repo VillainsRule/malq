@@ -55,12 +55,8 @@ to do:
 **DOMAIN TRACKER:**
 Y tempmail.io.vn
 Y emailfake.com
-Y email-fake.com
 Y expressinboxhub.com
 Y generator.email
-Y tempm.com
-Y mail-fake.com
-Y mail-temp.com
 Y tinyhost.shop
 Y tmail.thangdeptrai.net
 Y moakt.com
@@ -70,8 +66,6 @@ Y mail.paicha.cloud
 Y tempmail.io.vn
 Y txen.de
 Y z4mails.com
-Y 10-minutemail.com
-Y driftz.net
 Y cs.email
 Y nguyendoll.com
 Y altaddress.org
@@ -79,7 +73,6 @@ Y mailporary.com
 Y temp-mail.asia
 Y fmail.men
 Y cheapluxurymail.xyz
-Y cleantempmail.com
 Y mailmomy.com
 Y tempmailc.com
 Y getnada.net
@@ -97,13 +90,10 @@ Y grabmail.io
 Y inboxburn.com
 Y trytempmail.top
 Y edumailfree.com
-Y usmail.my.id
 Y mailregcl.com
 Y mailforspams.com
-Y tempmail.ai
 Y orifymail.com
 Y tempmailapi.io.vn
-Y mail.premiumindigital.site
 Y ezmail.pro
 Y neighbours.sh
 Y emailkilat.com
@@ -113,7 +103,6 @@ Y m7mail.cc
 Y tmail.pk
 Y birdtemp.com
 Y getmail.tech
-Y zeroinbox.biz.id
 Y jestco.id
 Y mailnow.site
 Y tempy.email
@@ -121,12 +110,10 @@ Y boomlify.com
 Y tempmail.cloud
 Y saga.my.id
 Y nospam.today
-Y tmail.wibucrypto.pro
 Y tempmailed.com
 Y purplemail.neweymail.com
 Y correotemporal.net
 Y kvlarapps.cloud
-Y mail.heavenprem.com
 Y mailmedi.com
 Y mail.123nhh.de
 Y vfotp.com
@@ -141,7 +128,6 @@ Y mockemail.com
 Y sacistudio.xyz
 Y mailkuh.my.id
 Y 365hmail.com
-Y duckzmail.com
 Y emailct.com
 Y lilzyy.com
 Y mailegzz.com
@@ -158,7 +144,6 @@ Y ilovevietnam.cyou
 Y rzmail.my.id
 Y zuckmails.com
 Y mail123.click
-Y tempmail.tw
 Y reusable.email
 Y akses.email
 Y tempmail.ocilotx.com
@@ -166,6 +151,7 @@ Y draxon.one
 Y sengare.art
 Y osakan.tokyo
 Y iwanta.email
+Y tmail.fomayan.org
 
 N 0mail.pro [NXDOMAIN]
 N 0mail.app [1 domain]
@@ -227,6 +213,7 @@ N 10secmail.com [2 domains]
 N 10minemail.org [nosel]
 N 10mail.org [redirect] (dropmail.info)
 N 10mail.xyz [serverr]
+N 10-minutemail.com [redirect]
 N 15qm.com [IP]
 N 15-minute-email.com [weird] (doesn't even actually work with a backend)
 N 15-minute-mail.com [1 domain]
@@ -387,6 +374,7 @@ N cuiqiu.net [redirect] (cuiqiu.com)
 N cuiqiu.com [signup]
 N czarymary.pl [ntm]
 N clova.email [signup]
+N cleantempmail.com [turnstile]
 
 N dropmailer.net [parked]
 N dispoemail.org [2 domains]
@@ -463,6 +451,8 @@ N dynainbox.com [slop]
 N dropmail.me [signup] (api token required, web ui is websocket + signed token)
 N desigroup.buzz [1 domain]
 N doai.email [3 domains]
+N driftz.net [slow]
+N duckzmail.com [broken]
 
 N emltmp.com [serverr]
 N easytrashmail.eu [serverr]
@@ -540,6 +530,7 @@ N ewebdevelopment.com [ntm]
 N externalemail.com [NXDOMAIN]
 N ezonemail.com [NXDOMAIN]
 N exolinker.com [redirect] (fmail.men)
+N email-fake.com [UAM]
 
 N fake.legal [4 domains]
 N fakemail.net [1 domain]
@@ -577,7 +568,7 @@ N freetemporaryemail.com [serverr]
 N fviainboxes.com [2 domains]
 N fyii.de [serverr]
 N freetempmail.org [nosel]
-N fakemailo.com [slow]
+N fakemailo.com [broken]
 N fastmailapp.com [signup]
 N fakemail.app [signup]
 N fakemail.cc [timeout]
@@ -963,6 +954,10 @@ N mydevil.net [ntm]
 N mymailserver.site [redirect] (best-tempmail.com)
 N mail.zrf.me [turnstile]
 N mailhook.dev [1 domain]
+N mail-fake.com [UAM]
+N mail-temp.com [UAM]
+N mail.heavenprem.com [NXDOMAIN]
+N mail.premiumindigital.site [serverr]
 
 N notletters.com [signup]
 N noopmail.org [nosel]
@@ -1710,6 +1705,9 @@ N topmailtop.com [serverr]
 N tempmail-plus.com [recaptcha]
 N tempmailmate.com [broken] (API)
 N tmailcloud.my.id [2 domains]
+N tempm.com [UAM]
+N tempmail.ai [broken] (paid custom addresses)
+N tempmail.tw [broken]
 
 N unlimitmail.com [signup]
 N unstablemail.com [NXDOMAIN]
@@ -1726,6 +1724,7 @@ N uggsrock.com [serverr]
 N upliftnow.com [parked]
 N unaux.com [ntm]
 N usmailz.com [NXDOMAIN]
+N usmail.my.id [serverr]
 
 N vsmailpro.com [NXDOMAIN]
 N vmail.dev [turnstile]
@@ -1832,3 +1831,4 @@ N zapovedniki.com [timeout]
 N zxcs.nl [blank]
 N zaxgmail.com [signup]
 N zurastore.my.id [1 domain]
+N zeroinbox.biz.id [NXDOMAIN]
