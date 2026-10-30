@@ -97,24 +97,28 @@ fs.readdirSync(iconPath).forEach((iconFile) => {
         app.get(`/icons/${iconFile}`, () => new Response(fs.createReadStream(path.join(iconPath, iconFile)), { headers: { 'Content-Type': 'image/png' } }));
 });
 
+const demoBypasses = Bun.env.DEMO_BYPASS_TOKENS?.split(',').map(k => k.trim()).filter(Boolean) || [];
+
 app.get('/api/v1/session', async ({ query, server, request }) => {
     if (Bun.env.DEMO_ENABLED) {
         const token = query.token;
         if (!token) return new Response(JSON.stringify({ error: 'missing demo token; see /demo' }), { status: 401 });
 
-        const entry = demoTokens.get(token);
-        const clientIP = Bun.hash.xxHash3(server!.requestIP(request)?.address || '');
+        if (!demoBypasses.includes(token)) {
+            const entry = demoTokens.get(token);
+            const clientIP = Bun.hash.xxHash3(server!.requestIP(request)?.address || '');
 
-        if (!entry) return new Response(JSON.stringify({ error: 'invalid or expired demo challenge' }), { status: 401 });
-        if (entry.ip !== clientIP) return new Response(JSON.stringify({ error: 'demo IP mismatch' }), { status: 403 });
-        if (entry.expires < Date.now()) {
-            demoTokens.delete(token);
-            return new Response('Token expired', { status: 401 });
+            if (!entry) return new Response(JSON.stringify({ error: 'invalid or expired demo challenge' }), { status: 401 });
+            if (entry.ip !== clientIP) return new Response(JSON.stringify({ error: 'demo IP mismatch' }), { status: 403 });
+            if (entry.expires < Date.now()) {
+                demoTokens.delete(token);
+                return new Response('Token expired', { status: 401 });
+            }
+            if (entry.remaining <= 0) return new Response(JSON.stringify({ error: 'demo token exhausted; generate a new one' }), { status: 403 });
+
+            entry.remaining--;
+            if (entry.remaining === 0) demoTokens.delete(token);
         }
-        if (entry.remaining <= 0) return new Response(JSON.stringify({ error: 'demo token exhausted; generate a new one' }), { status: 403 });
-
-        entry.remaining--;
-        if (entry.remaining === 0) demoTokens.delete(token);
     }
 
     let provider: ProviderImpl;
