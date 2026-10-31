@@ -54,7 +54,12 @@ const wafFetch = (inputUrl: string, options: WafFetchOptions = {}): Promise<WafF
             reject(new Error(`wafFetch timed out after ${timeout}ms: ${inputUrl}`));
         }, timeout);
 
-        client = await createClient(url.origin, options.noProxy);
+        try {
+            client = await createClient(url.origin, options.noProxy);
+        } catch (e) {
+            clearTimeout(timer);
+            return reject(e);
+        }
 
         if (timedOut) return client.close();
 
